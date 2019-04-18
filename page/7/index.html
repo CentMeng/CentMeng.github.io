@@ -197,6 +197,128 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Retrofit2介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/17/Retrofit2介绍/">Retrofit2介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/17/Retrofit2介绍/" class="archive-article-date">
+  	<time datetime="2016-10-17T05:19:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Retrofit2介绍"><a href="#Retrofit2介绍" class="headerlink" title="Retrofit2介绍"></a>Retrofit2介绍</h1><h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><p>在开始了解 Retrofit 的使用之前，我们需要理解RESTful概念因为 Retrofit 的初衷就是根据 RESTful风格的API 来进行封装的。关于RESTful 我们可以参考<br><a href="http://www.androidchina.net/3749.html" target="_blank" rel="noopener">《RESTful API 设计指南》</a></p>
+<h2 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h2><p>Retrofit与okhttp共同出自于Square公司，retrofit就是对okhttp做了一层封装。把网络请求都交给给了Okhttp，我们只需要通过简单的配置就能使用retrofit来进行网络请求了。官方介绍：<a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">http://square.github.io/retrofit/</a></p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ul>
+<li>Gradle：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:retrofit:2.1.0&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>学习一门新的技术的时候，我们首先要参考的就是官方文档，我们看看官方文档是怎么写的：<a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">http://square.github.io/retrofit/</a></p>
+<p>大家看到官方文档，很是简单粗暴，一言不合就上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line">  <span class="meta">@GET</span>(<span class="string">"users/&#123;user&#125;/repos"</span>)</span><br><span class="line">  Call&lt;List&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path</span>(<span class="string">"user"</span>) String user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面代码我们可知，Retrofit将HTTP API转换为interface接口的方式（Retrofit turns your HTTP API into a Java interface.）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(<span class="string">"https://api.github.com/"</span>)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">GitHubService service = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
+<p>Retrofit 根据之前定义的接口生成一个具体的实现。通俗的讲就是我们可以将Retrofit类看作是一个“工厂类”的角色，我们在接口中提供了此次的“产品”的生产规格信息，而Retrofit则通过信息负责为我们生产。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Repo&gt;&gt; repos = service.listRepos(<span class="string">"octocat"</span>);</span><br></pre></td></tr></table></figure>
+<p>“Call”：通过之前封装的请求接口对象创建的任一的Call都可以发起一个同步（或异步）的HTTP请求到远程服务器。</p>
+<p>以上信息就是简单的Retrofit的操作，通过这个实例感受最多的就是解耦明确；使用简单。通过注解的方式描述request让人眼前一亮。</p>
+<h3 id="其他注解"><a href="#其他注解" class="headerlink" title="其他注解"></a>其他注解</h3><ul>
+<li>@Path</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@Query<br>对于@GET来说，参数信息是可以直接放在url中上传的。那么你马上就反应过来了，这一样也存在严重的耦合！于是，就有了 @Query</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Query</span><span class="params">(<span class="string">"name"</span>)</span> String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@QueryMap<br>假设我要在参数中上传10个参数呢？</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@QueryMap Map&lt;String,String&gt; params)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@Post @Body Post请求上传body</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@POST</span>(<span class="string">"add"</span>)</span><br><span class="line"> Call&lt;List&lt;User&gt;&gt; get(<span class="meta">@Body</span> User user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@Post @FormUrlEncoded 表单上传</li>
+</ul>
+<p><strong><em>服务器通过request.getParameter的方式直接读取参数信息</em></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@Headers与@Header</li>
+</ul>
+<p>可以设置HTTP的header，拿使用编码来举例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-type:application/x-www-form-urlencoded;charset=UTF-8"</span>)</span><br><span class="line">  <span class="meta">@FormUrlEncoded</span></span><br><span class="line">  <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码说的使用@Headers的用法，那么@Header怎么使用呢？@Header与@Headers不同在于是动态的添加请求头信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FormUrlEncoded</span></span><br><span class="line"> <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"><span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Header(<span class="string">"Content-type"</span> String contentType)</span>,@<span class="title">Path</span><span class="params">(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br></pre></td></tr></table></figure>
+<p>HTTP的Header也可以在okhttp的拦截器中添加。</p>
+<ul>
+<li>其他</li>
+</ul>
+<p>当然我们还可以进行文件上传和下载，这里就不过多介绍了，网上有很多示例。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p><strong><em>特别注意如果需要继承rxjava和gson转换，则还需要引入</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:adapter-rxjava:2.1.0&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:converter-gson:2.1.0&apos;</span><br></pre></td></tr></table></figure>
+<p><strong><em>其他格式转换引入</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Gson: com.squareup.retrofit2:converter-gson</span><br><span class="line">Jackson: com.squareup.retrofit2:converter-jackson</span><br><span class="line">Moshi: com.squareup.retrofit2:converter-moshi</span><br><span class="line">Protobuf: com.squareup.retrofit2:converter-protobuf</span><br><span class="line">Wire: com.squareup.retrofit2:converter-wire</span><br><span class="line">Simple XML: com.squareup.retrofit2:converter-simplexml</span><br><span class="line">Scalars (primitives, boxed, and String): com.squareup.retrofit2:converter-scalars</span><br></pre></td></tr></table></figure>
+<p><strong><em>如果不添加转换器会报IllegalArgumentException异常,这也会是新手开发碰到的第一个坑</em></strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-week初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -980,78 +1102,6 @@
 
 
   
-    <article id="post-解决HTTPS的SSL认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/21/解决HTTPS的SSL认证/">解决HTTPS的SSL认证</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/21/解决HTTPS的SSL认证/" class="archive-article-date">
-  	<time datetime="2016-09-21T15:14:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信很多人，在开发时候会遇到https检验证书问题，证书不对，无法调取接口。其实解决这个方法很简单，只需要写如下类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.security.KeyManagementException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.SecureRandom;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.X509Certificate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.HostnameVerifier;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.HttpsURLConnection;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLSession;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.TrustManager;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.X509TrustManager;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mengxiangcheng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 16/9/19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@copyright</span> ©2016 孟少杰 All Rights Reserved</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span> SSL认证</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FakeX509TrustManager</span> <span class="keyword">implements</span> <span class="title">X509TrustManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> TrustManager[] trustManagers;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> X509Certificate[] _AcceptedIssuers = <span class="keyword">new</span></span><br><span class="line">            X509Certificate[] &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> java.security.cert.CertificateException </span>&#123;</span><br><span class="line">        <span class="comment">//To change body of implemented methods use File | Settings | File Templates.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> java.security.cert.CertificateException </span>&#123;</span><br><span class="line">        <span class="comment">//To change body of implemented methods use File | Settings | File Templates.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isClientTrusted</span><span class="params">(X509Certificate[] chain)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isServerTrusted</span><span class="params">(X509Certificate[] chain)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        <span class="keyword">return</span> _AcceptedIssuers;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">allowAllSSL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HttpsURLConnection.setDefaultHostnameVerifier(<span class="keyword">new</span> HostnameVerifier() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(String arg0, SSLSession arg1)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        SSLContext context = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (trustManagers == <span class="keyword">null</span>) &#123;</span><br><span class="line">            trustManagers = <span class="keyword">new</span> TrustManager[] &#123; <span class="keyword">new</span> FakeX509TrustManager() &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            context = SSLContext.getInstance(<span class="string">"TLS"</span>);</span><br><span class="line">            context.init(<span class="keyword">null</span>, trustManagers, <span class="keyword">new</span> SecureRandom());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后在请求接口前加allowAllSSL()方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FakeX509TrustManager.allowAllSSL();</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">HTTPS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1141,19 +1191,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1161,15 +1203,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1181,15 +1231,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1201,11 +1251,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1214,10 +1268,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1234,6 +1284,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>

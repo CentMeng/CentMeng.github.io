@@ -197,6 +197,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android实现中间卡位下方viewpager效果展示" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/25/android实现中间卡位下方viewpager效果展示/">android实现中间卡位下方viewpager效果展示</a>
+    </h1>
+  
+
+        
+        <a href="/2016/07/25/android实现中间卡位下方viewpager效果展示/" class="archive-article-date">
+  	<time datetime="2016-07-25T11:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/data/androidkawei.gif"></p>
+<p>###设置卡位效果###</p>
+<p>实现如图效果，中间tab滑动上方时候，卡在顶部，下方继续上滑</p>
+<p>其实很简单，只需要借助android的<a href="https://guides.codepath.com/android/Design-Support-Library" target="_blank" rel="noopener">Design Support Library</a></p>
+<p>####1.引用library<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support:design:23.3.0'</span></span><br></pre></td></tr></table></figure></p>
+<p> ####2.写布局</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">"@+id/coordinator"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_marginTop</span>=<span class="string">"@dimen/view_height"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:id</span>=<span class="string">"@+id/barlayout"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_above</span>=<span class="string">"@+id/layout_zhidian"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:background</span>=<span class="string">"@color/background"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">              <span class="tag">&lt;<span class="name">FrameLayout</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:id</span>=<span class="string">"@+id/layout_topexpert"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:background</span>=<span class="string">"@color/white"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|exitUntilCollapsed"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:visibility</span>=<span class="string">"visible"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">....</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">....</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">              <span class="tag">&lt;<span class="name">android.support.design.widget.TabLayout</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:id</span>=<span class="string">"@+id/tl_expert"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabGravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabIndicatorColor</span>=<span class="string">"@color/basecolor"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:background</span>=<span class="string">"@color/white"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabMode</span>=<span class="string">"fixed"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabSelectedTextColor</span>=<span class="string">"@color/basecolor"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabTextColor</span>=<span class="string">"@color/darkgray"</span></span></span><br><span class="line"><span class="tag">                  /&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;<span class="name">android.support.v4.view.ViewPager</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:id</span>=<span class="string">"@+id/viewpager"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> 其中关键的是<a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html" target="_blank" rel="noopener">CoordinatorLayout</a></p>
+<p>#####设置滑动布局#####</p>
+<p> 在CoordinatorLayout中包含AppBarLayout,其中AppBarLayout中的子布局，如果设置<br>app:layout_scrollFlags属性里面必须至少启用scroll这个flag，这样这个view才会滚动出屏幕，否则它将一直固定在顶部。可以使用的其他flag有：</p>
+<p><strong><em>enterAlways: 一旦向上滚动这个view就可见。</em></strong></p>
+<p><strong><em>enterAlwaysCollapsed: 顾名思义，这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时enterAlways也定义了，那么view将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。</em></strong></p>
+<p><strong><em>exitUntilCollapsed: 同样顾名思义，这个flag时定义何时退出，当你定义了一个minHeight，这个view将在滚动到达这个最小高度的时候消失。</em></strong></p>
+<p><strong><em>记住，要把带有scroll flag的view放在前面，这样收回的view才能让正常退出，而固定的view继续留在顶部。</em></strong></p>
+<p>本例中layout_topexpert是使用滑动消失的设置了 app:layout_scrollFlags=”scroll|exitUntilCollapsed”，而tl_expert是卡在上方的，所以没有做任何设置</p>
+<p>#####定义AppBarLayout与滚动视图之间的联系#####<br>在viewpager或者任意支持嵌套滚动的view比如NestedScrollView上添加app:layout_behavior。support library包含了一个特殊的字符串资源@string/appbar_scrolling_view_behavior，它和AppBarLayout.ScrollingViewBehavior相匹配，用来通知AppBarLayout 这个特殊的view何时发生了滚动事件，这个behavior需要设置在触发事件（滚动）的view之上</p>
+<p><strong>*</strong>另外需要注意的是<strong>*</strong></p>
+<p>如果相关滚动的是viewpager，在viewpager可以使用recyclerview和scrollview，但ScrollView要使用NestedScrollView</p>
+<p><br></p>
+<hr>
+<p><br><br>滑动卡位的效果实现了，下面是实现Tabfenye和viewpager下方的效果了，其实也很简单，使用库中的android.support.design.widget.TabLayout并做些设置就ok了</p>
+<p>###设置Tablayout###</p>
+<p>####1.设置ViewPager的adpter</p>
+<p>代码很简单，直接看代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExpertDetailPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String userId = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String[] tabTitles = <span class="keyword">new</span> String[]&#123;<span class="string">"点师介绍"</span>,<span class="string">"话题"</span>,<span class="string">"益答"</span>,<span class="string">"动态"</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tabTitles[position];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExpertDetailPagerAdapter</span><span class="params">(FragmentManager fm, String userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(fm);</span><br><span class="line">        <span class="keyword">this</span>.userId = userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (position)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertInfoFragment.newInstance(userId);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertTopicFragment.newInstance(userId);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                RankEntity entity = <span class="keyword">new</span> RankEntity();</span><br><span class="line">                entity.setId(userId);</span><br><span class="line">                <span class="keyword">return</span> ExpertYiDaFragment.newInstance(entity);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertDynamicFragment.newInstance(userId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>getPageTitle是返回Tab的标题</p>
+<p>####2.设置Tablayout</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fragmentAdapter = <span class="keyword">new</span> ExpertDetailPagerAdapter(getSupportFragmentManager(),expertId);</span><br><span class="line"> viewpager.setAdapter(fragmentAdapter);</span><br><span class="line"> viewpager.setOffscreenPageLimit(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"> tl_expert.setupWithViewPager(viewpager);</span><br></pre></td></tr></table></figure>
+<p>本例中Tablayout是居中显示，是通过在布局中设置这两个属性实现的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">app:tabGravity="center"</span><br><span class="line">app:tabMode="fixed"</span><br></pre></td></tr></table></figure>
+<p>这样就实现了，我一开始使用ScrollView嵌套ViewPager，ViewPager中嵌套ScrollView，RecyclerView出现一大堆问题，最后发现用design库如此的简单解决了问题</p>
+<p>###自定义Behavior###</p>
+<p>CoordinatorLayout的工作原理是搜索定义了<a href="http://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html" target="_blank" rel="noopener">CoordinatorLayout Behavior</a> 的子view，不管是通过在xml中使用app:layout_behavior标签还是通过在代码中对view类使用@DefaultBehavior修饰符来添加注解。当滚动发生的时候，CoordinatorLayout会尝试触发那些声明了依赖的子view。</p>
+<p>要自己定义CoordinatorLayout Behavior，你需要实现layoutDependsOn() 和onDependentViewChanged()两个方法。比如AppBarLayout.Behavior 就定义了这两个关键方法。这个behavior用于当滚动发生的时候让AppBarLayout发生改变。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> AppBarLayout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// check the behavior triggered</span></span><br><span class="line">    android.support.design.widget.CoordinatorLayout.Behavior behavior = ((android.support.design.widget.CoordinatorLayout.LayoutParams) dependency.getLayoutParams()).getBehavior();</span><br><span class="line">    <span class="keyword">if</span> (behavior <span class="keyword">instanceof</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">        <span class="comment">// do stuff here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">布局样式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="android-studio配置AndroidAnnotations" class="article article-type-android  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -773,19 +875,11 @@ hexo server（或hexo s）
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -793,15 +887,23 @@ hexo server（或hexo s）
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -813,15 +915,15 @@ hexo server（或hexo s）
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -833,11 +935,15 @@ hexo server（或hexo s）
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -846,10 +952,6 @@ hexo server（或hexo s）
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -866,6 +968,10 @@ hexo server（或hexo s）
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>

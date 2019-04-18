@@ -197,6 +197,115 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-再识RxJava庐山真面目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/17/再识RxJava庐山真面目/">再识RxJava庐山真面目</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/17/再识RxJava庐山真面目/" class="archive-article-date">
+  	<time datetime="2017-01-17T14:10:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>再次来记录RxJava，是因为之前对他还是很迷茫。今天看了下相关资料，算是看山是山，看水是水的地步。但是还是没达到看山不是山，看水不是水的境界。下面再来记录下RxJava的庐山真面目。说白了，就是建立观察者和被观察者的关系，这篇文章不做系统讲解，只是mark下被大家忽略的地方。</p>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>首先，还是老套路，要熟悉RxJava我们要了解观察者模式，在RxJava就是以下两个。通俗点讲，观察者和被观察者就是警察和小偷的区别。小偷动手了，警察才去抓小偷。</p>
+<p>Observable 被观察者（小偷）</p>
+<p>Observer 观察者（警察）</p>
+<h2 id="Observer和Subscriber"><a href="#Observer和Subscriber" class="headerlink" title="Observer和Subscriber"></a>Observer和Subscriber</h2><p>Observer还有一个实现它的抽象类，Subscriber。那么他俩的区别在哪里？</p>
+<p> Observer 和 Subscriber 是完全一样的。它们的区别对于使用者来说主要有两点：</p>
+<ul>
+<li>onStart(): 这是 Subscriber 增加的方法。它会在 subscribe 刚开始，而事件还未发送之前被调用，可以用于做一些准备工作，例如数据的清零或重置。这是一个可选方法，默认情况下它的实现为空。需要注意的是，如果对准备工作的线程有要求（例如弹出一个显示进度的对话框，这必须在主线程执行）， onStart() 就不适用了，因为它总是在 subscribe 所发生的线程被调用，而不能指定线程。要在指定的线程来做准备工作，可以使用 doOnSubscribe() 方法，具体可以在后面的文中看到。</li>
+<li>unsubscribe(): 这是 Subscriber 所实现的另一个接口 Subscription 的方法，用于取消订阅。在这个方法被调用后，Subscriber 将不再接收事件。一般在这个方法调用前，可以使用 isUnsubscribed() 先判断一下状态。 unsubscribe() 这个方法很重要，因为在 subscribe() 之后， Observable 会持有 Subscriber 的引用，这个引用如果不能及时被释放，将有内存泄露的风险。所以最好保持一个原则：要在不再使用的时候尽快在合适的地方（例如 onPause() onStop() 等方法中）调用 unsubscribe() 来解除引用关系，以避免内存泄露的发生。</li>
+</ul>
+<p><strong><em>Observer 和 Subscriber 具有相同的角色，而且 Observer 在 subscribe() 过程中最终会被转换成 Subscriber 对象</em></strong></p>
+<h2 id="不完整定义的回调"><a href="#不完整定义的回调" class="headerlink" title="不完整定义的回调"></a>不完整定义的回调</h2><p>建立订阅关系的subscribe（）方法，除了 subscribe(Observer) 和 subscribe(Subscriber) ，subscribe() 还支持不完整定义的回调，RxJava 会自动根据定义创建出 Subscriber 。形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Action1&lt;String&gt; onNextAction = new Action1&lt;String&gt;() &#123;</span><br><span class="line">    // onNext()</span><br><span class="line">    @Override</span><br><span class="line">    public void call(String s) &#123;</span><br><span class="line">        Log.d(tag, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Action1&lt;Throwable&gt; onErrorAction = new Action1&lt;Throwable&gt;() &#123;</span><br><span class="line">    // onError()</span><br><span class="line">    @Override</span><br><span class="line">    public void call(Throwable throwable) &#123;</span><br><span class="line">        // Error handling</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Action0 onCompletedAction = new Action0() &#123;</span><br><span class="line">    // onCompleted()</span><br><span class="line">    @Override</span><br><span class="line">    public void call() &#123;</span><br><span class="line">        Log.d(tag, &quot;completed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction 来定义 onNext()</span><br><span class="line">observable.subscribe(onNextAction);</span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction 和 onErrorAction 来定义 onNext() 和 onError()</span><br><span class="line">observable.subscribe(onNextAction, onErrorAction);</span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction、 onErrorAction 和 onCompletedAction 来定义 onNext()、 onError() 和 onCompleted()</span><br><span class="line">observable.subscribe(onNextAction, onErrorAction, onCompletedAction);</span><br></pre></td></tr></table></figure>
+<p><strong><em>简单解释一下这段代码中出现的 Action1 和 Action0。 Action0 是 RxJava 的一个接口，它只有一个方法 call()，这个方法是无参无返回值的；由于 onCompleted() 方法也是无参无返回值的，因此 Action0 可以被当成一个包装对象，将 onCompleted() 的内容打包起来将自己作为一个参数传入 subscribe() 以实现不完整定义的回调。这样其实也可以看做将 onCompleted() 方法作为参数传进了 subscribe()，相当于其他某些语言中的『闭包』。 Action1 也是一个接口，它同样只有一个方法 call(T param)，这个方法也无返回值，但有一个参数；与 Action0 同理，由于 onNext(T obj) 和 onError(Throwable error) 也是单参数无返回值的，因此 Action1 可以将 onNext(obj) 和 onError(error) 打包起来传入 subscribe() 以实现不完整定义的回调。事实上，虽然 Action0 和 Action1 在 API 中使用最广泛，但 RxJava 是提供了多个 ActionX 形式的接口 (例如 Action2, Action3) 的，它们可以被用以包装不同的无返回值的方法。</em></strong></p>
+<p>同理，FuncX 和 ActionX 的区别在 FuncX 包装的是有返回值的方法。</p>
+<h2 id="线程控制-——-Scheduler"><a href="#线程控制-——-Scheduler" class="headerlink" title="线程控制 —— Scheduler"></a>线程控制 —— Scheduler</h2><p>我个人认为，RxJava比较方便的一点，就是线程切换操作，只需要使用Scheduler就可以很简单实现切换线程。在不指定线程的情况下， RxJava 遵循的是线程不变的原则，即：在哪个线程调用 subscribe()，就在哪个线程生产事件；在哪个线程生产事件，就在哪个线程消费事件。如果需要切换线程，就需要用到 Scheduler （调度器）。</p>
+<p>我们先了解几个内置的Scheduler：</p>
+<ul>
+<li>Schedulers.immediate(): 直接在当前线程运行，相当于不指定线程。这是默认的 Scheduler。</li>
+<li>Schedulers.newThread(): 总是启用新线程，并在新线程执行操作。</li>
+<li>Schedulers.io(): I/O 操作（读写文件、读写数据库、网络信息交互等）所使用的 Scheduler。行为模式和 newThread() 差不多，区别在于 io() 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率。不要把计算工作放在 io() 中，可以避免创建不必要的线程。</li>
+<li>Schedulers.computation(): 计算所使用的 Scheduler。这个计算指的是 CPU 密集型计算，即不会被 I/O 等操作限制性能的操作，例如图形的计算。这个 Scheduler 使用的固定的线程池，大小为 CPU 核数。不要把 I/O 操作放在 computation() 中，否则 I/O 操作的等待时间会浪费 CPU。</li>
+<li>另外， Android 还有一个专用的 AndroidSchedulers.mainThread()，它指定的操作将在 Android 主线程运行。</li>
+</ul>
+<p>有了这几个 Scheduler ，就可以使用 subscribeOn() 和 observeOn() 两个方法来对线程进行控制了。</p>
+<ul>
+<li>subscribeOn(): 指定 subscribe() 所发生的线程，即 Observable.OnSubscribe 被激活时所处的线程。或者叫做事件产生的线程。 </li>
+<li>observeOn(): 指定 Subscriber 所运行在的线程。或者叫做事件消费的线程。</li>
+</ul>
+<p>一言不合上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Observable.just(1, 2, 3, 4)</span><br><span class="line">    .subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程</span><br><span class="line">    .subscribe(new Action1&lt;Integer&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void call(Integer number) &#123;</span><br><span class="line">            Log.d(tag, &quot;number:&quot; + number);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>上面这段代码中，由于 subscribeOn(Schedulers.io()) 的指定，被创建的事件的内容 1、2、3、4 将会在 IO 线程发出；而由于 observeOn(AndroidScheculers.mainThread()) 的指定，因此 subscriber 数字的打印将发生在主线程 。事实上，这种在 subscribe() 之前写上两句 subscribeOn(Scheduler.io()) 和 observeOn(AndroidSchedulers.mainThread()) 的使用方式非常常见，它适用于多数的 『后台线程取数据，主线程显示』的程序策略。</p>
+<p><strong><em>下面说下subscribeOn（）和observeOn（）的注意点吧</em></strong></p>
+<p>通过 observeOn() 的多次调用，程序实现了线程的多次切换但subscribeOn() 它是只能调用一次的，不论它的位置放在那里。通俗点将就是，observeOn（）可以多次调用，并且都会切换线程，但subscribeOn（）无论你放在前面还是后面只会被调用一次。如果你调用多个subscribeOn（）只有第一个起作用。</p>
+<h2 id="延伸：doOnSubscribe"><a href="#延伸：doOnSubscribe" class="headerlink" title="延伸：doOnSubscribe()"></a>延伸：doOnSubscribe()</h2><p>然而，虽然超过一个的 subscribeOn() 对事件处理的流程没有影响，但在流程之前却是可以利用的。</p>
+<p>在前面讲 Subscriber 的时候，提到过 Subscriber 的 onStart() 可以用作流程开始前的初始化。然而 onStart() 由于在 subscribe() 发生时就被调用了，因此不能指定线程，而是只能执行在 subscribe() 被调用时的线程。这就导致如果 onStart() 中含有对线程有要求的代码（例如在界面上显示一个 ProgressBar，这必须在主线程执行），将会有线程非法的风险，因为有时你无法预测 subscribe() 将会在什么线程执行。</p>
+<p>而与 Subscriber.onStart() 相对应的，有一个方法 Observable.doOnSubscribe() 。它和 Subscriber.onStart() 同样是在 subscribe() 调用后而且在事件发送前执行，但区别在于它可以指定线程。默认情况下， doOnSubscribe() 执行在 subscribe() 发生的线程；而如果在 doOnSubscribe() 之后有 subscribeOn() 的话，它将执行在离它最近的 subscribeOn() 所指定的线程。</p>
+<p>还是一言不合上代码，千万别问代码是谁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Observable.create(onSubscribe)</span><br><span class="line">    .subscribeOn(Schedulers.io())</span><br><span class="line">    .doOnSubscribe(new Action0() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void call() &#123;</span><br><span class="line">            progressBar.setVisibility(View.VISIBLE); // 需要在主线程执行</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .subscribeOn(AndroidSchedulers.mainThread()) // 指定主线程</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">    .subscribe(subscriber);</span><br></pre></td></tr></table></figure>
+<p>如上，在 doOnSubscribe()的后面跟一个 subscribeOn() ，就能指定准备工作的线程了。</p>
+<p>Ok，以上内容均来自大神们的博客，我只是做了搬运工和总结。如果想了解RxJava实际应用，请戳这里<a href="https://centmeng.github.io/2016/11/22/RxJava%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8(%E4%B8%80">RxJava实际应用</a>/)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RxJava</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-spring-boot项目部署到Tomcat上" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -604,125 +713,6 @@
 
 
   
-    <article id="post-Hadoop安装和环境配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/02/Hadoop安装和环境配置/">Hadoop安装和环境配置</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/02/Hadoop安装和环境配置/" class="archive-article-date">
-  	<time datetime="2016-12-02T12:43:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>主要分为三步(前提是已安装HomeBrew和Java)，我们这里的安装通过HomeBrew进行安装</p>
-<ol>
-<li>配置ssh localhost 免密码登陆</li>
-<li>安装Hadoop已经进行配置文件设置 （伪分布式）</li>
-<li>运行Hadoop</li>
-</ol>
-<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>为了确保在远程管理Hadoop以及Hadoop节点用户共享时的安全性, Hadoop需要配置使用SSH协议<br>首先在系统偏好设置-&gt;共享-&gt;打开远程登录服务-&gt;右侧选择允许所有用户访问</p>
-<p>先验证下是否可以免登陆 ssh localhost,这时候如果出现如下错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh: connect to host localhost port 22: Connection refused</span><br></pre></td></tr></table></figure></p>
-<p>我们只需执行如下两行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</span><br><span class="line">cat ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-<p>解释：</p>
-<p>第一行：ssh -keygen 代表生成密钥，-t代表指定生成的密钥类型，dsa代表dsa密钥认证的意思（密钥类型）；-P用于提供密语，-f 指定生成的密钥文件</p>
-<p>第二行：将公钥加入到用于认证的公钥文件中</p>
-<p>这时候，我们再试ssh localhost命令，就不会被refused</p>
-<h2 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h2><h3 id="HomeBrew安装"><a href="#HomeBrew安装" class="headerlink" title="HomeBrew安装"></a>HomeBrew安装</h3><p>其实很简单，只需一行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install hadoop</span><br></pre></td></tr></table></figure>
-<p>至于查看安装目录，可以使用以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew list hadoop</span><br></pre></td></tr></table></figure>
-<p>可以看到我这里安装的是2.7.1版本，并且目录是/usr/local/Cellar/hadoop/2.7.1</p>
-<h3 id="配置Hadoop"><a href="#配置Hadoop" class="headerlink" title="配置Hadoop"></a>配置Hadoop</h3><p>我们需要对4个文件进行修改和配置，具体如下：</p>
-<h4 id="hadoop-env-sh"><a href="#hadoop-env-sh" class="headerlink" title="hadoop-env.sh"></a>hadoop-env.sh</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/hadoop-env.sh</p>
-<p>将代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_OPTS=&quot;$HADOOP_OPTS -Djava.net.preferIPv4Stack=true&quot;</span><br></pre></td></tr></table></figure></p>
-<p>替换为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_OPTS=&quot;$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Djava.security.krb5.realm= -Djava.security.krb5.kdc=&quot;</span><br></pre></td></tr></table></figure>
-<h4 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/core-site.xml</p>
-<p>将下面代码添加到文件中：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/hdfs/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>A base for other temporary directories.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong><em>注： fs.default.name 保存了NameNode的位置，HDFS和MapReduce组件都需要用到它，这就是它出现在core-site.xml 文件中而不是 hdfs-site.xml文件中的原因。在该处配置HDFS的地址和端口号。</em></strong></p>
-<h4 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/mapred-site.xml或者mapred-site.xml.templete</p>
-<p>将下面代码添加到文件中：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.job.tracker<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9010<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>变量mapred.job.tracker 保存了JobTracker的位置，因为只有MapReduce组件需要知道这个位置，所以它出现在mapred-site.xml文件中。</p>
-<h4 id="hdfs-site-xml"><a href="#hdfs-site-xml" class="headerlink" title="hdfs-site.xml"></a>hdfs-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/hdfs-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>变量dfs.replication指定了每个HDFS默认备份方式通常为3, 由于我们只有一台主机和一个伪分布式模式的DataNode，将此值修改为1。</p>
-<h2 id="运行Hadoop"><a href="#运行Hadoop" class="headerlink" title="运行Hadoop"></a>运行Hadoop</h2><ul>
-<li>启动hadoop之前需要格式化hadoop系统的HDFS文件系统<br>跳转到目录/usr/local/Cellar/hadoop/2.7.1/bin下<br>执行如下命令：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode -format</span><br></pre></td></tr></table></figure>
-<p>如果出现command not found :hadoop则需要配置环境变量，具体怎么配置，这是基本技能，就不在这里说明了。</p>
-<ul>
-<li>然后进入/usr/local/Cellar/hadoop/2.7.1/sbin   </li>
-</ul>
-<p>执行如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./start-all.sh</span><br></pre></td></tr></table></figure>
-<p>或者分开启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./start-dfs.sh</span><br><span class="line">./start-yarn.sh</span><br></pre></td></tr></table></figure>
-<ul>
-<li>验证hadoop是否启动</li>
-</ul>
-<p>Resource Manager: <a href="http://localhost:50070" target="_blank" rel="noopener">http://localhost:50070</a><br>JobTracker: <a href="http://localhost:8088" target="_blank" rel="noopener">http://localhost:8088</a><br>Specific Node Information: <a href="http://localhost:8042" target="_blank" rel="noopener">http://localhost:8042</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据/" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -812,19 +802,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -832,15 +814,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -852,15 +842,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -872,11 +862,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,10 +879,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -905,6 +895,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>

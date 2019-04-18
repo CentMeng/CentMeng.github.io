@@ -197,6 +197,125 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Hadoop安装和环境配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/02/Hadoop安装和环境配置/">Hadoop安装和环境配置</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/02/Hadoop安装和环境配置/" class="archive-article-date">
+  	<time datetime="2016-12-02T12:43:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>主要分为三步(前提是已安装HomeBrew和Java)，我们这里的安装通过HomeBrew进行安装</p>
+<ol>
+<li>配置ssh localhost 免密码登陆</li>
+<li>安装Hadoop已经进行配置文件设置 （伪分布式）</li>
+<li>运行Hadoop</li>
+</ol>
+<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>为了确保在远程管理Hadoop以及Hadoop节点用户共享时的安全性, Hadoop需要配置使用SSH协议<br>首先在系统偏好设置-&gt;共享-&gt;打开远程登录服务-&gt;右侧选择允许所有用户访问</p>
+<p>先验证下是否可以免登陆 ssh localhost,这时候如果出现如下错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh: connect to host localhost port 22: Connection refused</span><br></pre></td></tr></table></figure></p>
+<p>我们只需执行如下两行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh-keygen -t dsa -P &apos;&apos; -f ~/.ssh/id_dsa</span><br><span class="line">cat ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<p>第一行：ssh -keygen 代表生成密钥，-t代表指定生成的密钥类型，dsa代表dsa密钥认证的意思（密钥类型）；-P用于提供密语，-f 指定生成的密钥文件</p>
+<p>第二行：将公钥加入到用于认证的公钥文件中</p>
+<p>这时候，我们再试ssh localhost命令，就不会被refused</p>
+<h2 id="安装Hadoop"><a href="#安装Hadoop" class="headerlink" title="安装Hadoop"></a>安装Hadoop</h2><h3 id="HomeBrew安装"><a href="#HomeBrew安装" class="headerlink" title="HomeBrew安装"></a>HomeBrew安装</h3><p>其实很简单，只需一行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install hadoop</span><br></pre></td></tr></table></figure>
+<p>至于查看安装目录，可以使用以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew list hadoop</span><br></pre></td></tr></table></figure>
+<p>可以看到我这里安装的是2.7.1版本，并且目录是/usr/local/Cellar/hadoop/2.7.1</p>
+<h3 id="配置Hadoop"><a href="#配置Hadoop" class="headerlink" title="配置Hadoop"></a>配置Hadoop</h3><p>我们需要对4个文件进行修改和配置，具体如下：</p>
+<h4 id="hadoop-env-sh"><a href="#hadoop-env-sh" class="headerlink" title="hadoop-env.sh"></a>hadoop-env.sh</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/hadoop-env.sh</p>
+<p>将代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_OPTS=&quot;$HADOOP_OPTS -Djava.net.preferIPv4Stack=true&quot;</span><br></pre></td></tr></table></figure></p>
+<p>替换为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_OPTS=&quot;$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Djava.security.krb5.realm= -Djava.security.krb5.kdc=&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/core-site.xml</p>
+<p>将下面代码添加到文件中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/hdfs/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>A base for other temporary directories.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong><em>注： fs.default.name 保存了NameNode的位置，HDFS和MapReduce组件都需要用到它，这就是它出现在core-site.xml 文件中而不是 hdfs-site.xml文件中的原因。在该处配置HDFS的地址和端口号。</em></strong></p>
+<h4 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/mapred-site.xml或者mapred-site.xml.templete</p>
+<p>将下面代码添加到文件中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapred.job.tracker<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:9010<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>变量mapred.job.tracker 保存了JobTracker的位置，因为只有MapReduce组件需要知道这个位置，所以它出现在mapred-site.xml文件中。</p>
+<h4 id="hdfs-site-xml"><a href="#hdfs-site-xml" class="headerlink" title="hdfs-site.xml"></a>hdfs-site.xml</h4><p>文件路径：/usr/local/Cellar/hadoop/2.7.1/libexec/etc/hadoop/hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>变量dfs.replication指定了每个HDFS默认备份方式通常为3, 由于我们只有一台主机和一个伪分布式模式的DataNode，将此值修改为1。</p>
+<h2 id="运行Hadoop"><a href="#运行Hadoop" class="headerlink" title="运行Hadoop"></a>运行Hadoop</h2><ul>
+<li>启动hadoop之前需要格式化hadoop系统的HDFS文件系统<br>跳转到目录/usr/local/Cellar/hadoop/2.7.1/bin下<br>执行如下命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode -format</span><br></pre></td></tr></table></figure>
+<p>如果出现command not found :hadoop则需要配置环境变量，具体怎么配置，这是基本技能，就不在这里说明了。</p>
+<ul>
+<li>然后进入/usr/local/Cellar/hadoop/2.7.1/sbin   </li>
+</ul>
+<p>执行如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./start-all.sh</span><br></pre></td></tr></table></figure>
+<p>或者分开启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./start-dfs.sh</span><br><span class="line">./start-yarn.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>验证hadoop是否启动</li>
+</ul>
+<p>Resource Manager: <a href="http://localhost:50070" target="_blank" rel="noopener">http://localhost:50070</a><br>JobTracker: <a href="http://localhost:8088" target="_blank" rel="noopener">http://localhost:8088</a><br>Specific Node Information: <a href="http://localhost:8042" target="_blank" rel="noopener">http://localhost:8042</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据/" class="article-tag-list-link color4">大数据</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-RxJava实际应用(一)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -596,128 +715,6 @@
 
 
   
-    <article id="post-Retrofit2介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/17/Retrofit2介绍/">Retrofit2介绍</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/17/Retrofit2介绍/" class="archive-article-date">
-  	<time datetime="2016-10-17T05:19:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Retrofit2介绍"><a href="#Retrofit2介绍" class="headerlink" title="Retrofit2介绍"></a>Retrofit2介绍</h1><h2 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h2><p>在开始了解 Retrofit 的使用之前，我们需要理解RESTful概念因为 Retrofit 的初衷就是根据 RESTful风格的API 来进行封装的。关于RESTful 我们可以参考<br><a href="http://www.androidchina.net/3749.html" target="_blank" rel="noopener">《RESTful API 设计指南》</a></p>
-<h2 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h2><p>Retrofit与okhttp共同出自于Square公司，retrofit就是对okhttp做了一层封装。把网络请求都交给给了Okhttp，我们只需要通过简单的配置就能使用retrofit来进行网络请求了。官方介绍：<a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">http://square.github.io/retrofit/</a></p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ul>
-<li>Gradle：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:retrofit:2.1.0&apos;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>学习一门新的技术的时候，我们首先要参考的就是官方文档，我们看看官方文档是怎么写的：<a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">http://square.github.io/retrofit/</a></p>
-<p>大家看到官方文档，很是简单粗暴，一言不合就上代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line">  <span class="meta">@GET</span>(<span class="string">"users/&#123;user&#125;/repos"</span>)</span><br><span class="line">  Call&lt;List&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path</span>(<span class="string">"user"</span>) String user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从上面代码我们可知，Retrofit将HTTP API转换为interface接口的方式（Retrofit turns your HTTP API into a Java interface.）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(<span class="string">"https://api.github.com/"</span>)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">GitHubService service = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
-<p>Retrofit 根据之前定义的接口生成一个具体的实现。通俗的讲就是我们可以将Retrofit类看作是一个“工厂类”的角色，我们在接口中提供了此次的“产品”的生产规格信息，而Retrofit则通过信息负责为我们生产。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Repo&gt;&gt; repos = service.listRepos(<span class="string">"octocat"</span>);</span><br></pre></td></tr></table></figure>
-<p>“Call”：通过之前封装的请求接口对象创建的任一的Call都可以发起一个同步（或异步）的HTTP请求到远程服务器。</p>
-<p>以上信息就是简单的Retrofit的操作，通过这个实例感受最多的就是解耦明确；使用简单。通过注解的方式描述request让人眼前一亮。</p>
-<h3 id="其他注解"><a href="#其他注解" class="headerlink" title="其他注解"></a>其他注解</h3><ul>
-<li>@Path</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@Query<br>对于@GET来说，参数信息是可以直接放在url中上传的。那么你马上就反应过来了，这一样也存在严重的耦合！于是，就有了 @Query</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Query</span><span class="params">(<span class="string">"name"</span>)</span> String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@QueryMap<br>假设我要在参数中上传10个参数呢？</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@GET</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@QueryMap Map&lt;String,String&gt; params)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@Post @Body Post请求上传body</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"> <span class="meta">@POST</span>(<span class="string">"add"</span>)</span><br><span class="line"> Call&lt;List&lt;User&gt;&gt; get(<span class="meta">@Body</span> User user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@Post @FormUrlEncoded 表单上传</li>
-</ul>
-<p><strong><em>服务器通过request.getParameter的方式直接读取参数信息</em></strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>@Headers与@Header</li>
-</ul>
-<p>可以设置HTTP的header，拿使用编码来举例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IDemoBiz</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-type:application/x-www-form-urlencoded;charset=UTF-8"</span>)</span><br><span class="line">  <span class="meta">@FormUrlEncoded</span></span><br><span class="line">  <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"> <span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Path(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码说的使用@Headers的用法，那么@Header怎么使用呢？@Header与@Headers不同在于是动态的添加请求头信息。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FormUrlEncoded</span></span><br><span class="line"> <span class="meta">@POST</span>(<span class="string">"modify/&#123;userId&#125;"</span>)</span><br><span class="line"><span class="function">Call&lt;User&gt; <span class="title">modify</span><span class="params">(@Header(<span class="string">"Content-type"</span> String contentType)</span>,@<span class="title">Path</span><span class="params">(<span class="string">"userId"</span>)</span> String userId,@<span class="title">Field</span><span class="params">(<span class="string">"name"</span>)</span> String name,@<span class="title">Field</span><span class="params">(<span class="string">"nickname"</span>)</span> String nickname)</span>;</span><br></pre></td></tr></table></figure>
-<p>HTTP的Header也可以在okhttp的拦截器中添加。</p>
-<ul>
-<li>其他</li>
-</ul>
-<p>当然我们还可以进行文件上传和下载，这里就不过多介绍了，网上有很多示例。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p><strong><em>特别注意如果需要继承rxjava和gson转换，则还需要引入</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:adapter-rxjava:2.1.0&apos;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup.retrofit2:converter-gson:2.1.0&apos;</span><br></pre></td></tr></table></figure>
-<p><strong><em>其他格式转换引入</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Gson: com.squareup.retrofit2:converter-gson</span><br><span class="line">Jackson: com.squareup.retrofit2:converter-jackson</span><br><span class="line">Moshi: com.squareup.retrofit2:converter-moshi</span><br><span class="line">Protobuf: com.squareup.retrofit2:converter-protobuf</span><br><span class="line">Wire: com.squareup.retrofit2:converter-wire</span><br><span class="line">Simple XML: com.squareup.retrofit2:converter-simplexml</span><br><span class="line">Scalars (primitives, boxed, and String): com.squareup.retrofit2:converter-scalars</span><br></pre></td></tr></table></figure>
-<p><strong><em>如果不添加转换器会报IllegalArgumentException异常,这也会是新手开发碰到的第一个坑</em></strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -807,19 +804,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -827,15 +816,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -847,15 +844,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -867,11 +864,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -880,10 +881,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -900,6 +897,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>

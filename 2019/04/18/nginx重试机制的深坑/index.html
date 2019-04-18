@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://centmeng.github.io">
-  <title>Mysql重装问题 | 萤火</title>
+  <title>nginx重试机制的深坑 | 萤火</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这个问题，还是我大学学习Mysql遇到这个问题，当时做了总结记录下来。没想到朋友今天遇到相同问题，我还能找到自己总结的word文档。所以，打算放到自己博客上，帮助其他人能够看到解决，二是方便自己归档记录 当时用的还是Mysql5.1,所以这次总结也已此为主，其他版本无用，可不要怪我哦。 1、控制面板里的增加删除程序内进行删除2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹">
-<meta name="keywords" content="Mysql">
+  <meta name="description" content="写了一个批量发短信的方法，为了方便，通过接口请求的方式进行调用，在调用过程中由于发送数量多，造成请求处理超时，导致了nginx重试机制，最终导致短信多次重发。血淋淋的教训啊~  nginx公司的服务和大多数公司服务一样，都采用多节点的方式部署，并使用nginx进行负载均衡。nginx是常用的一种HTTP和反向代理服务器，支持容错和负载均衡，其中nginx的重试机制就是容错的一种。 在nginx的">
+<meta name="keywords" content="深坑解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql重装问题">
-<meta property="og:url" content="https://centmeng.github.io/2017/01/07/Mysql重装问题/index.html">
+<meta property="og:title" content="nginx重试机制的深坑">
+<meta property="og:url" content="https://centmeng.github.io/2019/04/18/nginx重试机制的深坑/index.html">
 <meta property="og:site_name" content="萤火">
-<meta property="og:description" content="这个问题，还是我大学学习Mysql遇到这个问题，当时做了总结记录下来。没想到朋友今天遇到相同问题，我还能找到自己总结的word文档。所以，打算放到自己博客上，帮助其他人能够看到解决，二是方便自己归档记录 当时用的还是Mysql5.1,所以这次总结也已此为主，其他版本无用，可不要怪我哦。 1、控制面板里的增加删除程序内进行删除2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹">
+<meta property="og:description" content="写了一个批量发短信的方法，为了方便，通过接口请求的方式进行调用，在调用过程中由于发送数量多，造成请求处理超时，导致了nginx重试机制，最终导致短信多次重发。血淋淋的教训啊~  nginx公司的服务和大多数公司服务一样，都采用多节点的方式部署，并使用nginx进行负载均衡。nginx是常用的一种HTTP和反向代理服务器，支持容错和负载均衡，其中nginx的重试机制就是容错的一种。 在nginx的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-18T09:10:43.053Z">
+<meta property="og:image" content="https://centmeng.github.io/img/ken/nginxretry.jpeg">
+<meta property="og:updated_time" content="2019-04-18T12:07:05.903Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql重装问题">
-<meta name="twitter:description" content="这个问题，还是我大学学习Mysql遇到这个问题，当时做了总结记录下来。没想到朋友今天遇到相同问题，我还能找到自己总结的word文档。所以，打算放到自己博客上，帮助其他人能够看到解决，二是方便自己归档记录 当时用的还是Mysql5.1,所以这次总结也已此为主，其他版本无用，可不要怪我哦。 1、控制面板里的增加删除程序内进行删除2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹">
+<meta name="twitter:title" content="nginx重试机制的深坑">
+<meta name="twitter:description" content="写了一个批量发短信的方法，为了方便，通过接口请求的方式进行调用，在调用过程中由于发送数量多，造成请求处理超时，导致了nginx重试机制，最终导致短信多次重发。血淋淋的教训啊~  nginx公司的服务和大多数公司服务一样，都采用多节点的方式部署，并使用nginx进行负载均衡。nginx是常用的一种HTTP和反向代理服务器，支持容错和负载均衡，其中nginx的重试机制就是容错的一种。 在nginx的">
+<meta name="twitter:image" content="https://centmeng.github.io/img/ken/nginxretry.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="萤火" type="application/atom+xml">
   
@@ -197,40 +199,39 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Mysql重装问题" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-nginx重试机制的深坑" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Mysql重装问题
+      nginx重试机制的深坑
     </h1>
   
 
         
-        <a href="/2017/01/07/Mysql重装问题/" class="archive-article-date">
-  	<time datetime="2017-01-07T06:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-07</time>
+        <a href="/2019/04/18/nginx重试机制的深坑/" class="archive-article-date">
+  	<time datetime="2019-04-18T09:45:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这个问题，还是我大学学习Mysql遇到这个问题，当时做了总结记录下来。没想到朋友今天遇到相同问题，我还能找到自己总结的word文档。所以，打算放到自己博客上，帮助其他人能够看到解决，二是方便自己归档记录</p>
-<p><strong><em>当时用的还是Mysql5.1,所以这次总结也已此为主，其他版本无用，可不要怪我哦。</em></strong></p>
-<h2 id="1、控制面板里的增加删除程序内进行删除"><a href="#1、控制面板里的增加删除程序内进行删除" class="headerlink" title="1、控制面板里的增加删除程序内进行删除"></a>1、控制面板里的增加删除程序内进行删除</h2><h2 id="2、删除MySQL文件夹下的my-ini文件，如果备份好，可以直接将文件夹全部删除"><a href="#2、删除MySQL文件夹下的my-ini文件，如果备份好，可以直接将文件夹全部删除" class="headerlink" title="2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹全部删除"></a>2、删除MySQL文件夹下的my.ini文件，如果备份好，可以直接将文件夹全部删除</h2><h2 id="3、注册表信息删除"><a href="#3、注册表信息删除" class="headerlink" title="3、注册表信息删除"></a>3、注册表信息删除</h2><ul>
-<li><p>HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Eventlog\Application\MySQL 目录删除</p>
-</li>
-<li><p>HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Eventlog\Application\MySQL 目录删除</p>
-</li>
-<li><p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MySQL 目录删除</p>
-</li>
-</ul>
-<h2 id="4、这一条是很关键的"><a href="#4、这一条是很关键的" class="headerlink" title="4、这一条是很关键的"></a>4、这一条是很关键的</h2><p>C:\Documents and Settings\All Users\Application Data\MySQL<br>这里还有MySQL的文件，必须要删除</p>
-<p><strong><em>注意：Application Data这个文件夹是隐藏的，需要打开个文件夹选择菜单栏 工具→文件夹选项→查看→隐藏文件和文件夹 一项选上 显示所有文件和文件夹 确定</em></strong></p>
-<p>OK！以上4步完成，再次安装吧</p>
-<p>当时自己还用的Windows所以这篇也是这对Winows系统。</p>
+        <blockquote>
+<p>写了一个批量发短信的方法，为了方便，通过接口请求的方式进行调用，在调用过程中由于发送数量多，造成请求处理超时，导致了nginx重试机制，最终导致短信多次重发。血淋淋的教训啊~</p>
+</blockquote>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>公司的服务和大多数公司服务一样，都采用多节点的方式部署，并使用nginx进行负载均衡。nginx是常用的一种HTTP和反向代理服务器，支持容错和负载均衡，其中nginx的重试机制就是容错的一种。</p>
+<p>在nginx的配置中，proxy_next_upstream 和proxy_next_upstream_tries是重试配置，其中proxy_next_upstream给出了在什么情况下进行重试，官方文档给出的说明是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Syntax: proxy_next_upstream error | timeout | invalid_header | http_500 | http_502 | http_503 | http_504 | http_403 | http_404 | off ...;  </span><br><span class="line">Default:    proxy_next_upstream error timeout;  </span><br><span class="line">Context:    http, server, location</span><br></pre></td></tr></table></figure>
+<p>根据文档所知，当请求服务器发生错误或超时时，会尝试到下一台服务器。proxy_next_upstream_tries官方给出的文档是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Syntax: proxy_next_upstream_tries number;  </span><br><span class="line">Default:    proxy_next_upstream_tries 0;  </span><br><span class="line">Context:    http, server, location  </span><br><span class="line">This directive appeared in version 1.7.5.</span><br></pre></td></tr></table></figure>
+<p>proxy_next_upstream_tries配置决定最多重试多少次，0表示不限制。我们的nginx没有找到该配置项，默认尝试了3次。</p>
+<p>好了，下面看下破案现场吧</p>
+<p><img src="/img/ken/nginxretry.jpeg"></p>
+<p>可以看到超时时间是60秒，超时之后，都会向之前没有重试过的服务器再次请求。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>场景：请求一个接口，处理时间较长（如1分钟），且为同步操作（即处理完成后才返回结果）。若nginx配置的响应等待时间（proxy_read_timeout）为60秒，就会触发超时重试，将请求又打到另一台。如果处理中没有考虑到重复数据的场景，就会发生数据多次重复调用！所以下次如有这种情况可以使用IP:Port的方式进行操作，请注意你的姿势。</p>
 
       
 
@@ -275,7 +276,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深坑解决</a>
         		</li>
       		
 		</ul>
@@ -287,7 +288,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库/" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/后端技术/" class="article-tag-list-link color5">后端技术</a>
         		</li>
       		
 		</ul>
@@ -342,7 +343,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://centmeng.github.io/2017/01/07/Mysql重装问题/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://centmeng.github.io/2019/04/18/nginx重试机制的深坑/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -356,18 +357,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/01/07/spring-boot项目部署到Tomcat上/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          spring-boot项目部署到Tomcat上
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/30/2016/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">2016</div>
+    <a href="/2018/08/05/Docker/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Docker</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -381,7 +373,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Mysql重装问题" data-title="Mysql重装问题" data-url="https://centmeng.github.io/2017/01/07/Mysql重装问题/"></div>
+	<div class="ds-thread" data-thread-key="nginx重试机制的深坑" data-title="nginx重试机制的深坑" data-url="https://centmeng.github.io/2019/04/18/nginx重试机制的深坑/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -197,6 +197,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-解决HTTPS的SSL认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/21/解决HTTPS的SSL认证/">解决HTTPS的SSL认证</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/21/解决HTTPS的SSL认证/" class="archive-article-date">
+  	<time datetime="2016-09-21T15:14:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相信很多人，在开发时候会遇到https检验证书问题，证书不对，无法调取接口。其实解决这个方法很简单，只需要写如下类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.security.KeyManagementException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.SecureRandom;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.X509Certificate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.HostnameVerifier;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.HttpsURLConnection;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLSession;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.TrustManager;</span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.X509TrustManager;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mengxiangcheng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 16/9/19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@copyright</span> ©2016 孟少杰 All Rights Reserved</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span> SSL认证</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FakeX509TrustManager</span> <span class="keyword">implements</span> <span class="title">X509TrustManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> TrustManager[] trustManagers;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> X509Certificate[] _AcceptedIssuers = <span class="keyword">new</span></span><br><span class="line">            X509Certificate[] &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> java.security.cert.CertificateException </span>&#123;</span><br><span class="line">        <span class="comment">//To change body of implemented methods use File | Settings | File Templates.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> java.security.cert.CertificateException </span>&#123;</span><br><span class="line">        <span class="comment">//To change body of implemented methods use File | Settings | File Templates.</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isClientTrusted</span><span class="params">(X509Certificate[] chain)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isServerTrusted</span><span class="params">(X509Certificate[] chain)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        <span class="keyword">return</span> _AcceptedIssuers;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">allowAllSSL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HttpsURLConnection.setDefaultHostnameVerifier(<span class="keyword">new</span> HostnameVerifier() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(String arg0, SSLSession arg1)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        SSLContext context = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (trustManagers == <span class="keyword">null</span>) &#123;</span><br><span class="line">            trustManagers = <span class="keyword">new</span> TrustManager[] &#123; <span class="keyword">new</span> FakeX509TrustManager() &#125;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            context = SSLContext.getInstance(<span class="string">"TLS"</span>);</span><br><span class="line">            context.init(<span class="keyword">null</span>, trustManagers, <span class="keyword">new</span> SecureRandom());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在请求接口前加allowAllSSL()方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FakeX509TrustManager.allowAllSSL();</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">HTTPS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-android界面性能调优" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -759,130 +831,6 @@
 
 
   
-    <article id="post-rxjava介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/13/rxjava介绍/">RxJava 介绍和使用</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/13/rxjava介绍/" class="archive-article-date">
-  	<time datetime="2016-09-13T08:11:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="RxJava介绍"><a href="#RxJava介绍" class="headerlink" title="RxJava介绍"></a>RxJava介绍</h3><p><img src="/img/code.jpg"></p>
-<h4 id="Git地址"><a href="#Git地址" class="headerlink" title="Git地址"></a>Git地址</h4><p><a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="noopener">https://github.com/ReactiveX/RxJava </a></p>
-<p><a href="https://github.com/ReactiveX/RxAndroid" target="_blank" rel="noopener">https://github.com/ReactiveX/RxAndroid</a></p>
-<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Rxjava在Github主页上给的介绍是”a library for composing asynchronous and event-based programs using observable sequences for the Java VM”（一个在 Java VM 上使用可观测的序列来组成异步的、基于事件的程序的库）。看到这样的解释，对于小白的我还是很高深的，其实，用一个词就可以代替，【异步】。那么他和Android其他异步Handler，AsyncTask有什么不同呢？这是因为RxJava有一个很好的优点就是简洁。当然这不是代码量的简洁，而是逻辑的简洁，让我们看一下下面例子，看下代码逻辑。详细介绍，会在使用中做详细解释。</p>
-<p>需求是这样的：</p>
-<p>界面上有一个自定义的视图 imageCollectorView ，它的作用是显示多张图片，并能使用 addImage(Bitmap) 方法来任意增加显示的图片。现在需要程序将一个给出的目录数组 File[] folders 中每个目录下的 png 图片都加载出来并显示在 imageCollectorView 中。需要注意的是，由于读取图片的这一过程较为耗时，需要放在后台执行，而图片的显示则必须在 UI 线程执行。常用的实现方式有多种，我这里贴出其中一种：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Observable.from(folders)</span><br><span class="line">    .flatMap(new Func1&lt;File, Observable&lt;File&gt;&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public Observable&lt;File&gt; call(File file) &#123;</span><br><span class="line">            return Observable.from(file.listFiles());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .filter(new Func1&lt;File, Boolean&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public Boolean call(File file) &#123;</span><br><span class="line">            return file.getName().endsWith(&quot;.png&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .map(new Func1&lt;File, Bitmap&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public Bitmap call(File file) &#123;</span><br><span class="line">            return getBitmapFromFile(file);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .subscribeOn(Schedulers.io())</span><br><span class="line">    .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">    .subscribe(new Action1&lt;Bitmap&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void call(Bitmap bitmap) &#123;</span><br><span class="line">            imageCollectorView.addImage(bitmap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<p>下面再贴出一种平常使用的方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">new Thread() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        super.run();</span><br><span class="line">        for (File folder : folders) &#123;</span><br><span class="line">            File[] files = folder.listFiles();</span><br><span class="line">            for (File file : files) &#123;</span><br><span class="line">                if (file.getName().endsWith(&quot;.png&quot;)) &#123;</span><br><span class="line">                    final Bitmap bitmap = getBitmapFromFile(file);</span><br><span class="line">                    getActivity().runOnUiThread(new Runnable() &#123;</span><br><span class="line">                        @Override</span><br><span class="line">                        public void run() &#123;</span><br><span class="line">                            imageCollectorView.addImage(bitmap);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;.start();</span><br></pre></td></tr></table></figure>
-<p>虽然使用RxJava代码量增多，但整体逻辑还是变得简单了，观察一下你会发现， RxJava 的这个实现，是一条从上到下的链式调用，没有任何嵌套，这在逻辑的简洁性上是具有优势的。当需求变得复杂时，这种优势将更加明显（试想如果还要求只选取前 10 张图片，常规方式要怎么办？如果有更多这样那样的要求呢？再试想，在这一大堆需求实现完两个月之后需要改功能，当你翻回这里看到自己当初写下的那一片迷之缩进，你能保证自己将迅速看懂，而不是对着代码重新捋一遍思路？）。</p>
-<h4 id="RxJava观察者模式"><a href="#RxJava观察者模式" class="headerlink" title="RxJava观察者模式"></a>RxJava观察者模式</h4><p><strong> RxJava 的异步实现，是通过一种扩展的观察者模式来实现的。</strong></p>
-<p>RxJava 有四个基本概念：Observable (可观察者，即被观察者)、 Observer (观察者)、 subscribe (订阅)、事件。Observable 和 Observer 通过 subscribe() 方法实现订阅关系，从而 Observable 可以在需要的时候发出事件来通知 Observer。</p>
-<p>与传统观察者模式不同， RxJava 的事件回调方法除了普通事件 onNext() （相当于 onClick() / onEvent()）之外，还定义了两个特殊的事件：onCompleted() 和 onError()。</p>
-<ul>
-<li>onCompleted(): 事件队列完结。RxJava 不仅把每个事件单独处理，还会把它们看做一个队列。RxJava 规定，当不会再有新的 onNext() 发出时，需要触发 onCompleted() 方法作为标志。</li>
-<li>onError(): 事件队列异常。在事件处理过程中出异常时，onError() 会被触发，同时队列自动终止，不允许再有事件发出。</li>
-<li>在一个正确运行的事件序列中, onCompleted() 和 onError() 有且只有一个，并且是事件序列中的最后一个。需要注意的是，onCompleted() 和 onError() 二者也是互斥的，即在队列中调用了其中一个，就不应该再调用另一个。</li>
-</ul>
-<h3 id="RxJava基本实现"><a href="#RxJava基本实现" class="headerlink" title="RxJava基本实现"></a>RxJava基本实现</h3><p>基于以上的概念， RxJava 的基本实现主要有三点：</p>
-<h4 id="创建-Observer"><a href="#创建-Observer" class="headerlink" title="创建 Observer"></a>创建 Observer</h4><p>Observer 即观察者，它决定事件触发的时候将有怎样的行为。 RxJava 中的 Observer 接口的实现方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Observer&lt;String&gt; observer = new Observer&lt;String&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onNext(String s) &#123;</span><br><span class="line">        Log.d(tag, &quot;Item: &quot; + s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCompleted() &#123;</span><br><span class="line">        Log.d(tag, &quot;Completed!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        Log.d(tag, &quot;Error!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>除了 Observer 接口之外，RxJava 还内置了一个实现了 Observer 的抽象类：Subscriber。 Subscriber 对 Observer 接口进行了一些扩展，但他们的基本使用方式是完全一样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Subscriber&lt;String&gt; subscriber = new Subscriber&lt;String&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onNext(String s) &#123;</span><br><span class="line">        Log.d(tag, &quot;Item: &quot; + s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCompleted() &#123;</span><br><span class="line">        Log.d(tag, &quot;Completed!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        Log.d(tag, &quot;Error!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>不仅基本使用方式一样，实质上，在 RxJava 的 subscribe 过程中，Observer 也总是会先被转换成一个 Subscriber 再使用。所以如果你只想使用基本功能，选择 Observer 和 Subscriber 是完全一样的。它们的区别对于使用者来说主要有两点：</p>
-<ul>
-<li>onStart(): 这是 Subscriber 增加的方法。它会在 subscribe 刚开始，而事件还未发送之前被调用，可以用于做一些准备工作，例如数据的清零或重置。这是一个可选方法，默认情况下它的实现为空。需要注意的是，如果对准备工作的线程有要求（例如弹出一个显示进度的对话框，这必须在主线程执行）， onStart() 就不适用了，因为它总是在 subscribe 所发生的线程被调用，而不能指定线程。要在指定的线程来做准备工作，可以使用 doOnSubscribe() 方法.</li>
-<li>unsubscribe(): 这是 Subscriber 所实现的另一个接口 Subscription 的方法，用于取消订阅。在这个方法被调用后，Subscriber 将不再接收事件。一般在这个方法调用前，可以使用 isUnsubscribed() 先判断一下状态。 unsubscribe() 这个方法很重要，因为在 subscribe() 之后， Observable 会持有 Subscriber 的引用，这个引用如果不能及时被释放，将有内存泄露的风险。<strong>所以最好保持一个原则：要在不再使用的时候尽快在合适的地方（例如 onPause() onStop() 等方法中）调用 unsubscribe() 来解除引用关系，以避免内存泄露的发生。</strong></li>
-</ul>
-<h4 id="创建-Observable"><a href="#创建-Observable" class="headerlink" title="创建 Observable"></a>创建 Observable</h4><p>Observable 即被观察者，它决定什么时候触发事件以及触发怎样的事件。 RxJava 使用 create() 方法来创建一个 Observable ，并为它定义事件触发规则：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Observable observable = Observable.create(new Observable.OnSubscribe&lt;String&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void call(Subscriber&lt;? super String&gt; subscriber) &#123;</span><br><span class="line">        subscriber.onNext(&quot;Hello&quot;);</span><br><span class="line">        subscriber.onNext(&quot;Hi&quot;);</span><br><span class="line">        subscriber.onNext(&quot;Aloha&quot;);</span><br><span class="line">        subscriber.onCompleted();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>可以看到，这里传入了一个 OnSubscribe 对象作为参数。OnSubscribe 会被存储在返回的 Observable 对象中，它的作用相当于一个计划表，当 Observable 被订阅的时候，OnSubscribe 的 call() 方法会自动被调用，事件序列就会依照设定依次触发（对于上面的代码，就是观察者Subscriber 将会被调用三次 onNext() 和一次 onCompleted()）。这样，由被观察者调用了观察者的回调方法，就实现了由被观察者向观察者的事件传递，即观察者模式。</p>
-<p>create() 方法是 RxJava 最基本的创造事件序列的方法。基于这个方法， RxJava 还提供了一些方法用来快捷创建事件队列，例如：</p>
-<ul>
-<li>just(T…): 将传入的参数依次发送出来。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable observable = Observable.just(&quot;Hello&quot;, &quot;Hi&quot;, &quot;Aloha&quot;);</span><br><span class="line">// 将会依次调用：</span><br><span class="line">// onNext(&quot;Hello&quot;);</span><br><span class="line">// onNext(&quot;Hi&quot;);</span><br><span class="line">// onNext(&quot;Aloha&quot;);</span><br><span class="line">// onCompleted();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>from(T[]) / from(Iterable&lt;? extends T&gt;) : 将传入的数组或 Iterable 拆分成具体对象后，依次发送出来。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String[] words = &#123;&quot;Hello&quot;, &quot;Hi&quot;, &quot;Aloha&quot;&#125;;</span><br><span class="line">Observable observable = Observable.from(words);</span><br><span class="line">// 将会依次调用：</span><br><span class="line">// onNext(&quot;Hello&quot;);</span><br><span class="line">// onNext(&quot;Hi&quot;);</span><br><span class="line">// onNext(&quot;Aloha&quot;);</span><br><span class="line">// onCompleted();</span><br></pre></td></tr></table></figure>
-<p><strong> 上面 just(T…) 的例子和 from(T[]) 的例子，都和之前的 create(OnSubscribe) 的例子是等价的。</strong></p>
-<h4 id="Subscribe-订阅"><a href="#Subscribe-订阅" class="headerlink" title="Subscribe (订阅)"></a>Subscribe (订阅)</h4><p>创建了 Observable 和 Observer 之后，再用 subscribe() 方法将它们联结起来，整条链子就可以工作了。代码形式很简单：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">observable.subscribe(observer);</span><br><span class="line">// 或者：</span><br><span class="line">observable.subscribe(subscriber);</span><br></pre></td></tr></table></figure>
-<p>ps:有人可能会注意到， subscribe() 这个方法有点怪：它看起来是『observalbe 订阅了 observer / subscriber』而不是『observer / subscriber 订阅了 observalbe』，这看起来就像『杂志订阅了读者』一样颠倒了对象关系。这让人读起来有点别扭，不过如果把 API 设计成 observer.subscribe(observable) / subscriber.subscribe(observable) ，虽然更加符合思维逻辑，但对流式 API 的设计就造成影响了，比较起来明显是得不偿失的。</p>
-<p>Observable.subscribe(Subscriber) 的内部实现是这样的（仅核心代码）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 注意：这不是 subscribe() 的源码，而是将源码中与性能、兼容性、扩展性有关的代码剔除后的核心代码。</span><br><span class="line">// 如果需要看源码，可以去 RxJava 的 GitHub 仓库下载。</span><br><span class="line">public Subscription subscribe(Subscriber subscriber) &#123;</span><br><span class="line">    subscriber.onStart();</span><br><span class="line">    onSubscribe.call(subscriber);</span><br><span class="line">    return subscriber;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到，subscriber() 做了3件事：</p>
-<ol>
-<li>调用 Subscriber.onStart() 。这个方法在前面已经介绍过，是一个可选的准备方法。</li>
-<li>调用 Observable 中的 OnSubscribe.call(Subscriber) 。在这里，事件发送的逻辑开始运行。从这也可以看出，在 RxJava 中， Observable 并不是在创建的时候就立即开始发送事件，而是在它被订阅的时候，即当 subscribe() 方法执行的时候。</li>
-<li>将传入的 Subscriber 作为 Subscription 返回。这是为了方便 unsubscribe().</li>
-</ol>
-<p>整个过程中对象间的关系如下图：<br><img src="/img/android/RxJava/RxJava实现过程.gif"></p>
-<p>除了 subscribe(Observer) 和 subscribe(Subscriber) ，subscribe() 还支持不完整定义的回调，RxJava 会自动根据定义创建出 Subscriber 。形式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Action1&lt;String&gt; onNextAction = new Action1&lt;String&gt;() &#123;</span><br><span class="line">    // onNext()</span><br><span class="line">    @Override</span><br><span class="line">    public void call(String s) &#123;</span><br><span class="line">        Log.d(tag, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Action1&lt;Throwable&gt; onErrorAction = new Action1&lt;Throwable&gt;() &#123;</span><br><span class="line">    // onError()</span><br><span class="line">    @Override</span><br><span class="line">    public void call(Throwable throwable) &#123;</span><br><span class="line">        // Error handling</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Action0 onCompletedAction = new Action0() &#123;</span><br><span class="line">    // onCompleted()</span><br><span class="line">    @Override</span><br><span class="line">    public void call() &#123;</span><br><span class="line">        Log.d(tag, &quot;completed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction 来定义 onNext()</span><br><span class="line">observable.subscribe(onNextAction);</span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction 和 onErrorAction 来定义 onNext() 和 onError()</span><br><span class="line">observable.subscribe(onNextAction, onErrorAction);</span><br><span class="line">// 自动创建 Subscriber ，并使用 onNextAction、 onErrorAction 和 onCompletedAction 来定义 onNext()、 onError() 和 onCompleted()</span><br><span class="line">observable.subscribe(onNextAction, onErrorAction, onCompletedAction);</span><br></pre></td></tr></table></figure>
-<p>简单解释一下这段代码中出现的 Action1 和 Action0。 Action0 是 RxJava 的一个接口，它只有一个方法 call()，这个方法是无参无返回值的；由于 onCompleted() 方法也是无参无返回值的，因此 Action0 可以被当成一个包装对象，将 onCompleted() 的内容打包起来将自己作为一个参数传入 subscribe() 以实现不完整定义的回调。这样其实也可以看做将 onCompleted() 方法作为参数传进了 subscribe()，相当于其他某些语言中的『闭包』。 Action1 也是一个接口，它同样只有一个方法 call(T param)，这个方法也无返回值，但有一个参数；与 Action0 同理，由于 onNext(T obj) 和 onError(Throwable error) 也是单参数无返回值的，因此 Action1 可以将 onNext(obj) 和 onError(error) 打包起来传入 subscribe() 以实现不完整定义的回调。事实上，虽然 Action0 和 Action1 在 API 中使用最广泛，但 RxJava 是提供了多个 ActionX 形式的接口 (例如 Action2, Action3) 的，它们可以被用以包装不同的无返回值的方法。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术/" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -972,19 +920,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -992,15 +932,23 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1012,15 +960,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1032,11 +980,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">WebView</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1045,10 +997,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1065,6 +1013,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
