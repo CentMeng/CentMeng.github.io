@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="dns-prefetch" href="https://centmeng.github.io">
+  <title>Java架构师-Redis | 萤火</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NOSQL(Redis)简介，Redis安装与部署NOSQL简介NOSQL，泛指非关系型的数据库，NoSql数据库的四大分类：  键值（Key-Value）存储数据库：这一类数据库主要会使用到一个哈希表，这个表中有一个特定的键和一个指针指向特定的数据。如Redis，Voldemort，Oracle BDB 列存储数据库：这部分数据库通常是用来应对分布式存储的海量数据。键依然存在，但是它们的特点是指">
+<meta name="keywords" content="Java架构师">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java架构师-Redis">
+<meta property="og:url" content="https://centmeng.github.io/2017/04/17/Java架构师-Redis/index.html">
+<meta property="og:site_name" content="萤火">
+<meta property="og:description" content="NOSQL(Redis)简介，Redis安装与部署NOSQL简介NOSQL，泛指非关系型的数据库，NoSql数据库的四大分类：  键值（Key-Value）存储数据库：这一类数据库主要会使用到一个哈希表，这个表中有一个特定的键和一个指针指向特定的数据。如Redis，Voldemort，Oracle BDB 列存储数据库：这部分数据库通常是用来应对分布式存储的海量数据。键依然存在，但是它们的特点是指">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/Hash类型.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/list类型示例linsert.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/zset类型示例.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/主从复制架构.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/从服务器哨兵配置.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/redis事务使用.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/redis持久化机制.png">
+<meta property="og:image" content="https://centmeng.github.io/img/java/Redis/picture/集群操作命令.png">
+<meta property="og:updated_time" content="2019-04-18T09:10:43.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java架构师-Redis">
+<meta name="twitter:description" content="NOSQL(Redis)简介，Redis安装与部署NOSQL简介NOSQL，泛指非关系型的数据库，NoSql数据库的四大分类：  键值（Key-Value）存储数据库：这一类数据库主要会使用到一个哈希表，这个表中有一个特定的键和一个指针指向特定的数据。如Redis，Voldemort，Oracle BDB 列存储数据库：这部分数据库通常是用来应对分布式存储的海量数据。键依然存在，但是它们的特点是指">
+<meta name="twitter:image" content="https://centmeng.github.io/img/java/Redis/picture/Hash类型.png">
+  
+    <link rel="alternative" href="/atom.xml" title="萤火" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+</html>
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Vincent.M</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">打不开网页在链接地址前加https://</a></li>
+	        
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/categories/随笔集">随笔集</a></li>
+	        
+				<li><a href="/categories/大数据技术">大数据</a></li>
+	        
+				<li><a href="/categories/后端技术">后端技术</a></li>
+	        
+				<li><a href="/categories/Android技术">Android</a></li>
+	        
+				<li><a href="/categories/前端技术">前端技术</a></li>
+	        
+				<li><a href="/categories/数据库">数据库</a></li>
+	        
+				<li><a href="/categories/进阶">进阶</a></li>
+	        
+				<li><a href="/categories/其他">其他</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/CentMeng" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/5088952753?refer_flag=1001030101_&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="http://blog.csdn.net/u011930471" title="rss"><i class="icon-rss"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">Vincent.M</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/CentMeng" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/5088952753?refer_flag=1001030101_&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="rss" target="_blank" href="http://blog.csdn.net/u011930471" title="rss"><i class="icon-rss"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 10%"><a href="/">打不开网页在链接地址前加https://</a></li>
+		        
+					<li style="width: 10%"><a href="/">主页</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/随笔集">随笔集</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/大数据技术">大数据</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/后端技术">后端技术</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/Android技术">Android</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/前端技术">前端技术</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/数据库">数据库</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/进阶">进阶</a></li>
+		        
+					<li style="width: 10%"><a href="/categories/其他">其他</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-Java架构师-Redis" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java架构师-Redis
+    </h1>
+  
+
+        
+        <a href="/2017/04/17/Java架构师-Redis/" class="archive-article-date">
+  	<time datetime="2017-04-17T13:33:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="NOSQL-Redis-简介，Redis安装与部署"><a href="#NOSQL-Redis-简介，Redis安装与部署" class="headerlink" title="NOSQL(Redis)简介，Redis安装与部署"></a>NOSQL(Redis)简介，Redis安装与部署</h2><h3 id="NOSQL简介"><a href="#NOSQL简介" class="headerlink" title="NOSQL简介"></a>NOSQL简介</h3><p>NOSQL，泛指非关系型的数据库，NoSql数据库的四大分类：</p>
+<ul>
+<li>键值（Key-Value）存储数据库：这一类数据库主要会使用到一个哈希表，这个表中有一个特定的键和一个指针指向特定的数据。如Redis，Voldemort，Oracle BDB</li>
+<li>列存储数据库：这部分数据库通常是用来应对分布式存储的海量数据。键依然存在，但是它们的特点是指向了多个列。如HBase，Riak</li>
+<li>文档型数据库：该类型的数据模型是版本化的文档，半结构化的文档以特定的格式存储，比如JSON。文档型数据库可以看作是键值数据库的升级版，允许之间嵌套键值。而且文档型数据库比键值数据库的查询效率更高。如：CouchDB，MongoDB</li>
+<li>图形数据库：图形结构的数据库同其他行列以及刚性结构的Sql数据库不同，它是使用灵活的图形模型，并且能够扩展到多个服务器上。NoSql数据库没有标准的查询语言（SQL），因此进行数据库查询需要制定数据模型。许多NoSql数据库都有REST式的数据接口或者查询API。如：Neo4J,InfoGrid，Infinite Graph</li>
+</ul>
+<h3 id="非关系型数据库特点"><a href="#非关系型数据库特点" class="headerlink" title="非关系型数据库特点"></a>非关系型数据库特点</h3><ul>
+<li>数据模型比较简单</li>
+<li>需要灵活性更强的IT系统</li>
+<li>对数据库性能要求较高</li>
+<li>不需要高度的数据一致性</li>
+<li>对于给定key，比较容易映射复杂值的环境</li>
+</ul>
+<h3 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h3><p>是以key-value形式存储，和传统的关系型数据库不一样，不一定遵循传统数据库的一些基本要求（非关系型的、分布式的、开源的、水平可扩展的）</p>
+<p>优点：</p>
+<ul>
+<li>对数据高并发读写</li>
+<li>对海量数据的高效率存储和访问</li>
+<li>对数据的可扩展性(横向扩展【从节点扩充】和纵向扩展【主节点变成子节点】)和高可用性（存储到内存中，断电消失，刷数据到硬盘上【有RDB（同步到硬盘）和AOF（日志方式恢复）两种方式来实现】）</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>redis（ACID处理非常简单）</li>
+<li>无法做到太复杂的关系数据库模型</li>
+</ul>
+<p>Redis是以key-value store存储，data structure service 数据结构服务器。键可以包含：（string）字符串，哈希，（list）链表，（set）集合，（zset）有序集合。这些数据集合都支持push/pop、add/remove及取交集和并集以及更丰富的操作，redis支持各种不同的方式排序，为了保证效率，数据都是缓存在内存中，<font color="#f00">它也可以周期性的把更新的数据写入磁盘[RDB方式]或者把修改操作写入追加到文件[AOF方式]。</font> </p>
+<ul>
+<li>memorycache实例是并行的，redis实例是串行的。</li>
+<li>Redis慢了怎么办？<ul>
+<li>原因可能因为：开启AOF模式，多并发情况下会影响写的性能，因为需要记录日志</li>
+<li>解决方案1：2.0可以调虚拟机参数，3.0出了集群参数基本无用了。可以采取多加，分担写的高并发压力。</li>
+<li>解决方法2：采用另外一种NoSql数据库，ssdb（写的性能比较好） </li>
+</ul>
+</li>
+</ul>
+<h3 id="Redis安装与部署"><a href="#Redis安装与部署" class="headerlink" title="Redis安装与部署"></a>Redis安装与部署</h3><p>下载地址：<a href="http://redis.io/download" target="_blank" rel="noopener">http://redis.io/download</a></p>
+<p>安装步骤：</p>
+<ol>
+<li>首先需要安装gcc，把下载好的redis-3.0.0-rc2.tar.gz 放到linux /usr/local文件夹下</li>
+<li>进行解压 tar -zxvf redis-3.0.0-rc2.tar.gz</li>
+<li>进入到redis-3.0.0目录下，进行编译 make</li>
+<li>进入到src下进行安装 make install  验证(ll查看src下的目录，有redis-server 、redis-cil即可)</li>
+<li>建立俩个文件夹存放redis命令和配置文件<ul>
+<li>mkdir -p /usr/local/redis/etc</li>
+<li>mkdir -p /usr/local/redis/bin</li>
+</ul>
+</li>
+<li>把redis-3.0.0下的redis.conf 移动到/usr/local/redis/etc下，<ul>
+<li>cp redis.conf /usr/local/redis/etc/</li>
+</ul>
+</li>
+<li><p>把redis-3.0.0/src里的mkreleasehdr.sh、redis-benchmark、redis-check-aof、redis-check-dump、redis-cli、redis-server<br>文件移动到bin下，命令：</p>
+<ul>
+<li>mv mkreleasehdr.sh redis-benchmark redis-check-aof redis-check-dump redis-cli redis-server /usr/local/redis/bin(如果没有redis-check-dump尝试cp redis-check-rdb /usr/local/redis/bin)</li>
+</ul>
+</li>
+<li><p>启动时并指定配置文件：./redis-server /usr/local/redis/etc/redis.conf（注意要使用后台启动，所以修改redis.conf里的 daemonize 改为yes)</p>
+</li>
+<li><p>验证启动是否成功：</p>
+<ul>
+<li><p>ps -ef | grep redis 查看是否有redis服务 或者 查看端口：netstat -tunpl | grep 6379</p>
+</li>
+<li><p>进入redis客户端 ./redis-cli 退出客户端quit</p>
+</li>
+<li><p>退出redis服务三种方式： </p>
+</li>
+</ul>
+</li>
+</ol>
+<p>（1）pkill redis-server 、</p>
+<p>（2）kill 进程号、                       </p>
+<p>（3）/usr/local/redis/bin/redis-cli shutdown </p>
+<p><strong><em>rdb文件是redis存放数据的文件</em></strong></p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p>redis-cli(进入redis客户端)</p>
+<p>keys *（查看redis内容）</p>
+<p>set name msj（插入内容key是name，value是msj）</p>
+<p>get name（查看key为name的内容）</p>
+<p>del name（删除key为name的内容）</p>
+<p>quit（关闭redis客户端）</p>
+<p>redis-cli shutdown（进入redis-cli文件所在夹，此命令关闭redis服务）</p>
+<h2 id="Redis基础数据类型详解"><a href="#Redis基础数据类型详解" class="headerlink" title="Redis基础数据类型详解"></a>Redis基础数据类型详解</h2><p>redis一共分为五种数据类型：String、Hash、List、Set、ZSet</p>
+<h3 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h3><p>String类型是包含很多种类型的特殊类型，并且是二进制安全的。比如序列化的对象进行存储，比如一张图片进行二进制存储，比如一个简单的字符串，数值等等。</p>
+<h4 id="set和get方法："><a href="#set和get方法：" class="headerlink" title="set和get方法："></a>set和get方法：</h4><ul>
+<li>设置值：<font color="#f00">set</font> name msj 取值 <font color="#f00">get</font> name（设置name多次会覆盖）</li>
+<li>删除值：del name</li>
+</ul>
+<h4 id="使用setnx（not-exist）"><a href="#使用setnx（not-exist）" class="headerlink" title="使用setnx（not exist）"></a>使用set<font color="#f00">nx（not exist）</font></h4><ul>
+<li>name 如果不存在进行设置，存在就不需要进行设置了，返回0</li>
+</ul>
+<h4 id="使用setzreex-（expired）"><a href="#使用setzreex-（expired）" class="headerlink" title="使用setzreex （expired）"></a>使用set<font color="#f00">zreex （expired）</font></h4><ul>
+<li>setex color 10 red 设置color的有效期为10秒，10秒后返回nll（在redis里nll表示空）</li>
+</ul>
+<h4 id="使用setrange-替换字符串"><a href="#使用setrange-替换字符串" class="headerlink" title="使用setrange 替换字符串"></a>使用setrange 替换字符串</h4><ul>
+<li>set email <a href="mailto:mengshaojie@188.com" target="_blank" rel="noopener">mengshaojie@188.com</a></li>
+<li>setrange email <font color="#f00">10</font> ww<font color="#f00">（10表示从第几位开始替换（是下标值即正常值-1），后面跟上替换的字符串，后面字符串有几位则替换几位）</font></li>
+</ul>
+<h4 id="使用一次性设置多个和获取多个值的mset，mget方法："><a href="#使用一次性设置多个和获取多个值的mset，mget方法：" class="headerlink" title="使用一次性设置多个和获取多个值的mset，mget方法："></a>使用一次性设置多个和获取多个值的mset，mget方法：</h4><ul>
+<li>mset key1 msj key2 msj2 key3 28; 对应的 mget key1 key2 key3 方法，对应的也有msetnx和mget方法</li>
+<li>一次性设置和取值的getset方法：<ul>
+<li>set key4 cc</li>
+<li>getset key4 changchun 返回旧值并设置新值的方法</li>
+</ul>
+</li>
+</ul>
+<h4 id="incr和decr方法：对某一个值进行递增和递减等同于i-，i–"><a href="#incr和decr方法：对某一个值进行递增和递减等同于i-，i–" class="headerlink" title="incr和decr方法：对某一个值进行递增和递减等同于i++，i–"></a>incr和decr方法：对某一个值进行递增和递减等同于i++，i–</h4><h4 id="incrby和decrby方法：对某个值进行指定长度的递增和递减-语法：incrby-key-步长-等同于-i-步长"><a href="#incrby和decrby方法：对某个值进行指定长度的递增和递减-语法：incrby-key-步长-等同于-i-步长" class="headerlink" title="incrby和decrby方法：对某个值进行指定长度的递增和递减  (语法：incrby key [步长]) 等同于 i += 步长"></a>incrby和decrby方法：对某个值进行指定长度的递增和递减  (语法：incrby key [步长]) 等同于 i += 步长</h4><h4 id="append-name-方法：字符串追加方法"><a href="#append-name-方法：字符串追加方法" class="headerlink" title="append[name]方法：字符串追加方法"></a>append[name]方法：字符串追加方法</h4><h4 id="strien-name-方法：获取字符串的长度"><a href="#strien-name-方法：获取字符串的长度" class="headerlink" title="strien[name]方法：获取字符串的长度"></a>strien[name]方法：获取字符串的长度</h4><h3 id="Hash类型"><a href="#Hash类型" class="headerlink" title="Hash类型"></a>Hash类型</h3><p><img src="/img/java/Redis/picture/Hash类型.png"></p>
+<ul>
+<li>存储一个对象，对象有几十个字段，假如频繁取一个字段，那么不适宜把字段放到对象中缓存，影响效率（根据不同业务做不同的策略）。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hset user name msj</span><br><span class="line">hset user age 18</span><br><span class="line">hset user sex man</span><br><span class="line">hget user(报错)--》查看键值使用hkeys user，查看value使用hvals user，查看键值和value使用hgetall user</span><br><span class="line">hmget user name age sex（查看多个值）</span><br><span class="line">hlen user</span><br><span class="line">hdel user</span><br></pre></td></tr></table></figure>
+<h3 id="List类型"><a href="#List类型" class="headerlink" title="List类型"></a>List类型</h3><p>List类型是一个链表结构的结合，其主要功能有push、pop、获取元素等。更详细的说，List类型是一个双端链表的结构，我们可以通过相关操作进行集合的头部或者尾部添加删除元素，list的设计非常简单精巧，既可以作为栈，又可以作为队列。</p>
+<h4 id="Ipush方法：从头部加入元素（栈）先进后出"><a href="#Ipush方法：从头部加入元素（栈）先进后出" class="headerlink" title="Ipush方法：从头部加入元素（栈）先进后出"></a>Ipush方法：从头部加入元素（栈）先进后出</h4><ul>
+<li>lpush list1 “hello” lpush list1 “world”</li>
+<li>lrange list1 0 -1(表示从头取到末尾)</li>
+</ul>
+<h4 id="rpush方法：从尾部加入元素（队列）先进先出"><a href="#rpush方法：从尾部加入元素（队列）先进先出" class="headerlink" title="rpush方法：从尾部加入元素（队列）先进先出"></a>rpush方法：从尾部加入元素（队列）先进先出</h4><ul>
+<li>rpush list2 “beijing” rpush list2 “sxt”</li>
+<li>lrang list2 0 -1</li>
+</ul>
+<h4 id="linsert方法：插入元素"><a href="#linsert方法：插入元素" class="headerlink" title="linsert方法：插入元素"></a>linsert方法：插入元素</h4><ul>
+<li>linsert list3 before [集合的元素][插入的元素]<br><img src="/img/java/Redis/picture/list类型示例linsert.png"></li>
+</ul>
+<h4 id="lset方法：将指定下标的元素替换掉"><a href="#lset方法：将指定下标的元素替换掉" class="headerlink" title="lset方法：将指定下标的元素替换掉"></a>lset方法：将指定下标的元素替换掉</h4><ul>
+<li>lset list1 two 2<h4 id="lrem方法：删除元素，返回删除的个数（下标）"><a href="#lrem方法：删除元素，返回删除的个数（下标）" class="headerlink" title="lrem方法：删除元素，返回删除的个数（下标）"></a>lrem方法：删除元素，返回删除的个数（下标）</h4></li>
+<li>lset list1 移除几个 移除的字段<h4 id="ltrim方法：保留指定key的值范围内的数据"><a href="#ltrim方法：保留指定key的值范围内的数据" class="headerlink" title="ltrim方法：保留指定key的值范围内的数据"></a>ltrim方法：保留指定key的值范围内的数据</h4></li>
+<li>ltrim list 2 3 （加入队列有8个元素，则只保留了下标是2-下标3的元素）<h4 id="lpop方法：从list的头部删除元素，并返回删除元素"><a href="#lpop方法：从list的头部删除元素，并返回删除元素" class="headerlink" title="lpop方法：从list的头部删除元素，并返回删除元素"></a>lpop方法：从list的头部删除元素，并返回删除元素</h4></li>
+<li>lpop list1<h4 id="rpop方法：从list的尾部删除元素，并返回删除元素"><a href="#rpop方法：从list的尾部删除元素，并返回删除元素" class="headerlink" title="rpop方法：从list的尾部删除元素，并返回删除元素"></a>rpop方法：从list的尾部删除元素，并返回删除元素</h4></li>
+<li>rpop list1<h4 id="rpoplpush：第一步从尾部删除元素，然后第二步并从头部加入元素"><a href="#rpoplpush：第一步从尾部删除元素，然后第二步并从头部加入元素" class="headerlink" title="rpoplpush：第一步从尾部删除元素，然后第二步并从头部加入元素"></a>rpoplpush：第一步从尾部删除元素，然后第二步并从头部加入元素</h4><h4 id="lindex方法：返回名称为key的list中index未知的元素"><a href="#lindex方法：返回名称为key的list中index未知的元素" class="headerlink" title="lindex方法：返回名称为key的list中index未知的元素"></a>lindex方法：返回名称为key的list中index未知的元素</h4><h4 id="llen方法：返回元素的个数"><a href="#llen方法：返回元素的个数" class="headerlink" title="llen方法：返回元素的个数"></a>llen方法：返回元素的个数</h4></li>
+</ul>
+<h3 id="set（无序）类型和zset（有序）类型"><a href="#set（无序）类型和zset（有序）类型" class="headerlink" title="set（无序）类型和zset（有序）类型"></a>set（无序）类型和zset（有序）类型</h3><p>set集合是string类型的无序集合，set是通过hashtable实现的，对集合我们可以取交集、并集、差集。</p>
+<h4 id="sadd方法：向名称为key的set中添加元素"><a href="#sadd方法：向名称为key的set中添加元素" class="headerlink" title="sadd方法：向名称为key的set中添加元素"></a>sadd方法：向名称为key的set中添加元素</h4><ul>
+<li>set集合不允许重复元素 smembers查看set集合的元素</li>
+</ul>
+<h4 id="srem方法：删除set集合元素"><a href="#srem方法：删除set集合元素" class="headerlink" title="srem方法：删除set集合元素"></a>srem方法：删除set集合元素</h4><h4 id="spop方法：随机返回删除的key"><a href="#spop方法：随机返回删除的key" class="headerlink" title="spop方法：随机返回删除的key"></a>spop方法：随机返回删除的key</h4><h4 id="sdiff方法：返回两个集合的不同元素（哪个集合在前面就以哪个集合为标准）"><a href="#sdiff方法：返回两个集合的不同元素（哪个集合在前面就以哪个集合为标准）" class="headerlink" title="sdiff方法：返回两个集合的不同元素（哪个集合在前面就以哪个集合为标准）"></a>sdiff方法：返回两个集合的不同元素（哪个集合在前面就以哪个集合为标准）</h4><h4 id="sdiffstore方法：将返回的不同元素存储到另外一个集合里"><a href="#sdiffstore方法：将返回的不同元素存储到另外一个集合里" class="headerlink" title="sdiffstore方法：将返回的不同元素存储到另外一个集合里"></a>sdiffstore方法：将返回的不同元素存储到另外一个集合里</h4><ul>
+<li>这里是把set1和set2的不同元素（以set1为准）存储到set3集合里</li>
+<li>sdiffstore set3 set1 set2</li>
+</ul>
+<h4 id="sinter方法：返回集合的交集"><a href="#sinter方法：返回集合的交集" class="headerlink" title="sinter方法：返回集合的交集"></a>sinter方法：返回集合的交集</h4><h4 id="sinterstore方法：返回交集结果，存入set3中"><a href="#sinterstore方法：返回交集结果，存入set3中" class="headerlink" title="sinterstore方法：返回交集结果，存入set3中"></a>sinterstore方法：返回交集结果，存入set3中</h4><h4 id="sunion方法：取并集"><a href="#sunion方法：取并集" class="headerlink" title="sunion方法：取并集"></a>sunion方法：取并集</h4><h4 id="sunionstore：取得并集，存入set3中"><a href="#sunionstore：取得并集，存入set3中" class="headerlink" title="sunionstore：取得并集，存入set3中"></a>sunionstore：取得并集，存入set3中</h4><h4 id="smove方法：从一个set集合移动到另一个set集合里"><a href="#smove方法：从一个set集合移动到另一个set集合里" class="headerlink" title="smove方法：从一个set集合移动到另一个set集合里"></a>smove方法：从一个set集合移动到另一个set集合里</h4><ul>
+<li>将set1中的元素移动到set2中（相当于剪切粘贴）</li>
+<li>smove set1 set2</li>
+</ul>
+<h4 id="scard方法：查看集合里元素个数"><a href="#scard方法：查看集合里元素个数" class="headerlink" title="scard方法：查看集合里元素个数"></a>scard方法：查看集合里元素个数</h4><h4 id="sismember方法：判断某元素是否为集合中的元素"><a href="#sismember方法：判断某元素是否为集合中的元素" class="headerlink" title="sismember方法：判断某元素是否为集合中的元素"></a>sismember方法：判断某元素是否为集合中的元素</h4><ul>
+<li>返回1代表是集合中的元素，0代表不是</li>
+</ul>
+<h4 id="srandmember方法：随机返回一个元素"><a href="#srandmember方法：随机返回一个元素" class="headerlink" title="srandmember方法：随机返回一个元素"></a>srandmember方法：随机返回一个元素</h4><p>zadd向有序集合中添加一个元素，该元素如果存在，则更新顺序</p>
+<ul>
+<li>在重复插入的时候 会根据顺序属性更新<br><img src="/img/java/Redis/picture/zset类型示例.png"></li>
+<li>想查看索引则使用 zrange zset1 0 -1 withscores</li>
+</ul>
+<h4 id="zrem-删除名称为key的zset中的元素member"><a href="#zrem-删除名称为key的zset中的元素member" class="headerlink" title="zrem 删除名称为key的zset中的元素member"></a>zrem 删除名称为key的zset中的元素member</h4><h4 id="zincrby-以指定值去自动递增或者减少，用法和之前的incrby类似"><a href="#zincrby-以指定值去自动递增或者减少，用法和之前的incrby类似" class="headerlink" title="zincrby 以指定值去自动递增或者减少，用法和之前的incrby类似"></a>zincrby 以指定值去自动递增或者减少，用法和之前的incrby类似</h4><h4 id="zrangebyscore-找到指定区间范围的数据进行返回"><a href="#zrangebyscore-找到指定区间范围的数据进行返回" class="headerlink" title="zrangebyscore 找到指定区间范围的数据进行返回"></a>zrangebyscore 找到指定区间范围的数据进行返回</h4><h4 id="zremrangebyrank-删除1到1（只删除索引1）"><a href="#zremrangebyrank-删除1到1（只删除索引1）" class="headerlink" title="zremrangebyrank 删除1到1（只删除索引1）"></a>zremrangebyrank 删除1到1（只删除索引1）</h4><h4 id="zremrangebyscore-删除指定序号"><a href="#zremrangebyscore-删除指定序号" class="headerlink" title="zremrangebyscore 删除指定序号"></a>zremrangebyscore 删除指定序号</h4><h4 id="zrank返回排序索引-从小到大排序（升序排序之后再找索引）"><a href="#zrank返回排序索引-从小到大排序（升序排序之后再找索引）" class="headerlink" title="zrank返回排序索引 从小到大排序（升序排序之后再找索引）"></a>zrank返回排序索引 从小到大排序（升序排序之后再找索引）</h4><ul>
+<li>注意 一个是顺序号 一个是索引 zrank返回的是索引</li>
+</ul>
+<h4 id="zrevrank-返回排序索引-从大到小排序（降序排列之后再找索引）"><a href="#zrevrank-返回排序索引-从大到小排序（降序排列之后再找索引）" class="headerlink" title="zrevrank 返回排序索引 从大到小排序（降序排列之后再找索引）"></a>zrevrank 返回排序索引 从大到小排序（降序排列之后再找索引）</h4><h4 id="zrangebyscore-zset1-2-3-withscores-找到指定区间范围的数据进行返回"><a href="#zrangebyscore-zset1-2-3-withscores-找到指定区间范围的数据进行返回" class="headerlink" title="zrangebyscore zset1 2 3 withscores 找到指定区间范围的数据进行返回"></a>zrangebyscore zset1 2 3 withscores 找到指定区间范围的数据进行返回</h4><h4 id="zcard-返回集合里所有元素的个数"><a href="#zcard-返回集合里所有元素的个数" class="headerlink" title="zcard 返回集合里所有元素的个数"></a>zcard 返回集合里所有元素的个数</h4><h4 id="zcount-返回集合中score在给定区间中的数量"><a href="#zcount-返回集合中score在给定区间中的数量" class="headerlink" title="zcount 返回集合中score在给定区间中的数量"></a>zcount 返回集合中score在给定区间中的数量</h4><h4 id="zremrangebyrank-zset-【from】【to】（删除索引）"><a href="#zremrangebyrank-zset-【from】【to】（删除索引）" class="headerlink" title="zremrangebyrank zset 【from】【to】（删除索引）"></a>zremrangebyrank zset 【from】【to】（删除索引）</h4><h4 id="zremrangebyscore-zset-from-to-删除指定序号"><a href="#zremrangebyscore-zset-from-to-删除指定序号" class="headerlink" title="zremrangebyscore zset [from] [to] (删除指定序号)"></a>zremrangebyscore zset [from] [to] (删除指定序号)</h4><h2 id="Redis高级命令"><a href="#Redis高级命令" class="headerlink" title="Redis高级命令"></a>Redis高级命令</h2><ul>
+<li>返回满足的所有键keys <em> （可以模糊查询 keys list</em>）</li>
+<li>exists 是否存在指定的key</li>
+<li>expire 设置某个key的过期时间，使用ttl查看剩余时间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expire name 5</span><br><span class="line">ttl name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>persist 取消过期时间</li>
+<li>select 选择数据库 数据库为0到15（一共16个数据库）默认进入的是0数据库【是逻辑划分不是物理划分即不是第一个数据库1个G，第二个数据库1个G，而是16个数据库供多少G，然后逻辑划分】</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set name msj</span><br><span class="line">set name1 msj1</span><br><span class="line">keys *</span><br><span class="line">select 0</span><br><span class="line">keys *</span><br><span class="line">select 1</span><br><span class="line">keys *</span><br></pre></td></tr></table></figure>
+<ul>
+<li>move [key][数据库下标] 将当前数据中的key转移到其他数据库中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">move name 2</span><br><span class="line">select 2</span><br><span class="line">keys *</span><br></pre></td></tr></table></figure>
+<ul>
+<li>randomkey 随机返回数据库里的一个key</li>
+<li>rename 重命名key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rename name name3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>echo 打印命令</li>
+<li>dbsize 查看数据库的key数量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbsize</span><br></pre></td></tr></table></figure>
+<ul>
+<li>info获取数据库信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">info</span><br><span class="line">其中的信息解释：</span><br><span class="line">cluster_enabled:0 0表示没开启，此处表示没开启集群模式</span><br></pre></td></tr></table></figure>
+<ul>
+<li>config get 实时存储收到的请求（返回相关的配置信息）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config get *返回所有配置</span><br></pre></td></tr></table></figure>
+<ul>
+<li>flushdb 清空当前数据库，flushall清空所有数据库</li>
+</ul>
+<h3 id="Redis的安全性"><a href="#Redis的安全性" class="headerlink" title="Redis的安全性"></a>Redis的安全性</h3><p>因为redis速度相当快，所以在一台比较好的服务器下，一个外部用户在一秒内可以进行15w次的密码尝试，这意味着你需要设定非常强大的密码来防止暴力破解。</p>
+<p>vi编辑redis.conf 文件，找到下面进行保存修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#requirepass foobared</span><br><span class="line">requirepass ****(密码)</span><br></pre></td></tr></table></figure>
+<p>重启服务器 pkill redis-server </p>
+<p>再次进入127.0.0.1：6379&gt;keys *<br>(error)NOAUTH Authentication required</p>
+<p>会发现没有权限进行查询127.0.0.1:6379&gt; auth bhz</p>
+<p>OK 输入密码则成功进入</p>
+<p>每次进入的时候都要输入密码，还有种简单的方式：</p>
+<p>直接登录授权：redis-cli -abhz</p>
+<h3 id="主从复制-主服务器可以读写，从服务器只可读"><a href="#主从复制-主服务器可以读写，从服务器只可读" class="headerlink" title="主从复制(主服务器可以读写，从服务器只可读)"></a>主从复制(主服务器可以读写，从服务器只可读)</h3><p>推荐博客：<a href="http://blog.csdn.net/hechurui/article/details/49508813" target="_blank" rel="noopener">http://blog.csdn.net/hechurui/article/details/49508813</a></p>
+<h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><p>电子商务网站上的商品，一般都是一次上传，无数次浏览的，说专业点也就是”多读少写”。<br><img src="/img/java/Redis/picture/主从复制架构.png"></p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>读写分离，不仅可以提高服务器的负载能力（配置好后自动做负载均衡），并且可以根据读请求的规模自由增加或者减少从库的数量</li>
+<li>数据被复制成了了好几份，就算有一台机器出现故障，也可以使用其他机器的数据快速恢复。</li>
+</ul>
+<h4 id="主从复制："><a href="#主从复制：" class="headerlink" title="主从复制："></a>主从复制：</h4><ul>
+<li>Master可以拥有多个slave</li>
+<li>多个slave可以连接同一个master外，还可以连接到其他的slave[即主连多个从，从又连多个从，这种情况一般不用]</li>
+<li>主从复制不会阻塞master在同步数据时，master可以继续处理client请求</li>
+<li>提供系统的伸缩性</li>
+</ul>
+<h4 id="主从复制过程："><a href="#主从复制过程：" class="headerlink" title="主从复制过程："></a>主从复制过程：</h4><ol>
+<li>slave与master建立连接</li>
+<li>master会开启一个后台进程，将数据库快照保存到文件中，同时master主进程会开始收集新的写命令并缓存</li>
+<li>后台完成保存后，就将文件发送给slave</li>
+<li>slave将此文件保存到硬盘上</li>
+</ol>
+<h4 id="主从复制配置"><a href="#主从复制配置" class="headerlink" title="主从复制配置"></a>主从复制配置</h4><p>clone服务器之后修改slave的IP地址还要修改mac地址</p>
+<p>修改配置文件（从服务器）：/usr/local/redis/etc/redis.conf</p>
+<ol>
+<li>slaveof <masterip> <masterport></masterport></masterip></li>
+<li>masterauth <master-password></master-password></li>
+</ol>
+<p>scp -r 本地路径/ 远程路径 （copy文件或文件夹到远程电脑路径下）<br>例如：scp -r redis 192.168.1.123:/usr/local/</p>
+<p>使用info查看role角色即可知道是主服务或从服务</p>
+<h3 id="哨兵"><a href="#哨兵" class="headerlink" title="哨兵"></a>哨兵</h3><p>有了主从复制的实现以后，我们如果想对主从服务器进行监控，那么在redis2.6以后提供了一个“哨兵”机制，在2.6版本中的哨兵为1.0版本，并不稳定，会出现各种各样的问题。在2.8以后的版本哨兵功能稳定起来。</p>
+<p>redis哨兵的启动和redis实例的启动没有关系。所以可以在任何机器上启动redis哨兵。至少要保证有两个哨兵在运行[主节点可以被多个哨兵监控]，要不然宕机后哨兵会找不到主节点。</p>
+<p><strong><em>哨兵是单独的，并不是某个服务器，只是在某个服务器中运行，一个哨兵可以监控多个服务器。主从服务器和哨兵没关系，哨兵是负责监控主从服务器</em></strong></p>
+<p>顾名思义，哨兵的含义就是监控Redis系统的运行状况。其主要功能有两点：</p>
+<ol>
+<li>监控主数据库和从数据库是否正常运行</li>
+<li>主数据库出现故障时，可以自动将从数据库转换为主数据库，实现自动切换。实现步骤：<br><font color="#f00">在其中一台从服务器配置<a href="http://www.cnblogs.com/Xrinehart/p/3502213.html" target="_blank" rel="noopener">sentinel.conf</a></font> <ol>
+<li>copy文件sentinel.conf到/usr/local/redis/etc中</li>
+<li>修改sentinel.conf文件：</li>
+</ol>
+</li>
+</ol>
+<p><img src="/img/java/Redis/picture/从服务器哨兵配置.png"></p>
+<ul>
+<li>步骤2 mymaster可以随便起，后续沿用此名称</li>
+<li>down-after-milliseconds 选项指定了 Sentinel 认为服务器已经断线所需的毫秒数（判定为主观下线SDOWN）</li>
+<li>failover-timeout 过期时间，当failover开始后，在此时间内仍然没有触发任何failover操作,当前sentinel将会认为此次failoer失败。    </li>
+<li>paraHel-syncs     选项指定了在执行故障转移时， 最多可以有多少个从服务器同时对新的主服务器进行同步， 这个数字越小， 完成故障转移所需的时间就越长，但越大就意味着越多的从服务器因为复制而不可用。可以通过将这个值设为 1 来保证每次只有一个从服务器处于不能处理命令请求的状态。</li>
+<li>can-failover 当前sentinel实例是否允许实施“failover”(故障转移)  no表示当前sentinel为“观察者”(只参与”投票”.不参与实施failover)，全局中至少有一个为yes </li>
+</ul>
+<h4 id="Sentinel-conf详解"><a href="#Sentinel-conf详解" class="headerlink" title="Sentinel.conf详解"></a>Sentinel.conf详解</h4><pre><code>##sentinel实例之间的通讯端口  
+##redis-0  
+port 26379  
+##sentinel需要监控的master信息：&lt;mastername&gt; &lt;masterIP&gt; &lt;masterPort&gt; &lt;quorum&gt;  
+##&lt;quorum&gt;应该小于集群中slave的个数,只有当至少&lt;quorum&gt;个sentinel实例提交&quot;master失效&quot;  
+##才会认为master为O_DWON(&quot;客观&quot;失效)  
+sentinel monitor def_master 127.0.0.1 6379 2  
+
+sentinel auth-pass def_master 012_345^678-90  
+
+##master被当前sentinel实例认定为“失效”的间隔时间  
+##如果当前sentinel与master直接的通讯中，在指定时间内没有响应或者响应错误代码，那么  
+##当前sentinel就认为master失效(SDOWN，“主观”失效)  
+##&lt;mastername&gt; &lt;millseconds&gt;  
+##默认为30秒  
+sentinel down-after-milliseconds def_master 30000  
+
+##当前sentinel实例是否允许实施“failover”(故障转移)  
+##no表示当前sentinel为“观察者”(只参与&quot;投票&quot;.不参与实施failover)，  
+##全局中至少有一个为yes  
+sentinel can-failover def_master yes  
+
+##当新master产生时，同时进行“slaveof”到新master并进行“SYNC”的slave个数。  
+##默认为1,建议保持默认值  
+##在salve执行salveof与同步时，将会终止客户端请求。  
+##此值较大，意味着“集群”终止客户端请求的时间总和和较大。  
+##此值较小,意味着“集群”在故障转移期间，多个salve向客户端提供服务时仍然使用旧数据。  
+sentinel parallel-syncs def_master 1  
+
+##failover过期时间，当failover开始后，在此时间内仍然没有触发任何failover操作，  
+##当前sentinel将会认为此次failoer失败。  
+sentinel failover-timeout def_master 900000  
+
+##当failover时，可以指定一个“通知”脚本用来告知系统管理员，当前集群的情况。  
+##脚本被允许执行的最大时间为60秒，如果超时，脚本将会被终止(KILL)  
+##脚本执行的结果：  
+## 1    -&gt; 稍后重试，最大重试次数为10;   
+## 2    -&gt; 执行结束，无需重试  
+##sentinel notification-script mymaster /var/redis/notify.sh  
+
+##failover之后重配置客户端，执行脚本时会传递大量参数，请参考相关文档  
+# sentinel client-reconfig-script &lt;master-name&gt; &lt;script-path&gt;  
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>shutdown掉主节点1，看是否选择了从节点为主节点2。</p>
+<p>再重新启动主节点1（<strong><em>主节点1变成了从节点</em></strong>）</p>
+<h3 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h3><ul>
+<li>redis的事务非常简单，使用方法如下：</li>
+</ul>
+<p>首先是使用multi方法打开事务，然后进行设置，这时设置的数据都会放入队列里进行保存，最后使用exec执行，把数据依次存储到redis中，使用discard方法取消事务。</p>
+<p><img src="/img/java/Redis/picture/redis事务使用.png"></p>
+<ul>
+<li>redis的事务不能保证同时成功或失败进行提交或回滚，所以redis的事务目前还是比较简单的。</li>
+</ul>
+<h3 id="持久化机制"><a href="#持久化机制" class="headerlink" title="持久化机制"></a>持久化机制</h3><p><img src="/img/java/Redis/picture/redis持久化机制.png"></p>
+<ul>
+<li>快照和aof两种方式只能选一种，一般使用aof并且是always模式，因为3.0之后采用集群，所以有多个主节点，减轻写操作的压力。对于2.x的版本也可以结合ssdb使用。</li>
+</ul>
+<h3 id="发布和订阅消息（观察者模式）"><a href="#发布和订阅消息（观察者模式）" class="headerlink" title="发布和订阅消息（观察者模式）"></a>发布和订阅消息（观察者模式）</h3><ul>
+<li>使用subscribe [频道]进行订阅监听</li>
+<li>使用publish [频道] [发布内容] 进行发布消息广播</li>
+</ul>
+<h3 id="虚拟内存的使用"><a href="#虚拟内存的使用" class="headerlink" title="虚拟内存的使用"></a>虚拟内存的使用</h3><ul>
+<li>redis会暂时把不经常访问的数据从内存交换到磁盘中，腾出宝贵的空间，用于其他需要访问的数据，这需要对vm相关进行配置。（3.0版本是不带VM特性的 配置无效）</li>
+</ul>
+<p>修改配置文件：redis.conf</p>
+<h2 id="Redis与java的使用"><a href="#Redis与java的使用" class="headerlink" title="Redis与java的使用"></a>Redis与java的使用</h2><ul>
+<li>业务量不大不需要用redis用spring cache就可以</li>
+</ul>
+<p>Jedis就是redis支持java的第三方类库，我们可以使用Jedis类库操作redis数据库。Jedis2.7才支持集群。</p>
+<p><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/redis/TestSingleRedis.java" target="_blank" rel="noopener">TestSingleRedis</a></p>
+<p><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/redis/TestClusterRedis.java" target="_blank" rel="noopener">TestClusterRedis</a></p>
+<ul>
+<li>利用set和map，来查询类似sql语句“select * from user where age = 25 and name = ‘zs’”的效果 </li>
+</ul>
+<h2 id="Redis集群搭建"><a href="#Redis集群搭建" class="headerlink" title="Redis集群搭建"></a>Redis集群搭建</h2><p>主从复制模式需要最少有3个主节点，哨兵模式有1个主节点就可以也可以多个主多个从。</p>
+<ul>
+<li><p>在redis3.0以前，提供了Sentinel工具来监控各Master的状态，如果Master异常，则会做主从切换，将slave作为master，将master作为slave。其配置也是稍微的复杂，并且各方面表现一般。现在redis3.0已经支持集群的容错功能，并且非常简单。</p>
+</li>
+<li><p>用哨兵可能会出现闪断问题（主节点down掉，进行主从节点切换，网络不好情况可能需要1-2秒），所以java端应该try catch 捕获cluster is down异常，并且在catch中continue，最好sleep 1到2秒。 如果不想java代码try catch，那么还可以使用keepalived。</p>
+</li>
+</ul>
+<h3 id="如果搭建集群？（此处用一台机器模拟多个节点）"><a href="#如果搭建集群？（此处用一台机器模拟多个节点）" class="headerlink" title="如果搭建集群？（此处用一台机器模拟多个节点）"></a>如果搭建集群？（此处用一台机器模拟多个节点）</h3><p>集群搭建：至少要三个master</p>
+<ol>
+<li>创建一个文件夹redis-cluster，然后在其下面分别创建6个文件夹如下：<ul>
+<li>mkdir -p /usr/local/redis-cluster</li>
+<li>mkdir 7001、mkdir 7002、mkdir 7003、mkdir 7004、mkdir 7005、mkdir 7006</li>
+</ul>
+</li>
+<li>把之前的redis.conf配置文件分别copy到700*下，进行修改各个文件内容，也就是对700*下的每一个copy的redis.conf进行修改。如下：<ul>
+<li>daemonize yes (后台启动)</li>
+<li>port 700*（分别对每个机器的端口号进行设置）</li>
+<li>bind 192.168.1.171(必须要绑定当前机器的ip，不然会无限悲剧下去，比如set和get值非常慢，深坑勿入)</li>
+<li>dir /usr/local/redis-cluster/700*/(指定数据文件存放位置，必须要指定不同的目录位置，不然会丢失数据，深坑勿入，不同机器不会出现)</li>
+<li>cluster-enabled yes （启动集群模式，开始玩耍）</li>
+<li>cluster-config-file nodes-700*.conf(这里700*最好和port对应上，这个文件是让各节点知道自己的配置类似共享自己的信息给其他节点)</li>
+<li>cluster-node-timeout 5000</li>
+<li>appendonly yes （开启aof模式）</li>
+</ul>
+</li>
+<li>把修改后的配置文件，分别copy到各个文件夹下，注意每个文件要修改端口号，并且nodes文件也要不相同！</li>
+<li>由于redis集群需要使用ruby命令，所以我们需要安装ruby<ul>
+<li>yum install ruby</li>
+<li>yum install rubygems</li>
+<li>gem install redis(安装redis和ruby的接口)</li>
+</ul>
+</li>
+<li>分别启动6个redis实例，然后检测是否启动成功<ul>
+<li>/usr/local/redis/bin/redis-server /usr/local/redis-cluster/700*/redis.conf</li>
+<li>ps -el | grep redis 查看是否启动成功</li>
+</ul>
+</li>
+<li>首先到redis3.0的安装目录下，然后执行redis-trib.rb命令<ul>
+<li>cd /usr/local/redis3.0/src</li>
+<li>./redis-trib.rb create –replicas 1 192.168.1.171:7001 192.168.1.171.7002 192.168.1.171.7003 192.168.1.171.7004 192.168.1.171.7005 192.168.1.171.7006 （显示的信息主节点又slots【槽】，从节点没有slots，因为从节点不支持写操作）</li>
+</ul>
+</li>
+<li>搭建成功，验证：<ul>
+<li>连接任意一个客户端即可：./redis=cli -c -h -p(-c表示集群模式，指定ip地址和多口号) 如：/usr/local/redis/bin/redis=cli -c -h 192.168.1.171 -p 700*</li>
+<li>进行验证：cluster info(查看集群信息)、cluster nodes(查看节点列表)</li>
+<li>进行数据操作验证</li>
+<li>关闭集群则需要逐个进行关闭，使用命令：/usr/local/redis/bin/redis-cli -c -h 192.168.1.171 -p 700* shutdown</li>
+</ul>
+</li>
+<li>补充<ul>
+<li>当出现集群无法启动时，删除临时的数据文件，再次重新启动每一个redis服务，然后重新构造集群环境</li>
+<li>redis-trib.rb 官方操作命令：<a href="http://redis.io/topics/cluster=tutorial" target="_blank" rel="noopener">http://redis.io/topics/cluster=tutorial</a></li>
+<li>推荐博客：<a href="http://blog.51ylp.com/nosql/1726.html/comment-page-1" target="_blank" rel="noopener">http://blog.51ylp.com/nosql/1726.html/comment-page-1</a></li>
+<li>假如7001登录客户端，set信息，信息不一定就会保存到7001，因为集群是个整体，根据槽分配；但是get事后，任何一个客户端都可以获取 </li>
+<li>集群模式创建一遍就可以了，下回直接启动集群服务器就行了</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Linux命令<ul>
+<li>关闭防火墙：service iptables stop</li>
+<li>验证：service iptables status</li>
+<li>关闭防火墙的自动运行： chkconfig iptables off</li>
+<li>验证：chkconfig –list | grep iptables<br><img src="/img/java/Redis/picture/集群操作命令.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="Redis集群操作文档"><a href="#Redis集群操作文档" class="headerlink" title="Redis集群操作文档"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/redis/doc/redis集群操作文档.doc" target="_blank" rel="noopener">Redis集群操作文档</a></h3><ul>
+<li>新建节点并热更新添加到集群中（大概注意点，详情参照文档）<ul>
+<li>新建节点</li>
+<li>redistrib.rb命令使用 redis-trib.rb add-node 192.168.1.171:7007（新增节点） 192.168.1.171:7001（已知存在节点）</li>
+<li>查看集群状态： cluster  nodes（当添加节点成功以后，新增的节点不会有任何数据，因为它没有分配任何的slot（hash槽）。我们需要为新节点手工分配slot。）</li>
+<li>分配slot槽（/usr/local/redis3.0/src/redis-trib.rb reshard 192.168.1.171:7001）【此处有注意点查看文档】</li>
+<li>添加从节点（7008）到集群中去（/usr/local/redis3.0/src/redis-trib.rb add-node 192.168.1.171:7008 192.168.1.171:7001）</li>
+<li>将从节点（7008）master改成slave（cluster replicate 382634a4025778c040b7213453fd42a709f79e28（主节点id））</li>
+</ul>
+</li>
+<li>热更新删除从节点和主节点（大概注意点，参照文档）<ul>
+<li>删除从节点（/usr/local/redis3.0/src/redis-trib.rb<br>del-node 192.168.1.171:7008 97b0e0115326833724eb0ffe1d0574ee34618e9f<br>）</li>
+<li>主节点删除需要注意：主节点的里面是有分配了slot槽的，所以我们这里必须先把7007里的slot槽放入到其他的可用主节点中去，然后再进行移除节点操作才行，不然会出现数据丢失问题。  </li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis集群与spring的整合-TomcatRedis的Session共享"><a href="#Redis集群与spring的整合-TomcatRedis的Session共享" class="headerlink" title="Redis集群与spring的整合/TomcatRedis的Session共享"></a>Redis集群与spring的整合/TomcatRedis的Session共享</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢您请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://obbbnmuwc.bkt.clouddn.com/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="http://obbbnmuwc.bkt.clouddn.com/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java架构师</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/后端技术/" class="article-tag-list-link color5">后端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://centmeng.github.io/2017/04/17/Java架构师-Redis/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/17/Java架构师-ActiveMQ/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Java架构师-ActiveMQ
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/30/Java架构师-JVM/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java架构师-JVM</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Java架构师-Redis" data-title="Java架构师-Redis" data-url="https://centmeng.github.io/2017/04/17/Java架构师-Redis/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"centmeng"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 Vincent.M
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">随笔集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">适配</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java架构师</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring-boot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Weex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">HTTPS</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://centmeng.github.io" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>招商中</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
