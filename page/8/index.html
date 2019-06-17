@@ -201,6 +201,317 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-weChat小程序开发工具和破解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/23/weChat小程序开发工具和破解/">weChat小程序开发工具和破解</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/23/weChat小程序开发工具和破解/" class="archive-article-date">
+  	<time datetime="2016-09-23T00:45:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>距离张小龙的那场首次公开演讲已经有九个月了，而在那场演讲中备受关注的「应用号」在千呼万唤中终于以「小程序」的名字正式对外小范围公测，不少创业者表示机会来了跃跃欲试。下面我也发个大招，给大家带波福利，</p>
+<h3 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h3><ul>
+<li>开发工具V0.9包含下面需要用到的替换文件包</li>
+</ul>
+<p>百度云盘：链接: <a href="https://pan.baidu.com/s/1boEtSJ1" target="_blank" rel="noopener">https://pan.baidu.com/s/1boEtSJ1</a> 密码: fa3f</p>
+<h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><ul>
+<li>下载开发工具，并安装（注意：一定要安装0.9版本）</li>
+<li>打开『微信Web开发者工具』的程序目录<ul>
+<li>Windows：使用资源管理器查看</li>
+<li>Mac：右键点击图标，选择『显示包内容』</li>
+</ul>
+</li>
+<li><p>进入程序目录后，替换以下文件（只需要替换0.9版本里的，0.7版本用来登陆）：</p>
+</li>
+<li><p>Windows：</p>
+<ul>
+<li>\package.nw\app\dist\components\create\createstep.js</li>
+<li>\package.nw\app\dist\stroes\projectStores.js</li>
+</ul>
+</li>
+<li>Mac：<ul>
+<li>/Resources/app.nw/app/dist/components/create/createstep.js</li>
+<li>/Resources/app.nw/app/dist/stroes/projectStores.js</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h3><ul>
+<li>运行『微信Web开发者工具』</li>
+<li>通过微信扫描二维码</li>
+<li>创建项目<ul>
+<li>AppID：随便填</li>
+<li>项目名称：随便填</li>
+<li>本地开发目录：选择一个目录</li>
+</ul>
+</li>
+<li>点击「添加项目」<ul>
+<li>此时如果出错，先退出再重进</li>
+<li>此时，能够看到项目列表了</li>
+</ul>
+</li>
+<li>打开项目</li>
+<li>开始开发</li>
+</ul>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li><p>找不到所要替换的文件</p>
+<ul>
+<li>问题原因：开发工具版本不正确，老版本不支持</li>
+<li>解决方案：确保下载的程序版本在0.9.092100以上</li>
+</ul>
+</li>
+<li><p>Failed to load resource: net::ERR_NAME_NOT_RESOLVED <a href="http://1709827360.appservice.open.weixin.qq.com/appservice" target="_blank" rel="noopener">http://1709827360.appservice.open.weixin.qq.com/appservice</a></p>
+<ul>
+<li>问题原因：通常是由于系统设置了代理如Shadowsocks等。</li>
+<li>解决方案：关闭代理，或者依次点击工具栏“动作”-“设置”，选择“不使用任何代理，勾选后直连网络”。</li>
+</ul>
+</li>
+<li>修复asdebug.js报错<ul>
+<li>问题原因：TypeError: Cannot read property ‘MaxRequestConcurrent’ of undefined</li>
+<li>解决方案：替换 /Resources/app.nw/app/dist/weapp/appservice/asdebug.js</li>
+</ul>
+</li>
+<li>扫码登录失败<ul>
+<li>问题原因：please bind your wechat account to the appid first</li>
+<li>解决方案：先使用0.7版本的进行扫码登陆，登陆成功后，再用0.9的版本打开就直接进入了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="教程网址"><a href="#教程网址" class="headerlink" title="教程网址"></a>教程网址</h3><p><a href="http://wxopen.notedown.cn/?" target="_blank" rel="noopener">http://wxopen.notedown.cn/?</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端技术//" class="article-tag-list-link color5">前端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MVVM框架简介和使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/22/MVVM框架简介和使用/">MVVM框架简介和使用</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/22/MVVM框架简介和使用/" class="archive-article-date">
+  	<time datetime="2016-09-22T08:09:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="MVVM简介"><a href="#MVVM简介" class="headerlink" title="MVVM简介"></a>MVVM简介</h3><p>MVVM是由MVC–&gt;MVP–&gt;MVVM一步步进化来的，那么先让我们了解下：MVC和MVP</p>
+<h4 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h4><p>MVC 即模型——视图——控制器。这样设计使得程序的各个部分分离降低耦合性，我们对代码的结构进行了划分。</p>
+<ul>
+<li>视图（View）：用户界面。</li>
+<li>控制器（Controller）：业务逻辑。</li>
+<li>模型（Model）：数据保存。</li>
+</ul>
+<p><img src="/img/android/mvvm/mvc.jpg"></p>
+<p>大概流程是，View传送指令到Controller，Controller完成业务逻辑后，要求Model改变状态，Model将新的数据发送到View，用户得到反馈。</p>
+<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h4><p><img src="/img/android/mvvm/mvp.jpg"></p>
+<p>Presenter 替换掉了Controller，不仅仅处理逻辑部分。而且还控制着View的刷新，监听Model层的数据变化。这样隔离掉View和Model的关系后使得View层变的非常的薄，没有任何的逻辑部分又不用主动监听数据，被称之为“被动视图”。</p>
+<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p><img src="/img/android/mvvm/mvvm.jpg"></p>
+<p>至于MVVM基本上和MVP一模一样，感觉只是名字替换了一下。他的关键技术就是今天的主题(Data Binding)。View的变化可以自动的反应在ViewModel，ViewModel的数据变化也会自动反应到View上。这样开发者就不用处理接收事件和View更新的工作，框架已经帮你做好了。</p>
+<h3 id="Data-Binding-Library"><a href="#Data-Binding-Library" class="headerlink" title="Data Binding Library"></a>Data Binding Library</h3><p>去年的Google IO 大会上，Android 团队发布了一个数据绑定框架（Data Binding Library）。以后可以直接在 layout 布局 xml 文件中绑定数据了，无需再 findViewById 然后手工设置数据了。其语法和使用方式和 JSP 中的 EL 表达式非常类似。 下面就来介绍怎么使用Data Binding Library。</p>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>目前，最新版的Android Studio已经内置了该框架的支持，配置起来也很简单，只需要编辑app目录下的build.gradle文件，添加下面的内容就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ....</span><br><span class="line">    dataBinding &#123;</span><br><span class="line">        enabled = true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要使用数据绑定，我们得首先创建一个实体类，比如User实体类，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class UserEntity &#123;</span><br><span class="line">    private String username;</span><br><span class="line">    private String nickname;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public UserEntity() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getNickname() &#123;</span><br><span class="line">        return nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNickname(String nickname) &#123;</span><br><span class="line">        this.nickname = nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUsername() &#123;</span><br><span class="line">        return username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUsername(String username) &#123;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public UserEntity(int age, String nickname, String username) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">        this.nickname = nickname;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面我们来看看layout文件是需要怎么书写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;user&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding1.UserEntity&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;</span><br><span class="line">        tools:context=&quot;org.lenve.databinding1.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.username&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.nickname&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;String.valueOf(user.age)&#125;&quot;/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
+<p>你会发现布局文件不再是以传统的某一个容器作为根节点，而是使用<layout></layout>作为根节点，在<layout>节点中我们可以通过<data>节点来引入我们要使用的数据源。</data></layout></p>
+<ul>
+<li>在data中定义的variable节点，name属性表示变量的名称，type表示这个变量的类型，实例就是我们实体类的位置，当然，这里你也可以换一种写法，如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;data&gt;</span><br><span class="line"></span><br><span class="line">      &lt;import type=&quot;org.lenve.databinding1.UserEntity&quot;/&gt;</span><br><span class="line">      &lt;variable</span><br><span class="line">          name=&quot;user&quot;</span><br><span class="line">          type=&quot;UserEntity&quot;/&gt;</span><br><span class="line">  &lt;/data&gt;</span><br></pre></td></tr></table></figure>
+<p>先使用import节点将UserEntity导入，然后直接使用即可。但是如果这样的话又会有另外一个问题，假如我有两个类都是UserEntity，这两个UserEntity分属于不同的包中，又该如何？看下面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;data&gt;</span><br><span class="line"></span><br><span class="line">     &lt;import type=&quot;org.lenve.databinding1.UserEntity&quot; alias=&quot;CentMeng&quot;/&gt;</span><br><span class="line">     &lt;variable</span><br><span class="line">         name=&quot;user&quot;</span><br><span class="line">         type=&quot;CentMeng&quot;/&gt;</span><br><span class="line"> &lt;/data&gt;</span><br></pre></td></tr></table></figure>
+<p>在import节点中还有一个属性叫做alias，这个属性表示我可以给该类取一个别名，我给UserEntity这个实体类取一个别名叫做Lenve，这样我就可以在variable节点中直接写CentMeng了。</p>
+<p>看完data节点我们再来看看布局文件，TextView的text属性被我直接设置为了@{user.username},这样，该TextView一会直接将UserEntity实体类的username属性的值显示出来，对于显示age的TextView，我用了String.valueOf来显示，因为大家知道TextView并不能直接显示int型数据，所以需要一个简单的转换，事实上，我们还可以在{}里边进行一些简单的运算，这些我一会再说。</p>
+<p>最后，我们来看看Activity中该怎么写，setContentView方法不能够再像以前那样来写了，换成下面的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataBindingUtil.setContentView(this, R.layout.activity_main)</span><br></pre></td></tr></table></figure>
+<p>该方法有一个返回值，这个返回值就是系统根据我们的activity_main.xml布局生成的一个ViewModel类，所以完整写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br></pre></td></tr></table></figure>
+<p>有了ViewModel，再把数据绑定上去就可以了，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br><span class="line">    UserEntity user = new UserEntity();</span><br><span class="line">    user.setAge(34);</span><br><span class="line">    user.setUsername(&quot;zhangsan&quot;);</span><br><span class="line">    user.setNickname(&quot;张三&quot;);</span><br><span class="line">    activityMainBinding.setUser(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="基本的运算"><a href="#基本的运算" class="headerlink" title="基本的运算"></a>基本的运算</h4><h5 id="基本三目运算"><a href="#基本三目运算" class="headerlink" title="基本三目运算"></a>基本三目运算</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">          android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">          android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">          android:text=&quot;@&#123;`username is :`+user.username&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>两个??表示如果username属性为null则显示nickname属性，否则显示username属性。</p>
+<h5 id="字符拼接"><a href="#字符拼接" class="headerlink" title="字符拼接"></a>字符拼接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;`username is :`+user.username&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p><strong><em>这里的字符拼接不是用单引号哦，用的是ESC按键下面那个按键按出来的。目前DataBinding中的字符拼接还不支持中文。</em></strong></p>
+<h5 id="根据数据来决定显示样式"><a href="#根据数据来决定显示样式" class="headerlink" title="根据数据来决定显示样式"></a>根据数据来决定显示样式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:background=&quot;@&#123;user.age &amp;lt; 24 ? 0xFF0000FF:0xFFFF0000&#125;&quot;</span><br><span class="line">            android:text=&quot;@&#123;String.valueOf(user.age)&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>我在这里给TextView设置背景的时候，做了一个简单的判断，如果用户的年龄小于24，背景就显示为蓝色，否则背景就显示为红色，DataBinding里支持小于号但是不支持大于号，索性，大于小于号我都用转义字符来表示。</p>
+<h5 id="其他运算"><a href="#其他运算" class="headerlink" title="其他运算"></a>其他运算</h5><p>基本四则运算，逻辑与、逻辑或、取反位移等</p>
+<ul>
+<li><p>数学表达式 + – / * %</p>
+</li>
+<li><p>字符串链接 +</p>
+</li>
+<li><p>逻辑操作符 &amp;&amp; ||</p>
+</li>
+<li><p>二元操作符 &amp; | ^</p>
+</li>
+<li><p>一元操作符 + – ! ~</p>
+</li>
+<li><p>Shift &gt;&gt; &gt;&gt;&gt; &lt;&lt;</p>
+</li>
+<li><p>比较 == &gt; &lt; &gt;= &lt;=&lt; p=””&gt;</p>
+</li>
+<li><p>instanceof</p>
+</li>
+<li><p>Grouping ()</p>
+</li>
+<li><p>Literals – character, String, numeric, null</p>
+</li>
+<li><p>值域引用（Field access）</p>
+</li>
+<li><p>通过[]访问数组里面的对象</p>
+</li>
+</ul>
+<h4 id="自定义绑定（ImageView绑定示例）"><a href="#自定义绑定（ImageView绑定示例）" class="headerlink" title="自定义绑定（ImageView绑定示例）"></a>自定义绑定（ImageView绑定示例）</h4><p>这里我们还得介绍DataBinding的另一项新功能，就是关于DataBinding自定义属性的问题，事实上，在我们使用DataBinding的时候，可以给一个控件自定义一个属性，比如我们下面即将说的这个绑定ImageView的案例。假设我现在想要通过Picasso显示一张网络图片，正常情况下这个显示很简单，可是如果我要通过DataBinding来实现，该怎么做呢？我们可以使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@BindingAdapter</span><br></pre></td></tr></table></figure>
+<p>注解来创建一个自定义属性，同时还要有一个配套的注解的方法。当我们在布局文件中使用这个自定义属性的时候，会触发这个被我们注解的方法，这样说大家可能还有一点模糊，我们来看看新的实体类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    private String username;</span><br><span class="line">    private String userface;</span><br><span class="line"></span><br><span class="line">    public User() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public User(String userface, String username) &#123;</span><br><span class="line">        this.userface = userface;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:userface&quot;)</span><br><span class="line">    public static void getInternetImage(ImageView iv, String userface) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(userface).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUserface() &#123;</span><br><span class="line">        return userface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUserface(String userface) &#123;</span><br><span class="line">        this.userface = userface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUsername() &#123;</span><br><span class="line">        return username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUsername(String username) &#123;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新类里边只有两个属性，分别是用户名和用户图像，用户图像中存储的实际上是一个网络图片地址，这里除了基本的get/set方法之外还多了一个叫做getInternetImage的网络方法，这个方法有一个注解@BindAdapter(“bind:userface”)，该注解表示当用户在ImageView中使用自定义属性userface的时候，会触发这个方法，我在这个方法中来为这个ImageView加载一张图片，这里有一点需要注意，就是该方法必须为静态方法。OK，我们再来看看这次的布局文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;user&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding2.User&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;</span><br><span class="line">        tools:context=&quot;org.lenve.databinding2.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            app:userface=&quot;@&#123;user.userface&#125;&quot;&gt;&lt;/ImageView&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.username&#125;&quot;/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
+<p><strong><em>在ImageView控件中使用userface属性的时候，使用的前缀不是android而是app。</em></strong>再来看看Activity中的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"> protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">     super.onCreate(savedInstanceState);</span><br><span class="line">     ActivityMainBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br><span class="line">     dataBinding.setUser(new User(&quot;http://img2.cache.netease.com/auto/2016/7/28/201607282215432cd8a.jpg&quot;, &quot;张三&quot;));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="绑定ListView"><a href="#绑定ListView" class="headerlink" title="绑定ListView"></a>绑定ListView</h4><p>现在google退出了RecyclerView，其实他和ListView的方式是一样的，通用的。</p>
+<p>下面是主体布局和item布局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;org.lenve.databinding3.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ListView</span><br><span class="line">        android:id=&quot;@+id/lv&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;&gt;&lt;/ListView&gt;</span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;food&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding3.Food&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;96dp&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;96dp&quot;</span><br><span class="line">            android:layout_height=&quot;96dp&quot;</span><br><span class="line">            android:padding=&quot;6dp&quot;</span><br><span class="line">            app:img=&quot;@&#123;food.img&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=&quot;@+id/description&quot;</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;8dp&quot;</span><br><span class="line">            android:layout_toRightOf=&quot;@id/iv&quot;</span><br><span class="line">            android:ellipsize=&quot;end&quot;</span><br><span class="line">            android:maxLines=&quot;3&quot;</span><br><span class="line">            android:text=&quot;@&#123;food.description&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;8dp&quot;</span><br><span class="line">            android:layout_toRightOf=&quot;@id/iv&quot;</span><br><span class="line">            android:layout_alignParentBottom=&quot;true&quot;</span><br><span class="line">            android:layout_marginBottom=&quot;2dp&quot;</span><br><span class="line">            android:text=&quot;@&#123;food.keywords&#125;&quot;</span><br><span class="line">            android:textStyle=&quot;bold&quot;/&gt;</span><br><span class="line">    &lt;/RelativeLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
+<p>其他的和上面介绍一样，这里就不粘贴代码了，我们主要看看adapter吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class MyBaseAdapter&lt;T&gt; extends BaseAdapter &#123;</span><br><span class="line">    private Context context;</span><br><span class="line">    private LayoutInflater inflater;</span><br><span class="line">    private int layoutId;</span><br><span class="line">    private int variableId;</span><br><span class="line">    private List&lt;T&gt; list;</span><br><span class="line"></span><br><span class="line">    public MyBaseAdapter(Context context, int layoutId, List&lt;T&gt; list, int resId) &#123;</span><br><span class="line">        this.context = context;</span><br><span class="line">        this.layoutId = layoutId;</span><br><span class="line">        this.list = list;</span><br><span class="line">        this.variableId = resId;</span><br><span class="line">        inflater = LayoutInflater.from(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line"></span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        return list.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object getItem(int position) &#123;</span><br><span class="line">        return list.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public long getItemId(int position) &#123;</span><br><span class="line">        return position;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public View getView(int position, View convertView, ViewGroup parent) &#123;</span><br><span class="line">        ViewDataBinding dataBinding;</span><br><span class="line">        if (convertView == null) &#123;</span><br><span class="line">            dataBinding = DataBindingUtil.inflate(inflater, layoutId, parent, false);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            dataBinding = DataBindingUtil.getBinding(convertView);</span><br><span class="line">        &#125;</span><br><span class="line">        dataBinding.setVariable(variableId, list.get(position));</span><br><span class="line">        return dataBinding.getRoot();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个大概算是Adapter的终极写法了，如果你按这种方式来写Adapter，那么如果没有非常奇葩的需求，你这个App中可能就只有这一个给ListView使用的Adapter了，为什么这么说呢？因为这个Adapter中没有一个变量和我们的ListView沾边，解释一下几个变量吧：layoutId这个表示item布局的资源id，variableId是系统自动生成的，根据我们的实体类，直接从外部传入即可。另外注意布局加载方式为DataBindingUtil类中的inflate方法。OK，最后再来看看Activity:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    private Handler mHandler = new Handler()&#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void handleMessage(Message msg) &#123;</span><br><span class="line">            MyBaseAdapter&lt;Food&gt; adapter = new MyBaseAdapter&lt;&gt;(MainActivity.this, R.layout.listview_item, foods, org.lenve.databinding3.BR.food);</span><br><span class="line">            lv.setAdapter(adapter);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    private List&lt;Food&gt; foods;</span><br><span class="line">    private ListView lv;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        lv = ((ListView) findViewById(R.id.lv));</span><br><span class="line">        initData();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void initData() &#123;</span><br><span class="line">        OkHttpClient client = new OkHttpClient.Builder().build();</span><br><span class="line">        Request request = new Request.Builder().url(&quot;http://www.tngou.net/api/food/list?id=1&quot;).build();</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                if (response.isSuccessful()) &#123;</span><br><span class="line">                    parseJson(response.body().string());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void parseJson(String jsonStr) &#123;</span><br><span class="line">        foods = new ArrayList&lt;&gt;();</span><br><span class="line">        try &#123;</span><br><span class="line">            JSONObject jo = new JSONObject(jsonStr);</span><br><span class="line">            JSONArray tngou = jo.getJSONArray(&quot;tngou&quot;);</span><br><span class="line">            for (int i = 0; i &lt; tngou.length(); i++) &#123;</span><br><span class="line">                JSONObject item = tngou.getJSONObject(i);</span><br><span class="line">                String description = item.getString(&quot;description&quot;);</span><br><span class="line">                String img = &quot;http://tnfs.tngou.net/image&quot;+item.getString(&quot;img&quot;);</span><br><span class="line">                String keywords = &quot;【关键词】 &quot;+item.getString(&quot;keywords&quot;);</span><br><span class="line">                String summary = item.getString(&quot;summary&quot;);</span><br><span class="line">                foods.add(new Food(description, img, keywords, summary));</span><br><span class="line">            &#125;</span><br><span class="line">            mHandler.sendEmptyMessage(0);</span><br><span class="line">        &#125; catch (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="点击事件处理"><a href="#点击事件处理" class="headerlink" title="点击事件处理"></a>点击事件处理</h4><p>如果你使用DataBinding，我们的点击事件也会有新的处理方式，首先以ListView为例来说说如何绑定点击事件，在listview_item布局文件中每一个item的根节点添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line">	....</span><br><span class="line">	....</span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;96dp&quot;</span><br><span class="line">        android:onClick=&quot;@&#123;food.onItemClick&#125;&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;96dp&quot;</span><br><span class="line">            android:layout_height=&quot;96dp&quot;</span><br><span class="line">            android:padding=&quot;6dp&quot;</span><br><span class="line">            app:img=&quot;@&#123;food.img&#125;&quot;/&gt;</span><br><span class="line">		....</span><br><span class="line">		....</span><br><span class="line">		....</span><br><span class="line">    &lt;/RelativeLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
+<p>OK，我给RelativeLayout容器添了onClick属性，属性的值为food.onItemClick，那么这个onItemClick到底是什么呢？其实就是在实体类Food中定义的一个方法，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void onItemClick(View view) &#123;</span><br><span class="line">       Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>点击item获取当前position的数据，获取方式也是非常简单，直接get方法获取即可，比传统的ListView的点击事件通过position来获取数据方便多了。如果我想为关键字这个TextView添加点击事件也很简单，和上面一样，这里我就不再贴代码了.</p>
+<h4 id="数据更新处理"><a href="#数据更新处理" class="headerlink" title="数据更新处理"></a>数据更新处理</h4><p>单纯的更新Food对象并不能改变ListView的UI显示效果，那该怎么做呢？Google给我们提供了三种解决方案，分别如下：</p>
+<h5 id="让实体类继承自BaseObservable-最常用"><a href="#让实体类继承自BaseObservable-最常用" class="headerlink" title="让实体类继承自BaseObservable (最常用)"></a>让实体类继承自BaseObservable (最常用)</h5><p>让实体类继承自BaseObservable，然后给需要改变的字段的get方法添加上@Bindable注解，然后给需要改变的字段的set方法加上notifyPropertyChanged(org.lenve.databinding3.BR.description);一句即可，比如我想点击item的时候把description字段的数据全部改为111，我可以修改Food类变为下面的样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public class Food extends BaseObservable &#123;</span><br><span class="line">    private String description;</span><br><span class="line">    private String img;</span><br><span class="line">    private String keywords;</span><br><span class="line">    private String summary;</span><br><span class="line"></span><br><span class="line">    public Food() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Food(String description, String img, String keywords, String summary) &#123;</span><br><span class="line">        this.description = description;</span><br><span class="line">        this.img = img;</span><br><span class="line">        this.keywords = keywords;</span><br><span class="line">        this.summary = summary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:img&quot;)</span><br><span class="line">    public static void loadInternetImage(ImageView iv, String img) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(img).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onItemClick(View view) &#123;</span><br><span class="line">//        Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">        setDescription(&quot;111&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void clickKeywords(View view) &#123;</span><br><span class="line">        Toast.makeText(view.getContext(), getKeywords(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Bindable</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDescription(String description) &#123;</span><br><span class="line">        this.description = description;</span><br><span class="line">        notifyPropertyChanged(org.lenve.databinding3.BR.description);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getImg() &#123;</span><br><span class="line">        return img;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setImg(String img) &#123;</span><br><span class="line">        this.img = img;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getKeywords() &#123;</span><br><span class="line">        return keywords;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setKeywords(String keywords) &#123;</span><br><span class="line">        this.keywords = keywords;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSummary() &#123;</span><br><span class="line">        return summary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSummary(String summary) &#123;</span><br><span class="line">        this.summary = summary;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用DataBinding提供的ObservableFields来创建实体类"><a href="#使用DataBinding提供的ObservableFields来创建实体类" class="headerlink" title="使用DataBinding提供的ObservableFields来创建实体类"></a>使用DataBinding提供的ObservableFields来创建实体类</h4><p>这种方式使用起来略微麻烦，除了继承BaseObservable之外，创建属性的方式也变成下面这种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final ObservableField&lt;String&gt; description = new ObservableField&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<p>属性的读写方式也变了，读取方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">description.get()</span><br></pre></td></tr></table></figure>
+<p>写入方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.description.set(description);</span><br></pre></td></tr></table></figure>
+<p>OK，依据上面几个规则，我新定义的实体类如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">public class Food extends BaseObservable &#123;</span><br><span class="line">    private final ObservableField&lt;String&gt; description = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; img = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; keywords = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; summary = new ObservableField&lt;&gt;();</span><br><span class="line">    public Food() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Food(String description, String img, String keywords, String summary) &#123;</span><br><span class="line">        this.description.set(description);</span><br><span class="line">        this.keywords.set(keywords);</span><br><span class="line">        this.img.set(img);</span><br><span class="line">        this.summary.set(summary);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:img&quot;)</span><br><span class="line">    public static void loadInternetImage(ImageView iv, String img) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(img).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onItemClick(View view) &#123;</span><br><span class="line">//        Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">        setDescription(&quot;111&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void clickKeywords(View view) &#123;</span><br><span class="line">        Toast.makeText(view.getContext(), getKeywords(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Bindable</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return description.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDescription(String description) &#123;</span><br><span class="line">        this.description.set(description);</span><br><span class="line">        notifyPropertyChanged(org.lenve.databinding3.BR.description);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getImg() &#123;</span><br><span class="line">        return img.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setImg(String img) &#123;</span><br><span class="line">        this.img.set(img);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getKeywords() &#123;</span><br><span class="line">        return keywords.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setKeywords(String keywords) &#123;</span><br><span class="line">        this.keywords.set(keywords);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSummary() &#123;</span><br><span class="line">        return summary.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSummary(String summary) &#123;</span><br><span class="line">        this.summary.set(summary);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用DataBinding中提供的集合来存储数据即可"><a href="#使用DataBinding中提供的集合来存储数据即可" class="headerlink" title="使用DataBinding中提供的集合来存储数据即可"></a>使用DataBinding中提供的集合来存储数据即可</h4><p>DataBinding中给我们提供了一些现成的集合，用来存储数据，比如ObservableArrayList，ObservableArrayMap，因为这些用的少，我这里就不做介绍了。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-解决HTTPS的SSL认证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -639,220 +950,9 @@
 
 
   
-    <article id="post-Android安全进阶攻略" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/20/Android安全进阶攻略/">Android安全进阶攻略</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/20/Android安全进阶攻略/" class="archive-article-date">
-  	<time datetime="2016-09-20T03:02:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/code.jpg"></p>
-<h3 id="研究什么"><a href="#研究什么" class="headerlink" title="研究什么"></a>研究什么</h3><p>从攻击角度举例，可以是：对某个模块进行漏洞挖掘的方法，对某个漏洞进行利用的技术，通过逆向工程破解程序、解密数据，对系统或应用进行感染、劫持等破坏安全性的攻击技术等。</p>
-<p>而防御上则是：查杀恶意应用的方法，检测和防范漏洞利用，为增强系统和第三方应用的安全性提供解决方案等。</p>
-<h3 id="学习什么"><a href="#学习什么" class="headerlink" title="学习什么"></a>学习什么</h3><h4 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h4><p>主要是操作系统原理。这是非常重要的知识，是认识某一个具体系统的前提。比起单纯阅读源码和分析文章，自己动手编译系统内核，用调试器一步步调试内核更有帮助。最后还可以尝试自己编写内核驱动模块或分析已有的内核Rootkit来深入理解操作系统。对于操作系统，我们需要分析WRK，了解包括系统引导、内存管理、进程管理、线程调度、文件系统、网络驱动等内容。</p>
-<h4 id="掌握的语言"><a href="#掌握的语言" class="headerlink" title="掌握的语言"></a>掌握的语言</h4><p>掌握C/C++，能理解该语言被编译器处理后汇编层面的实现原理。了解Java，需要理解Dalvik/ART虚拟机内部的实现过程。对于x86/ARM汇编，能读懂即可，遇到不认识的指令能从指令集手册中找到答案。</p>
-<p>另外，还需要掌握一门脚本语言，主要用来快速编写小工具或者POC，我推荐Python，因为开源社区中大部分Android安全分析类工具都是用Python编写的，例如知名的Androguard和Drozer。</p>
-<h4 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h4><p>逆向工程绝对是一项必备技能。无论是分析恶意软件行为还是分析闭源软件漏洞，都需要逆向工程。但更重要的是，逆向工程能让我们从闭源程序中汲取营养，加快理解系统的速度。在对这类程序进行反汇编、调试的过程中，也会加深对操作系统、程序语言内部实现的理解，将上述知识串联起来。</p>
-<p>神奇小子Geohot不久前利用CVE–2014–3153开发出了Android 4.4 Root通杀工具Towelroot，大多数人都不明白这个漏洞复杂的利用方法，但我通过对Towelroot逆向工程，第一时间理解了该漏洞利用的几项关键技术（Towelroot加入了大量混淆指令来反逆向工程，因而难度颇高）。也许我们不是天才，但逆向工程能让我们时不时地跟上天才的步伐。</p>
-<h3 id="理解Android系统"><a href="#理解Android系统" class="headerlink" title="理解Android系统"></a>理解Android系统</h3><p>Android源码非常庞大，即便只看系统组件，恐怕也要好几年。更何况其源码并不是Android手机的全部，还有Linux内核、基带、bootloader、TrustZone等底层模块等待我们探索。我们只需了解支撑Android系统运转的核心服务，以及Android系统的安全机制设计即可，其余内容则可在需要用到时再去分析。</p>
-<p>就组件来说，下面是应该优先理解的。</p>
-<ol>
-<li><p>Zygote：Android应用的孵化器，一切Android程序由此进程fork而来。</p>
-</li>
-<li><p>Binder：Android的进程间通信机制，它是Android平台最核心的功能组件。</p>
-</li>
-<li><p>Package Manager Service：应用安装包管理服务，不仅负责包的安装和卸载，更重要的是负责Android应用信息的查询和控制，例如Android权限管理。</p>
-</li>
-<li><p>Activity Manager Service：管理Android框架层的进程，也包含了Android应用四大组件的逻辑实现。</p>
-</li>
-<li><p>Dalvik虚拟机：虽然即将被ART取代，但Dalvik依然是帮助我们理解虚拟机和Android可执行程序文件格式的好教材。</p>
-</li>
-</ol>
-<p>就安全机制来说，则需要了解下面几点。</p>
-<ol>
-<li><p>沙箱隔离：沙箱是基于不同应用之间User ID的不同而实现的，其本质是Linux对于不同用户间访问权限的隔离。</p>
-</li>
-<li><p>应用权限控制：Android应用需要申请相应的权限才能访问系统的资源和信息，大多数权限由Android框架层的API进行控制，另一部分权限映射到应用所在的Group ID上，由Linux内核做出控制。</p>
-</li>
-<li><p>SE Linux：Linux内核层的安全增强，是一套独立于传统Linux权限访问控制的强制性权限控制机制。Google已将这套机制移植到Android内核，这给内核漏洞利用带来了一些挑战。</p>
-</li>
-</ol>
-<h3 id="Android安全研究的热点方向与现状"><a href="#Android安全研究的热点方向与现状" class="headerlink" title="Android安全研究的热点方向与现状"></a>Android安全研究的热点方向与现状</h3><h4 id="手机Root与内核漏洞挖掘利用"><a href="#手机Root与内核漏洞挖掘利用" class="headerlink" title="手机Root与内核漏洞挖掘利用"></a>手机Root与内核漏洞挖掘利用</h4><p>在Android 2.x时代，往往利用一些用户层程序的漏洞即可将手机root，现在则主要依赖内核漏洞。Android为Linux内核引入了新的内核模块，以及不同厂商的驱动方案。这就为系统内核引入了新的安全隐患，无论是高通、MTK还是三星猎户座，或者华为海思的芯片，多少都出现过一些内核漏洞，这是Android平台内核的一个主要攻击点。随着Google将SE Linux引入Android，攻击面有所减小，但不能完全解决内核漏洞利用的问题。从防御角度来说，同样面临着挑战：一些APT攻击如果利用内核漏洞，将能拿到系统的完全控制权。Android平台内核漏洞长期以来一直都在持续曝光，漏洞利用与防范依然是持续的热点。</p>
-<p>从这个方向入手，首先需要了解Linux内核，然后不断对目前已公开的CVE漏洞进行分析，理解漏洞的成因和各个类型。在漏洞利用方面，有开源项目run_root_shell可作为参考，该项目包含了多个经典漏洞的利用实现，是入门的好材料。除此之外，还可以关注国外的POC程序或对一键root类产品做分析。</p>
-<h4 id="Android应用与系统框架层漏洞挖掘"><a href="#Android应用与系统框架层漏洞挖掘" class="headerlink" title="Android应用与系统框架层漏洞挖掘"></a>Android应用与系统框架层漏洞挖掘</h4><p>Android应用本身的问题主要集中在4大组件上，通常是一些逻辑处理问题导致信息泄露、身份认证绕过等。得益于Android沙箱机制，应用本身的攻击面是相对较小的，但一些开发人员似乎因此有恃无恐，在编码过程中表现出了较差的安全意识。此外围绕WebView或者SSL漏洞所引发的安全问题也比较常见。</p>
-<p>框架层漏洞也是逻辑漏洞居多，但危害往往要比应用更大。比较著名的高危漏洞有Master Key签名绕过、WebView远程代码执行等。</p>
-<p>目前已存在一些开源漏洞挖掘工具，如Drozer和Intent Fuzzer。我们可以在此基础上改进，如果有独特的挖掘思路，也可以自己尝试开发挖掘工具。</p>
-<h4 id="恶意软件攻防"><a href="#恶意软件攻防" class="headerlink" title="恶意软件攻防"></a>恶意软件攻防</h4><p>从数量上看，隐私窃取和钓鱼软件是目前Android平台主要的恶意软件类型。</p>
-<p>如果用户对于应用申请的权限毫不知情，一款应用便能轻松获取用户的短信、通讯录、地理位置、录音等私密信息。Android平台需要有主动防御程序控制应用获取隐私的行为，目前有两种方法实现，一种是集成到厂商的ROM代码中，另一种则是利用API Hook实现。无论使用哪种方式，目前面临的问题都是如何更智能地为用户管理权限，以减少防御软件频繁弹窗带来的打扰。</p>
-<p>市面上还充斥着大量的仿冒支付类应用，他们看起来可能与正版应用没有区别，因为这些仿冒应用是由正版应用篡改而来的。这些软件通常会有用户名和密码窃取的恶意代码。安全软件需要通过签名、代码特征等方法对此进行识别。</p>
-<p>从趋势上看，恶意软件也不再局限于Android安装包（APK）的形式进行分发，而往往会带有Linux可执行文件（ELF），对系统进行更深层次的攻击。 目前市面上的安全产品对APK文件的查杀已较成熟，但对系统原生层的恶意软件查杀还没有特别完善的实现，对一些APT级别的新型威胁防御也仍在探索阶段。</p>
-<p>知名的恶意软件Oldboot就是恶意程序使用底层技术对抗查杀的典型案例，该程序的完整分析细节已被公开，读者可从网络上搜索文章参考，以更好地理解如何分析恶意软件行为。</p>
-<h4 id="支付安全"><a href="#支付安全" class="headerlink" title="支付安全"></a>支付安全</h4><p>长期以来，手机支付使用短信验证码和独立支付密码解决支付者身份认证的问题。但仍存在短信遭人窃听或密码被窃取的风险，因此一些厂商效仿PC上的U盾方案，推出音频盾或蓝牙盾解决认证问题。而利用ARM架构下的TrustZone将支付认证过程独立于操作系统之外，也是一个方向。手机支付是很强的需求，依然有很多方案值得探索。</p>
-<h4 id="应用加固（加壳）与逆向工程"><a href="#应用加固（加壳）与逆向工程" class="headerlink" title="应用加固（加壳）与逆向工程"></a>应用加固（加壳）与逆向工程</h4><p>游戏、支付类应用都有很强的反逆向工程、防破解、防篡改的需求，目前已有几家比较成熟的方案出现。但目前对于Android ELF格式程序的保护还不够，终极防护当然是使用类似PC上的VMProtect虚拟机。逆向工程与加固保护是一个不断攻防的过程，加固方案需要不断提升自己的保护强度，修补方案上的漏洞。而对于逆向工程师来说，不能逆向不意味着不能分析程序行为。一个好的软件跟踪方法往往让你事半功倍。</p>
-<p>目前国内比较知名的加固方案有梆梆加固、360加固保、爱加密等，大家可以在这些产品官网上看到相应信息。</p>
-<h4 id="企业安全BYOD"><a href="#企业安全BYOD" class="headerlink" title="企业安全BYOD"></a>企业安全BYOD</h4><p>仅就终端设备本身来说，BYOD通常的方案是将手机系统隔离出两个环境：一个公用，一个私用，两者互不影响。三星的KNOX安全套件就提供了这样一个功能，使用Container，将需要隔离的公用应用包裹起来；Google也在开发类似应用，但传闻进展较慢。这类方案通常会和系统本身紧密结合，实现这样一套方案，或者发现这类方案中的安全漏洞，也是一个新的方向。</p>
-<h3 id="实例：Android-4-4-2系统vold漏洞"><a href="#实例：Android-4-4-2系统vold漏洞" class="headerlink" title="实例：Android 4.4.2系统vold漏洞"></a>实例：Android 4.4.2系统vold漏洞</h3><h4 id="如何在第一时间得知漏洞"><a href="#如何在第一时间得知漏洞" class="headerlink" title="如何在第一时间得知漏洞"></a>如何在第一时间得知漏洞</h4><p>并非所有漏洞都会被纳入漏洞数据库（CVE），很多漏洞是被秘密修补的。一种方法是看版本升级时Android源码中的Change Log，运气好的话，你会从AOSP的Git Commit信息中注意到下面这句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Project： platform/system/void</span><br><span class="line">0de7c61: Validate asec names</span><br></pre></td></tr></table></figure>
-<p>洞的信息。如果你对这条提交记录背后的问题足够敏感，就能发现问题。</p>
-<p>事实上，注意到这条信息的人是少数。大多数人得知这个问题前，已有人掌握了技术细节并开发出了一款针对Moto的root工具放到了XDA论坛和Twitter上。</p>
-<h4 id="如何掌握漏洞细节"><a href="#如何掌握漏洞细节" class="headerlink" title="如何掌握漏洞细节"></a>如何掌握漏洞细节</h4><p>可能你会想到对这款名为“[Root 4.4.x] Pie for Motorola devices”工具进行逆向工程，但通过JEB，可以发现它经过了复杂的混淆。</p>
-<p>这种混淆叫做dexGuard，比Google使用的ProGuard更复杂。花精力脱壳，还不如自己开发一个能做软件行为跟踪（trace）的ROM对其进行分析，但这是比较高级的话题。</p>
-<p>先把工具放到一边，其实我们也可以通过现有的信息对该漏洞的利用方法进行分析。首先我们已获得了漏洞修补信息（其diff信息参见<a href="https://android.googlesource.com/platform/system/vold/+/0de7c61），这个问题出现在系统vold进程中，再结合源码和AIRBUS发布的分析报告，我们就可以得知以下信息。" target="_blank" rel="noopener">https://android.googlesource.com/platform/system/vold/+/0de7c61），这个问题出现在系统vold进程中，再结合源码和AIRBUS发布的分析报告，我们就可以得知以下信息。</a></p>
-<ol>
-<li><p>问题出现在系统进程vold（卷管理进程），这是一个以root权限运行的分区管理进程。具体出现问题的功能模块是ASEC（Android Secure External Caches），其大致功能是对应用在SD卡上存储的文件进行权限管理。因为SD卡的文件系统格式是FAT，它本身是不支持文件权限管理的。</p>
-</li>
-<li><p>使用“vdc asec create YOURNAME ext4 none 2000 false”命令，vold进程接收到消息，在/data/app-sec目录下创建一个文件夹/data/app-sec/YOURNAME，并将这个目录mount成/mnt/asec/YOURNAME。</p>
-</li>
-<li><p>如代码所示，vold在将/data/app-sec/和YOURNAME拼凑在一起时，使用了sprintf，未对YOURNAME这个字符串做任何校验。这意味着我们可以将YOURNAME构造成“../../PATH”的形式。这样vold将为我们mount任何目录，如果这个目录已存在（例如/sbin），将被新mount的目录覆盖。</p>
-</li>
-</ol>
-<p><img src="/img/jinjie/androidSafe/1.jpg"></p>
-<h4 id="如何利用这个漏洞获取root"><a href="#如何利用这个漏洞获取root" class="headerlink" title="如何利用这个漏洞获取root"></a>如何利用这个漏洞获取root</h4><p>既然vold可以为我们重复mount任意目录，就意味着我们可以使用自己指定的目录覆盖系统目录，也就等价于可以替换系统文件来获得以root身份执行的机会。将/sbin目录重新mount，替换/sbin/adbd文件，并且当系统进程adbd重新被init进程启动时，我们将有机会以root权限执行任意代码。这个漏洞利用代码非常简单。</p>
-<p><img src="/img/jinjie/androidSafe/2.jpg"></p>
-<p>这段命令首先创建了一个指向/sbin的符号链接/data/local/tmp/test1。然后使用vdc向vold发送触发漏洞的消息，vold将会把/data/app-sec/../../data/local/tmp/test1 mount起来。因为/data/local/tmp/test1是/sbin的符号链接，所以/sbin目录被覆盖成一个空分区。这个空分区是不可写入的，但我们能在该分区内建立符号链接，因此我为/data/local/tmp/adbd建立了一个符号链接是/sbin/adbd。这样一来，/sbin/adbd就指向了一个我们可控的文件：/data/local/tmp/adbd。当adbd进程被杀死，init进程将重新启动adbd，/data/local/tmp/adbd以root权限运行。后面要做的就是为手机安装su程序了，至此，手机root的过程完成。</p>
-<p>摘抄自《程序员杂志》</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android安全</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android修改字体大小效果不变" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/14/Android修改字体大小效果不变/">Android修改字体大小效果不变</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/14/Android修改字体大小效果不变/" class="archive-article-date">
-  	<time datetime="2016-09-14T08:32:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/code.jpg"></p>
-<p>很多开发者在开发的时候，会遇到有的用户修改字体大小，从而导致适配问题，在这里，可以通过如下代码，让自己App字体大小不变。具体代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private void initFontScale() &#123;</span><br><span class="line">        Configuration configuration = getResources().getConfiguration();</span><br><span class="line"></span><br><span class="line">        configuration.fontScale = (float) 1; //0.85 small size, 1 normal size, 1,15 big etc</span><br><span class="line">        DisplayMetrics metrics = new DisplayMetrics();</span><br><span class="line">        getWindowManager().getDefaultDisplay().getMetrics(metrics);</span><br><span class="line">        metrics.scaledDensity = configuration.fontScale * metrics.density;</span><br><span class="line">        getBaseContext().getResources().updateConfiguration(configuration, metrics);</span><br></pre></td></tr></table></figure>
-<p>以上代码需要每个Activity中调用，所以最好写在BaseActivity中，不喜勿喷，博主小白一个。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">适配</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
     </nav>
   
 
@@ -947,18 +1047,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -968,6 +1056,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -983,7 +1083,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -991,19 +1091,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1011,11 +1099,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1023,11 +1115,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1036,6 +1136,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">

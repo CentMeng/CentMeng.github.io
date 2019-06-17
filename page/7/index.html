@@ -201,6 +201,203 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Gephi初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/13/Gephi初体验/">Gephi初体验</a>
+    </h1>
+  
+
+        
+        <a href="/2016/11/13/Gephi初体验/" class="archive-article-date">
+  	<time datetime="2016-11-13T08:35:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>话不多说，大家看看图就会操作</p>
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><ul>
+<li>文件-&gt;打开-&gt;选择文件</li>
+<li><img src="/img/data/gephi/open.png"></li>
+</ul>
+<h2 id="设置层级颜色区分"><a href="#设置层级颜色区分" class="headerlink" title="设置层级颜色区分"></a>设置层级颜色区分</h2><ul>
+<li>统计-&gt;模块化</li>
+</ul>
+<p><img src="/img/data/gephi/tongji.png"></p>
+<p><img src="/img/data/gephi/tongji2.png"></p>
+<p><img src="/img/data/gephi/tongji3.png"></p>
+<p>这时候我们要转战场了，调整外观，如下图</p>
+<p><strong><em>选择节点-&gt;数值设定-&gt;Modularity Class（如果没有运行模块化则没有此选项）</em></strong></p>
+<p><img src="/img/data/gephi/waiguan.png"></p>
+<h2 id="选择布局"><a href="#选择布局" class="headerlink" title="选择布局"></a>选择布局</h2><p>ok，现在到了关键时刻，离成功不远了，选择一个展示布局，这里我们选择Yifan Hu，然后运行，就OK了。</p>
+<p><img src="/img/data/gephi/buju.png"></p>
+<p><img src="/img/data/gephi/buju1.png"></p>
+<h2 id="最终效果图"><a href="#最终效果图" class="headerlink" title="最终效果图"></a>最终效果图</h2><p><img src="/img/data/gephi/result.png"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/大数据技术//" class="article-tag-list-link color1">大数据技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Webview支持https 双向认证(SSL)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/Webview支持https 双向认证(SSL)/">Webview支持https 双向认证(SSL)</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/22/Webview支持https 双向认证(SSL)/" class="archive-article-date">
+  	<time datetime="2016-10-22T13:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>首先我们在这之前先了解一下https</p>
+<h3 id="Https相关知识"><a href="#Https相关知识" class="headerlink" title="Https相关知识"></a>Https相关知识</h3><p>，HTTPS相当于HTTP的安全版本了，它在HTTP的之下加入了SSL (Secure Socket Layer)，这里说他安全就靠这个SSL了。SSL位于TCP/IP和HTTP协议之间，那么SSL有什么作用呢？</p>
+<ul>
+<li>认证用户和服务器，确保数据发送到正确的客户机和服务器；(验证证书)</li>
+<li>加密数据以防止数据中途被窃取；（加密）</li>
+<li>维护数据的完整性，确保数据在传输过程中不被改变。（摘要算法）</li>
+</ul>
+<h3 id="Https工作原理"><a href="#Https工作原理" class="headerlink" title="Https工作原理"></a>Https工作原理</h3><p>HTTPS在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。握手过程的简单描述如下：</p>
+<ol>
+<li>浏览器将自己支持的一套加密算法、HASH算法发送给网站。</li>
+<li>网站从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。</li>
+<li>浏览器获得网站证书之后，开始验证证书的合法性，如果证书信任，则生成一串随机数字作为通讯过程中对称加密的秘钥。然后取出证书中的公钥，将这串数字以及HASH的结果进行加密，然后发给网站。</li>
+<li>网站接收浏览器发来的数据之后，通过私钥进行解密，然后HASH校验，如果一致，则使用浏览器发来的数字串使加密一段握手消息发给浏览器。</li>
+<li>浏览器解密，并HASH校验，没有问题，则握手结束。接下来的传输过程将由之前浏览器生成的随机密码并利用对称加密算法进行加密。</li>
+</ol>
+<p><strong><em>握手过程中如果有任何错误，都会使加密连接断开，从而阻止了隐私信息的传输。</em></strong></p>
+<p>以上流程协议，参考网上资料，不一定正确，如有错误希望指出。</p>
+<p>根据上面的流程，我们可以看到服务器端会有一个证书，在交互过程中客户端需要去验证证书的合法性，对于权威机构颁发的证书当然我们会直接认为合法。对于自己造的证书，那么我们就需要去校验合法性了，也就是说我们只需要假如使用OkhttpClient去信任这个证书就可以畅通的进行通信了。</p>
+<p>当然，对于自签名的网站的访问，网上的部分的做法是直接设置信任所有的证书，对于这种做法肯定是有风险的，所以这里我们不去介绍了，有需要自己去查。</p>
+<h2 id="WebView支持https"><a href="#WebView支持https" class="headerlink" title="WebView支持https"></a>WebView支持https</h2><p>OK，该说重点了，对于这方面，我们要从3个Android版本来写</p>
+<ul>
+<li>Android 4.0以下，即14以下，不包含14，如果最小支持14，则此处可忽略</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 设置webview的ssl双向认证</span></span><br><span class="line"><span class="comment">    * 注意：该方法只支持android4.0（不包含）以下</span></span><br><span class="line"><span class="comment">    * 该方法调用一次即可</span></span><br><span class="line"><span class="comment">    * &lt;P&gt;Author : Vincent.M &lt;/P&gt;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">setWebViewSSLCert</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">boolean</span> issuc = <span class="keyword">false</span>;<span class="comment">// true 代表验证和设置成功</span></span><br><span class="line">       <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">14</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> issuc;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       InputStream[] inputStreams = <span class="keyword">new</span> InputStream[<span class="number">1</span>];</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           inputStreams[<span class="number">0</span>] = <span class="keyword">this</span>.getAssets().open(<span class="string">"key.cer"</span>);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(inputStreams, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           Field[] arrayOfField = Class.forName(</span><br><span class="line">                   <span class="string">"android.net.http.HttpsConnection"</span>).getDeclaredFields();</span><br><span class="line">           <span class="keyword">for</span> (Field localField : arrayOfField) &#123;</span><br><span class="line">               <span class="keyword">if</span> (localField.getName().equals(<span class="string">"mSslSocketFactory"</span>)) &#123;<span class="comment">//采用反射的方式修改mSslSocketFactory变量</span></span><br><span class="line">                   localField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                   localField.set(<span class="keyword">null</span>, sslParams.sSLSocketFactory);</span><br><span class="line">                   issuc = <span class="keyword">true</span>;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">           ex.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> issuc;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/CentMeng/baseFramework/blob/master/networkcore/src/main/java/com/msj/networkcore/https/HttpsUtils.java" target="_blank" rel="noopener">HttpsUtils</a>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpsUtils</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SSLParams</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> SSLSocketFactory sSLSocketFactory;</span><br><span class="line">        <span class="keyword">public</span> X509TrustManager trustManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SSLParams <span class="title">getSslSocketFactory</span><span class="params">(InputStream[] certificates, InputStream bksFile, String password)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        SSLParams sslParams = <span class="keyword">new</span> SSLParams();</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            TrustManager[] trustManagers = prepareTrustManager(certificates);</span><br><span class="line">            KeyManager[] keyManagers = prepareKeyManager(bksFile, password);</span><br><span class="line">            SSLContext sslContext = SSLContext.getInstance(<span class="string">"TLS"</span>);</span><br><span class="line">            X509TrustManager trustManager = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">if</span> (trustManagers != <span class="keyword">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                trustManager = <span class="keyword">new</span> MyTrustManager(chooseTrustManager(trustManagers));</span><br><span class="line">            &#125; <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                trustManager = <span class="keyword">new</span> UnSafeTrustManager();</span><br><span class="line">            &#125;</span><br><span class="line">            sslContext.init(keyManagers, <span class="keyword">new</span> TrustManager[]&#123;trustManager&#125;,<span class="keyword">null</span>);</span><br><span class="line">            sslParams.sSLSocketFactory = sslContext.getSocketFactory();</span><br><span class="line">            sslParams.trustManager = trustManager;</span><br><span class="line">            <span class="keyword">return</span> sslParams;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">UnSafeHostnameVerifier</span> <span class="keyword">implements</span> <span class="title">HostnameVerifier</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(String hostname, SSLSession session)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UnSafeTrustManager</span> <span class="keyword">implements</span> <span class="title">X509TrustManager</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span></span></span><br><span class="line"><span class="function">                <span class="keyword">throws</span> CertificateException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span></span></span><br><span class="line"><span class="function">                <span class="keyword">throws</span> CertificateException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> X509Certificate[]&#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> TrustManager[] prepareTrustManager(InputStream... certificates)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (certificates == <span class="keyword">null</span> || certificates.length &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            CertificateFactory certificateFactory = CertificateFactory.getInstance(<span class="string">"X.509"</span>);</span><br><span class="line">            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            keyStore.load(<span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (InputStream certificate : certificates)</span><br><span class="line">            &#123;</span><br><span class="line">                String certificateAlias = Integer.toString(index++);</span><br><span class="line">                keyStore.setCertificateEntry(certificateAlias, certificateFactory.generateCertificate(certificate));</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (certificate != <span class="keyword">null</span>)</span><br><span class="line">                        certificate.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e)</span><br><span class="line"></span><br><span class="line">                &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            TrustManagerFactory trustManagerFactory = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            trustManagerFactory = TrustManagerFactory.</span><br><span class="line">                    getInstance(TrustManagerFactory.getDefaultAlgorithm());</span><br><span class="line">            trustManagerFactory.init(keyStore);</span><br><span class="line"></span><br><span class="line">            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> trustManagers;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CertificateException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> KeyManager[] prepareKeyManager(InputStream bksFile, String password)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (bksFile == <span class="keyword">null</span> || password == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            KeyStore clientKeyStore = KeyStore.getInstance(<span class="string">"BKS"</span>);</span><br><span class="line">            clientKeyStore.load(bksFile, password.toCharArray());</span><br><span class="line">            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());</span><br><span class="line">            keyManagerFactory.init(clientKeyStore, password.toCharArray());</span><br><span class="line">            <span class="keyword">return</span> keyManagerFactory.getKeyManagers();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnrecoverableKeyException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CertificateException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> X509TrustManager <span class="title">chooseTrustManager</span><span class="params">(TrustManager[] trustManagers)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (TrustManager trustManager : trustManagers)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (trustManager <span class="keyword">instanceof</span> X509TrustManager)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> (X509TrustManager) trustManager;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTrustManager</span> <span class="keyword">implements</span> <span class="title">X509TrustManager</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> X509TrustManager defaultTrustManager;</span><br><span class="line">        <span class="keyword">private</span> X509TrustManager localTrustManager;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyTrustManager</span><span class="params">(X509TrustManager localTrustManager)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, KeyStoreException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            TrustManagerFactory var4 = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());</span><br><span class="line">            var4.init((KeyStore) <span class="keyword">null</span>);</span><br><span class="line">            defaultTrustManager = chooseTrustManager(var4.getTrustManagers());</span><br><span class="line">            <span class="keyword">this</span>.localTrustManager = localTrustManager;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkClientTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> <span class="keyword">throws</span> CertificateException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkServerTrusted</span><span class="params">(X509Certificate[] chain, String authType)</span> <span class="keyword">throws</span> CertificateException</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                defaultTrustManager.checkServerTrusted(chain, authType);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (CertificateException ce)</span><br><span class="line">            &#123;</span><br><span class="line">                localTrustManager.checkServerTrusted(chain, authType);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> X509Certificate[] getAcceptedIssuers()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> X509Certificate[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Android 4.0及以上版本，Android 5.0（不包含）以下,下面这段代码是通用的，在4.0和5.0，不同点在设置WebViewClient中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">private X509Certificate[] mX509Certificates;</span><br><span class="line">   private PrivateKey mPrivateKey;</span><br><span class="line"></span><br><span class="line">   private void initPrivateKeyAndX509Certificate()</span><br><span class="line">           throws Exception &#123;</span><br><span class="line">       // 创建一个证书库，并将证书导入证书库</span><br><span class="line">       try &#123;</span><br><span class="line">           InputStream input = this.getContext().getResources().openRawResource(R.raw.keystore);</span><br><span class="line">           KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">           keyStore.load(input, CERTFILE_PASSWORD.toCharArray());</span><br><span class="line">           Enumeration&lt;?&gt; localEnumeration;</span><br><span class="line">           localEnumeration = keyStore.aliases();</span><br><span class="line">           while (localEnumeration.hasMoreElements()) &#123;</span><br><span class="line">               String str3 = (String) localEnumeration.nextElement();</span><br><span class="line">               mPrivateKey = (PrivateKey) keyStore.getKey(str3,</span><br><span class="line">                       CERTFILE_PASSWORD.toCharArray());</span><br><span class="line">               if (mPrivateKey == null) &#123;</span><br><span class="line">                   continue;</span><br><span class="line">               &#125; else &#123;</span><br><span class="line">                   Certificate[] arrayOfCertificate = keyStore</span><br><span class="line">                           .getCertificateChain(str3);</span><br><span class="line">                   mX509Certificates = new X509Certificate[arrayOfCertificate.length];</span><br><span class="line">                   for (int j = 0; j &lt; mX509Certificates.length; j++) &#123;</span><br><span class="line">                       mX509Certificates[j] = ((X509Certificate) arrayOfCertificate[j]);</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; catch (NoSuchAlgorithmException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; catch (CertificateException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; catch (KeyStoreException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>这里在WebViewClient来区分4.0和5.0的不同点</em></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">webview.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            <span class="comment">//支持处理https请求，默认是handler.cancel();</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceivedSslError</span><span class="params">(WebView view, SslErrorHandler handler, SslError error)</span> </span>&#123;</span><br><span class="line">                handler.proceed();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">               <span class="comment">//5.0的处理            @TargetApi(Build.VERSION_CODES.LOLLIPOP)</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceivedClientCertRequest</span><span class="params">(WebView view, ClientCertRequest request)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.onReceivedClientCertRequest(view, request);</span><br><span class="line">                LogUtils.e(<span class="string">"msj"</span>, <span class="string">"onReceivedClientCertRequest"</span>);</span><br><span class="line">                request.proceed(mPrivateKey, mX509Certificates);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.0.3,4.1.2的处理 4.2.2,4.3.1使用类 WebViewClientClassicExt </span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceivedClientCertRequest</span><span class="params">(WebView view,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                    ClientCertRequestHandler handler, String host_and_port)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//注意该方法是调用的隐藏函数接口。这儿是整个验证的技术难点：就是如何调用隐藏类的接口。</span></span><br><span class="line">                    <span class="comment">//方法：去下载一个android4.2版本全编译后的class.jar 然后导入到工程中</span></span><br><span class="line">                <span class="keyword">if</span>(((mX509Certificates != <span class="keyword">null</span>) &amp;&amp; (mX509Certificates.length !=<span class="number">0</span>)))&#123;</span><br><span class="line">                    handler.proceed(mPrivateKey, mX509Certificates);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    handler.cancel();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>再书写4.0的时候会发现，有报错,有两种解决方式</em></strong></p>
+<ul>
+<li>到android 4.2 源码环境下编译</li>
+<li>去下载一个全编译的<a href="http://download.csdn.net/detail/u011930471/9660228" target="_blank" rel="noopener">class.jar</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">WebView</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Retrofit2介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -810,320 +1007,9 @@
 
 
   
-    <article id="post-weChat小程序开发工具和破解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/23/weChat小程序开发工具和破解/">weChat小程序开发工具和破解</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/23/weChat小程序开发工具和破解/" class="archive-article-date">
-  	<time datetime="2016-09-23T00:45:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>距离张小龙的那场首次公开演讲已经有九个月了，而在那场演讲中备受关注的「应用号」在千呼万唤中终于以「小程序」的名字正式对外小范围公测，不少创业者表示机会来了跃跃欲试。下面我也发个大招，给大家带波福利，</p>
-<h3 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h3><ul>
-<li>开发工具V0.9包含下面需要用到的替换文件包</li>
-</ul>
-<p>百度云盘：链接: <a href="https://pan.baidu.com/s/1boEtSJ1" target="_blank" rel="noopener">https://pan.baidu.com/s/1boEtSJ1</a> 密码: fa3f</p>
-<h3 id="破解步骤"><a href="#破解步骤" class="headerlink" title="破解步骤"></a>破解步骤</h3><ul>
-<li>下载开发工具，并安装（注意：一定要安装0.9版本）</li>
-<li>打开『微信Web开发者工具』的程序目录<ul>
-<li>Windows：使用资源管理器查看</li>
-<li>Mac：右键点击图标，选择『显示包内容』</li>
-</ul>
-</li>
-<li><p>进入程序目录后，替换以下文件（只需要替换0.9版本里的，0.7版本用来登陆）：</p>
-</li>
-<li><p>Windows：</p>
-<ul>
-<li>\package.nw\app\dist\components\create\createstep.js</li>
-<li>\package.nw\app\dist\stroes\projectStores.js</li>
-</ul>
-</li>
-<li>Mac：<ul>
-<li>/Resources/app.nw/app/dist/components/create/createstep.js</li>
-<li>/Resources/app.nw/app/dist/stroes/projectStores.js</li>
-</ul>
-</li>
-</ul>
-<h3 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h3><ul>
-<li>运行『微信Web开发者工具』</li>
-<li>通过微信扫描二维码</li>
-<li>创建项目<ul>
-<li>AppID：随便填</li>
-<li>项目名称：随便填</li>
-<li>本地开发目录：选择一个目录</li>
-</ul>
-</li>
-<li>点击「添加项目」<ul>
-<li>此时如果出错，先退出再重进</li>
-<li>此时，能够看到项目列表了</li>
-</ul>
-</li>
-<li>打开项目</li>
-<li>开始开发</li>
-</ul>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
-<li><p>找不到所要替换的文件</p>
-<ul>
-<li>问题原因：开发工具版本不正确，老版本不支持</li>
-<li>解决方案：确保下载的程序版本在0.9.092100以上</li>
-</ul>
-</li>
-<li><p>Failed to load resource: net::ERR_NAME_NOT_RESOLVED <a href="http://1709827360.appservice.open.weixin.qq.com/appservice" target="_blank" rel="noopener">http://1709827360.appservice.open.weixin.qq.com/appservice</a></p>
-<ul>
-<li>问题原因：通常是由于系统设置了代理如Shadowsocks等。</li>
-<li>解决方案：关闭代理，或者依次点击工具栏“动作”-“设置”，选择“不使用任何代理，勾选后直连网络”。</li>
-</ul>
-</li>
-<li>修复asdebug.js报错<ul>
-<li>问题原因：TypeError: Cannot read property ‘MaxRequestConcurrent’ of undefined</li>
-<li>解决方案：替换 /Resources/app.nw/app/dist/weapp/appservice/asdebug.js</li>
-</ul>
-</li>
-<li>扫码登录失败<ul>
-<li>问题原因：please bind your wechat account to the appid first</li>
-<li>解决方案：先使用0.7版本的进行扫码登陆，登陆成功后，再用0.9的版本打开就直接进入了。</li>
-</ul>
-</li>
-</ul>
-<h3 id="教程网址"><a href="#教程网址" class="headerlink" title="教程网址"></a>教程网址</h3><p><a href="http://wxopen.notedown.cn/?" target="_blank" rel="noopener">http://wxopen.notedown.cn/?</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端技术//" class="article-tag-list-link color5">前端技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MVVM框架简介和使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/MVVM框架简介和使用/">MVVM框架简介和使用</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/22/MVVM框架简介和使用/" class="archive-article-date">
-  	<time datetime="2016-09-22T08:09:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="MVVM简介"><a href="#MVVM简介" class="headerlink" title="MVVM简介"></a>MVVM简介</h3><p>MVVM是由MVC–&gt;MVP–&gt;MVVM一步步进化来的，那么先让我们了解下：MVC和MVP</p>
-<h4 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h4><p>MVC 即模型——视图——控制器。这样设计使得程序的各个部分分离降低耦合性，我们对代码的结构进行了划分。</p>
-<ul>
-<li>视图（View）：用户界面。</li>
-<li>控制器（Controller）：业务逻辑。</li>
-<li>模型（Model）：数据保存。</li>
-</ul>
-<p><img src="/img/android/mvvm/mvc.jpg"></p>
-<p>大概流程是，View传送指令到Controller，Controller完成业务逻辑后，要求Model改变状态，Model将新的数据发送到View，用户得到反馈。</p>
-<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h4><p><img src="/img/android/mvvm/mvp.jpg"></p>
-<p>Presenter 替换掉了Controller，不仅仅处理逻辑部分。而且还控制着View的刷新，监听Model层的数据变化。这样隔离掉View和Model的关系后使得View层变的非常的薄，没有任何的逻辑部分又不用主动监听数据，被称之为“被动视图”。</p>
-<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p><img src="/img/android/mvvm/mvvm.jpg"></p>
-<p>至于MVVM基本上和MVP一模一样，感觉只是名字替换了一下。他的关键技术就是今天的主题(Data Binding)。View的变化可以自动的反应在ViewModel，ViewModel的数据变化也会自动反应到View上。这样开发者就不用处理接收事件和View更新的工作，框架已经帮你做好了。</p>
-<h3 id="Data-Binding-Library"><a href="#Data-Binding-Library" class="headerlink" title="Data Binding Library"></a>Data Binding Library</h3><p>去年的Google IO 大会上，Android 团队发布了一个数据绑定框架（Data Binding Library）。以后可以直接在 layout 布局 xml 文件中绑定数据了，无需再 findViewById 然后手工设置数据了。其语法和使用方式和 JSP 中的 EL 表达式非常类似。 下面就来介绍怎么使用Data Binding Library。</p>
-<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>目前，最新版的Android Studio已经内置了该框架的支持，配置起来也很简单，只需要编辑app目录下的build.gradle文件，添加下面的内容就好了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ....</span><br><span class="line">    dataBinding &#123;</span><br><span class="line">        enabled = true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>要使用数据绑定，我们得首先创建一个实体类，比如User实体类，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class UserEntity &#123;</span><br><span class="line">    private String username;</span><br><span class="line">    private String nickname;</span><br><span class="line">    private int age;</span><br><span class="line"></span><br><span class="line">    public UserEntity() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getNickname() &#123;</span><br><span class="line">        return nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setNickname(String nickname) &#123;</span><br><span class="line">        this.nickname = nickname;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUsername() &#123;</span><br><span class="line">        return username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUsername(String username) &#123;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public UserEntity(int age, String nickname, String username) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">        this.nickname = nickname;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>下面我们来看看layout文件是需要怎么书写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;user&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding1.UserEntity&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;</span><br><span class="line">        tools:context=&quot;org.lenve.databinding1.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.username&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.nickname&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;String.valueOf(user.age)&#125;&quot;/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
-<p>你会发现布局文件不再是以传统的某一个容器作为根节点，而是使用<layout></layout>作为根节点，在<layout>节点中我们可以通过<data>节点来引入我们要使用的数据源。</data></layout></p>
-<ul>
-<li>在data中定义的variable节点，name属性表示变量的名称，type表示这个变量的类型，实例就是我们实体类的位置，当然，这里你也可以换一种写法，如下：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;data&gt;</span><br><span class="line"></span><br><span class="line">      &lt;import type=&quot;org.lenve.databinding1.UserEntity&quot;/&gt;</span><br><span class="line">      &lt;variable</span><br><span class="line">          name=&quot;user&quot;</span><br><span class="line">          type=&quot;UserEntity&quot;/&gt;</span><br><span class="line">  &lt;/data&gt;</span><br></pre></td></tr></table></figure>
-<p>先使用import节点将UserEntity导入，然后直接使用即可。但是如果这样的话又会有另外一个问题，假如我有两个类都是UserEntity，这两个UserEntity分属于不同的包中，又该如何？看下面：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;data&gt;</span><br><span class="line"></span><br><span class="line">     &lt;import type=&quot;org.lenve.databinding1.UserEntity&quot; alias=&quot;CentMeng&quot;/&gt;</span><br><span class="line">     &lt;variable</span><br><span class="line">         name=&quot;user&quot;</span><br><span class="line">         type=&quot;CentMeng&quot;/&gt;</span><br><span class="line"> &lt;/data&gt;</span><br></pre></td></tr></table></figure>
-<p>在import节点中还有一个属性叫做alias，这个属性表示我可以给该类取一个别名，我给UserEntity这个实体类取一个别名叫做Lenve，这样我就可以在variable节点中直接写CentMeng了。</p>
-<p>看完data节点我们再来看看布局文件，TextView的text属性被我直接设置为了@{user.username},这样，该TextView一会直接将UserEntity实体类的username属性的值显示出来，对于显示age的TextView，我用了String.valueOf来显示，因为大家知道TextView并不能直接显示int型数据，所以需要一个简单的转换，事实上，我们还可以在{}里边进行一些简单的运算，这些我一会再说。</p>
-<p>最后，我们来看看Activity中该怎么写，setContentView方法不能够再像以前那样来写了，换成下面的方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataBindingUtil.setContentView(this, R.layout.activity_main)</span><br></pre></td></tr></table></figure>
-<p>该方法有一个返回值，这个返回值就是系统根据我们的activity_main.xml布局生成的一个ViewModel类，所以完整写法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br></pre></td></tr></table></figure>
-<p>有了ViewModel，再把数据绑定上去就可以了，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br><span class="line">    UserEntity user = new UserEntity();</span><br><span class="line">    user.setAge(34);</span><br><span class="line">    user.setUsername(&quot;zhangsan&quot;);</span><br><span class="line">    user.setNickname(&quot;张三&quot;);</span><br><span class="line">    activityMainBinding.setUser(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="基本的运算"><a href="#基本的运算" class="headerlink" title="基本的运算"></a>基本的运算</h4><h5 id="基本三目运算"><a href="#基本三目运算" class="headerlink" title="基本三目运算"></a>基本三目运算</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">          android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">          android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">          android:text=&quot;@&#123;`username is :`+user.username&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p>两个??表示如果username属性为null则显示nickname属性，否则显示username属性。</p>
-<h5 id="字符拼接"><a href="#字符拼接" class="headerlink" title="字符拼接"></a>字符拼接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;`username is :`+user.username&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p><strong><em>这里的字符拼接不是用单引号哦，用的是ESC按键下面那个按键按出来的。目前DataBinding中的字符拼接还不支持中文。</em></strong></p>
-<h5 id="根据数据来决定显示样式"><a href="#根据数据来决定显示样式" class="headerlink" title="根据数据来决定显示样式"></a>根据数据来决定显示样式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:background=&quot;@&#123;user.age &amp;lt; 24 ? 0xFF0000FF:0xFFFF0000&#125;&quot;</span><br><span class="line">            android:text=&quot;@&#123;String.valueOf(user.age)&#125;&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p>我在这里给TextView设置背景的时候，做了一个简单的判断，如果用户的年龄小于24，背景就显示为蓝色，否则背景就显示为红色，DataBinding里支持小于号但是不支持大于号，索性，大于小于号我都用转义字符来表示。</p>
-<h5 id="其他运算"><a href="#其他运算" class="headerlink" title="其他运算"></a>其他运算</h5><p>基本四则运算，逻辑与、逻辑或、取反位移等</p>
-<ul>
-<li><p>数学表达式 + – / * %</p>
-</li>
-<li><p>字符串链接 +</p>
-</li>
-<li><p>逻辑操作符 &amp;&amp; ||</p>
-</li>
-<li><p>二元操作符 &amp; | ^</p>
-</li>
-<li><p>一元操作符 + – ! ~</p>
-</li>
-<li><p>Shift &gt;&gt; &gt;&gt;&gt; &lt;&lt;</p>
-</li>
-<li><p>比较 == &gt; &lt; &gt;= &lt;=&lt; p=””&gt;</p>
-</li>
-<li><p>instanceof</p>
-</li>
-<li><p>Grouping ()</p>
-</li>
-<li><p>Literals – character, String, numeric, null</p>
-</li>
-<li><p>值域引用（Field access）</p>
-</li>
-<li><p>通过[]访问数组里面的对象</p>
-</li>
-</ul>
-<h4 id="自定义绑定（ImageView绑定示例）"><a href="#自定义绑定（ImageView绑定示例）" class="headerlink" title="自定义绑定（ImageView绑定示例）"></a>自定义绑定（ImageView绑定示例）</h4><p>这里我们还得介绍DataBinding的另一项新功能，就是关于DataBinding自定义属性的问题，事实上，在我们使用DataBinding的时候，可以给一个控件自定义一个属性，比如我们下面即将说的这个绑定ImageView的案例。假设我现在想要通过Picasso显示一张网络图片，正常情况下这个显示很简单，可是如果我要通过DataBinding来实现，该怎么做呢？我们可以使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@BindingAdapter</span><br></pre></td></tr></table></figure>
-<p>注解来创建一个自定义属性，同时还要有一个配套的注解的方法。当我们在布局文件中使用这个自定义属性的时候，会触发这个被我们注解的方法，这样说大家可能还有一点模糊，我们来看看新的实体类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    private String username;</span><br><span class="line">    private String userface;</span><br><span class="line"></span><br><span class="line">    public User() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public User(String userface, String username) &#123;</span><br><span class="line">        this.userface = userface;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:userface&quot;)</span><br><span class="line">    public static void getInternetImage(ImageView iv, String userface) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(userface).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUserface() &#123;</span><br><span class="line">        return userface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUserface(String userface) &#123;</span><br><span class="line">        this.userface = userface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getUsername() &#123;</span><br><span class="line">        return username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUsername(String username) &#123;</span><br><span class="line">        this.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>新类里边只有两个属性，分别是用户名和用户图像，用户图像中存储的实际上是一个网络图片地址，这里除了基本的get/set方法之外还多了一个叫做getInternetImage的网络方法，这个方法有一个注解@BindAdapter(“bind:userface”)，该注解表示当用户在ImageView中使用自定义属性userface的时候，会触发这个方法，我在这个方法中来为这个ImageView加载一张图片，这里有一点需要注意，就是该方法必须为静态方法。OK，我们再来看看这次的布局文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;user&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding2.User&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;</span><br><span class="line">        tools:context=&quot;org.lenve.databinding2.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            app:userface=&quot;@&#123;user.userface&#125;&quot;&gt;&lt;/ImageView&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:text=&quot;@&#123;user.username&#125;&quot;/&gt;</span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
-<p><strong><em>在ImageView控件中使用userface属性的时候，使用的前缀不是android而是app。</em></strong>再来看看Activity中的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"> protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">     super.onCreate(savedInstanceState);</span><br><span class="line">     ActivityMainBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);</span><br><span class="line">     dataBinding.setUser(new User(&quot;http://img2.cache.netease.com/auto/2016/7/28/201607282215432cd8a.jpg&quot;, &quot;张三&quot;));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="绑定ListView"><a href="#绑定ListView" class="headerlink" title="绑定ListView"></a>绑定ListView</h4><p>现在google退出了RecyclerView，其实他和ListView的方式是一样的，通用的。</p>
-<p>下面是主体布局和item布局</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;org.lenve.databinding3.MainActivity&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ListView</span><br><span class="line">        android:id=&quot;@+id/lv&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;&gt;&lt;/ListView&gt;</span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line"></span><br><span class="line">    &lt;data&gt;</span><br><span class="line"></span><br><span class="line">        &lt;variable</span><br><span class="line">            name=&quot;food&quot;</span><br><span class="line">            type=&quot;org.lenve.databinding3.Food&quot;/&gt;</span><br><span class="line">    &lt;/data&gt;</span><br><span class="line"></span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;96dp&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;96dp&quot;</span><br><span class="line">            android:layout_height=&quot;96dp&quot;</span><br><span class="line">            android:padding=&quot;6dp&quot;</span><br><span class="line">            app:img=&quot;@&#123;food.img&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=&quot;@+id/description&quot;</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;8dp&quot;</span><br><span class="line">            android:layout_toRightOf=&quot;@id/iv&quot;</span><br><span class="line">            android:ellipsize=&quot;end&quot;</span><br><span class="line">            android:maxLines=&quot;3&quot;</span><br><span class="line">            android:text=&quot;@&#123;food.description&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;8dp&quot;</span><br><span class="line">            android:layout_toRightOf=&quot;@id/iv&quot;</span><br><span class="line">            android:layout_alignParentBottom=&quot;true&quot;</span><br><span class="line">            android:layout_marginBottom=&quot;2dp&quot;</span><br><span class="line">            android:text=&quot;@&#123;food.keywords&#125;&quot;</span><br><span class="line">            android:textStyle=&quot;bold&quot;/&gt;</span><br><span class="line">    &lt;/RelativeLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
-<p>其他的和上面介绍一样，这里就不粘贴代码了，我们主要看看adapter吧</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class MyBaseAdapter&lt;T&gt; extends BaseAdapter &#123;</span><br><span class="line">    private Context context;</span><br><span class="line">    private LayoutInflater inflater;</span><br><span class="line">    private int layoutId;</span><br><span class="line">    private int variableId;</span><br><span class="line">    private List&lt;T&gt; list;</span><br><span class="line"></span><br><span class="line">    public MyBaseAdapter(Context context, int layoutId, List&lt;T&gt; list, int resId) &#123;</span><br><span class="line">        this.context = context;</span><br><span class="line">        this.layoutId = layoutId;</span><br><span class="line">        this.list = list;</span><br><span class="line">        this.variableId = resId;</span><br><span class="line">        inflater = LayoutInflater.from(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line"></span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        return list.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object getItem(int position) &#123;</span><br><span class="line">        return list.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public long getItemId(int position) &#123;</span><br><span class="line">        return position;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public View getView(int position, View convertView, ViewGroup parent) &#123;</span><br><span class="line">        ViewDataBinding dataBinding;</span><br><span class="line">        if (convertView == null) &#123;</span><br><span class="line">            dataBinding = DataBindingUtil.inflate(inflater, layoutId, parent, false);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            dataBinding = DataBindingUtil.getBinding(convertView);</span><br><span class="line">        &#125;</span><br><span class="line">        dataBinding.setVariable(variableId, list.get(position));</span><br><span class="line">        return dataBinding.getRoot();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个大概算是Adapter的终极写法了，如果你按这种方式来写Adapter，那么如果没有非常奇葩的需求，你这个App中可能就只有这一个给ListView使用的Adapter了，为什么这么说呢？因为这个Adapter中没有一个变量和我们的ListView沾边，解释一下几个变量吧：layoutId这个表示item布局的资源id，variableId是系统自动生成的，根据我们的实体类，直接从外部传入即可。另外注意布局加载方式为DataBindingUtil类中的inflate方法。OK，最后再来看看Activity:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    private Handler mHandler = new Handler()&#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void handleMessage(Message msg) &#123;</span><br><span class="line">            MyBaseAdapter&lt;Food&gt; adapter = new MyBaseAdapter&lt;&gt;(MainActivity.this, R.layout.listview_item, foods, org.lenve.databinding3.BR.food);</span><br><span class="line">            lv.setAdapter(adapter);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    private List&lt;Food&gt; foods;</span><br><span class="line">    private ListView lv;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        lv = ((ListView) findViewById(R.id.lv));</span><br><span class="line">        initData();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void initData() &#123;</span><br><span class="line">        OkHttpClient client = new OkHttpClient.Builder().build();</span><br><span class="line">        Request request = new Request.Builder().url(&quot;http://www.tngou.net/api/food/list?id=1&quot;).build();</span><br><span class="line">        client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">                if (response.isSuccessful()) &#123;</span><br><span class="line">                    parseJson(response.body().string());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void parseJson(String jsonStr) &#123;</span><br><span class="line">        foods = new ArrayList&lt;&gt;();</span><br><span class="line">        try &#123;</span><br><span class="line">            JSONObject jo = new JSONObject(jsonStr);</span><br><span class="line">            JSONArray tngou = jo.getJSONArray(&quot;tngou&quot;);</span><br><span class="line">            for (int i = 0; i &lt; tngou.length(); i++) &#123;</span><br><span class="line">                JSONObject item = tngou.getJSONObject(i);</span><br><span class="line">                String description = item.getString(&quot;description&quot;);</span><br><span class="line">                String img = &quot;http://tnfs.tngou.net/image&quot;+item.getString(&quot;img&quot;);</span><br><span class="line">                String keywords = &quot;【关键词】 &quot;+item.getString(&quot;keywords&quot;);</span><br><span class="line">                String summary = item.getString(&quot;summary&quot;);</span><br><span class="line">                foods.add(new Food(description, img, keywords, summary));</span><br><span class="line">            &#125;</span><br><span class="line">            mHandler.sendEmptyMessage(0);</span><br><span class="line">        &#125; catch (JSONException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="点击事件处理"><a href="#点击事件处理" class="headerlink" title="点击事件处理"></a>点击事件处理</h4><p>如果你使用DataBinding，我们的点击事件也会有新的处理方式，首先以ListView为例来说说如何绑定点击事件，在listview_item布局文件中每一个item的根节点添加如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    &gt;</span><br><span class="line">	....</span><br><span class="line">	....</span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;96dp&quot;</span><br><span class="line">        android:onClick=&quot;@&#123;food.onItemClick&#125;&quot;</span><br><span class="line">        android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/iv&quot;</span><br><span class="line">            android:layout_width=&quot;96dp&quot;</span><br><span class="line">            android:layout_height=&quot;96dp&quot;</span><br><span class="line">            android:padding=&quot;6dp&quot;</span><br><span class="line">            app:img=&quot;@&#123;food.img&#125;&quot;/&gt;</span><br><span class="line">		....</span><br><span class="line">		....</span><br><span class="line">		....</span><br><span class="line">    &lt;/RelativeLayout&gt;</span><br><span class="line">&lt;/layout&gt;</span><br></pre></td></tr></table></figure>
-<p>OK，我给RelativeLayout容器添了onClick属性，属性的值为food.onItemClick，那么这个onItemClick到底是什么呢？其实就是在实体类Food中定义的一个方法，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void onItemClick(View view) &#123;</span><br><span class="line">       Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>点击item获取当前position的数据，获取方式也是非常简单，直接get方法获取即可，比传统的ListView的点击事件通过position来获取数据方便多了。如果我想为关键字这个TextView添加点击事件也很简单，和上面一样，这里我就不再贴代码了.</p>
-<h4 id="数据更新处理"><a href="#数据更新处理" class="headerlink" title="数据更新处理"></a>数据更新处理</h4><p>单纯的更新Food对象并不能改变ListView的UI显示效果，那该怎么做呢？Google给我们提供了三种解决方案，分别如下：</p>
-<h5 id="让实体类继承自BaseObservable-最常用"><a href="#让实体类继承自BaseObservable-最常用" class="headerlink" title="让实体类继承自BaseObservable (最常用)"></a>让实体类继承自BaseObservable (最常用)</h5><p>让实体类继承自BaseObservable，然后给需要改变的字段的get方法添加上@Bindable注解，然后给需要改变的字段的set方法加上notifyPropertyChanged(org.lenve.databinding3.BR.description);一句即可，比如我想点击item的时候把description字段的数据全部改为111，我可以修改Food类变为下面的样子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public class Food extends BaseObservable &#123;</span><br><span class="line">    private String description;</span><br><span class="line">    private String img;</span><br><span class="line">    private String keywords;</span><br><span class="line">    private String summary;</span><br><span class="line"></span><br><span class="line">    public Food() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Food(String description, String img, String keywords, String summary) &#123;</span><br><span class="line">        this.description = description;</span><br><span class="line">        this.img = img;</span><br><span class="line">        this.keywords = keywords;</span><br><span class="line">        this.summary = summary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:img&quot;)</span><br><span class="line">    public static void loadInternetImage(ImageView iv, String img) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(img).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onItemClick(View view) &#123;</span><br><span class="line">//        Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">        setDescription(&quot;111&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void clickKeywords(View view) &#123;</span><br><span class="line">        Toast.makeText(view.getContext(), getKeywords(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Bindable</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDescription(String description) &#123;</span><br><span class="line">        this.description = description;</span><br><span class="line">        notifyPropertyChanged(org.lenve.databinding3.BR.description);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getImg() &#123;</span><br><span class="line">        return img;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setImg(String img) &#123;</span><br><span class="line">        this.img = img;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getKeywords() &#123;</span><br><span class="line">        return keywords;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setKeywords(String keywords) &#123;</span><br><span class="line">        this.keywords = keywords;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSummary() &#123;</span><br><span class="line">        return summary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSummary(String summary) &#123;</span><br><span class="line">        this.summary = summary;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用DataBinding提供的ObservableFields来创建实体类"><a href="#使用DataBinding提供的ObservableFields来创建实体类" class="headerlink" title="使用DataBinding提供的ObservableFields来创建实体类"></a>使用DataBinding提供的ObservableFields来创建实体类</h4><p>这种方式使用起来略微麻烦，除了继承BaseObservable之外，创建属性的方式也变成下面这种：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final ObservableField&lt;String&gt; description = new ObservableField&lt;&gt;();</span><br></pre></td></tr></table></figure>
-<p>属性的读写方式也变了，读取方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">description.get()</span><br></pre></td></tr></table></figure>
-<p>写入方式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.description.set(description);</span><br></pre></td></tr></table></figure>
-<p>OK，依据上面几个规则，我新定义的实体类如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">public class Food extends BaseObservable &#123;</span><br><span class="line">    private final ObservableField&lt;String&gt; description = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; img = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; keywords = new ObservableField&lt;&gt;();</span><br><span class="line">    private final ObservableField&lt;String&gt; summary = new ObservableField&lt;&gt;();</span><br><span class="line">    public Food() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Food(String description, String img, String keywords, String summary) &#123;</span><br><span class="line">        this.description.set(description);</span><br><span class="line">        this.keywords.set(keywords);</span><br><span class="line">        this.img.set(img);</span><br><span class="line">        this.summary.set(summary);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BindingAdapter(&quot;bind:img&quot;)</span><br><span class="line">    public static void loadInternetImage(ImageView iv, String img) &#123;</span><br><span class="line">        Picasso.with(iv.getContext()).load(img).into(iv);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onItemClick(View view) &#123;</span><br><span class="line">//        Toast.makeText(view.getContext(), getDescription(), Toast.LENGTH_SHORT).show();</span><br><span class="line">        setDescription(&quot;111&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void clickKeywords(View view) &#123;</span><br><span class="line">        Toast.makeText(view.getContext(), getKeywords(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Bindable</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return description.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDescription(String description) &#123;</span><br><span class="line">        this.description.set(description);</span><br><span class="line">        notifyPropertyChanged(org.lenve.databinding3.BR.description);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getImg() &#123;</span><br><span class="line">        return img.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setImg(String img) &#123;</span><br><span class="line">        this.img.set(img);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getKeywords() &#123;</span><br><span class="line">        return keywords.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setKeywords(String keywords) &#123;</span><br><span class="line">        this.keywords.set(keywords);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getSummary() &#123;</span><br><span class="line">        return summary.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setSummary(String summary) &#123;</span><br><span class="line">        this.summary.set(summary);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用DataBinding中提供的集合来存储数据即可"><a href="#使用DataBinding中提供的集合来存储数据即可" class="headerlink" title="使用DataBinding中提供的集合来存储数据即可"></a>使用DataBinding中提供的集合来存储数据即可</h4><p>DataBinding中给我们提供了一些现成的集合，用来存储数据，比如ObservableArrayList，ObservableArrayMap，因为这些用的少，我这里就不做介绍了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 
@@ -1218,18 +1104,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -1239,6 +1113,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1254,7 +1140,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1262,19 +1148,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1282,11 +1156,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1294,11 +1172,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1307,6 +1193,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">

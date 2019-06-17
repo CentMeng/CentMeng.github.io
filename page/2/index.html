@@ -201,6 +201,180 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-starter制作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/05/starter制作/">SpringBoot starter制作</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/05/starter制作/" class="archive-article-date">
+  	<time datetime="2018-08-05T03:10:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>大家都知道，在spring-boot有众多starter。在传统Maven项目中通常将一些层、组件拆分为模块来管理，以便相互依赖复用，在spring-boot项目中我们则可以创建自定义spring-boot starter来达成该目的。<br>å</p>
+</blockquote>
+<p>这里我们做一个KafKa的starter来进行讲解，首先，我们先引入依赖，pom.xml如下</p>
+<ul>
+<li>pom.xml引入</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;com.zongjie&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-kafka-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.16.20&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;kafka_2.10&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;0.8.2.0&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.15&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;!-- Import dependency management from Spring Boot --&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;1.5.8.RELEASE&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/htmlsingle/#boot-features-custom-starter-naming" target="_blank" rel="noopener">Spring官方</a> Starter通常命名为spring-boot-starter-{name}如 spring-boot-starter-web， Spring官方建议非官方Starter命名应遵循{name}-spring-boot-starter的格式。</p>
+</blockquote>
+<ul>
+<li>写配置和service</li>
+</ul>
+<p>这里我们写kafka需要从application.properties读取的配置，在引用的项目中，配置即可</p>
+<p>以生产者为例的配置文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Vincent.M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@mail</span> mengshaojie@188.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/5/21</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@copyright</span> ©2018 孟少杰 All Rights Reserved</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(ProducerProperties.PREFIX)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProducerProperties</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PREFIX = <span class="string">"com.mq.kafka.producer"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String serializerClass;</span><br><span class="line">    <span class="keyword">private</span> String producerType;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxQueueBuffer;</span><br><span class="line">    <span class="keyword">private</span> String brokerList;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> requiredAck;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Properties <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="keyword">if</span> (serializerClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"serializer.class"</span>, serializerClass);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (producerType != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"producer.type"</span>, producerType);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (maxQueueBuffer &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"queue.buffering.max.ms"</span>, String.valueOf(maxQueueBuffer));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (brokerList != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"metadata.broker.list"</span>, brokerList);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (requiredAck &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"request.required.acks"</span>, String.valueOf(requiredAck));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> properties;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>service需要被引用的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public class KafkaProducer implements InitializingBean &#123;</span><br><span class="line"></span><br><span class="line">    private static ConcurrentHashMap&lt;String, ProducerWrapper&gt; producerWrapperMap = new ConcurrentHashMap&lt;String, ProducerWrapper&gt;();</span><br><span class="line"></span><br><span class="line">    ProducerProperties producerProperties;</span><br><span class="line"></span><br><span class="line">    public KafkaProducer(ProducerProperties producerProperties)&#123;</span><br><span class="line">        this.producerProperties = producerProperties;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 同步发送生产者数据</span><br><span class="line">     *</span><br><span class="line">     * @param topic    主题</span><br><span class="line">     * @param routeKey 消息分组的字段,为null会选择随机分组</span><br><span class="line">     * @param msg      消息体</span><br><span class="line">     */</span><br><span class="line">    public void send(KafkaTopics topic, String routeKey, String msg) &#123;</span><br><span class="line">        getProducer(topic.getTopic()).send(topic, routeKey, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 异步发送生产者数据，会先放到内存队列中再发送</span><br><span class="line">     *</span><br><span class="line">     * @param topic</span><br><span class="line">     * @param routeKey</span><br><span class="line">     * @param msg</span><br><span class="line">     */</span><br><span class="line">    public void sendAsync(KafkaTopics topic, String routeKey, String msg) &#123;</span><br><span class="line">        getProducer(topic.getTopic()).sendAsync(topic, routeKey, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取信息发送器</span><br><span class="line">     *</span><br><span class="line">     * @param topic</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    private  ProducerWrapper getProducer(String topic) &#123;</span><br><span class="line">        if (!producerWrapperMap.containsKey(topic)) &#123;</span><br><span class="line">            synchronized (producerWrapperMap) &#123;</span><br><span class="line">                if (!producerWrapperMap.containsKey(topic)) &#123;</span><br><span class="line">                    if (producerProperties != null) &#123;</span><br><span class="line">                        producerWrapperMap.put(topic, new ProducerWrapper(topic, producerProperties.getProperties()));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return producerWrapperMap.get(topic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void afterPropertiesSet() throws Exception &#123;</span><br><span class="line">        Assert.notNull(producerProperties, &quot;producerProperties &apos;producer&apos; is required&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/01/2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）/">2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/01/2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）/" class="archive-article-date">
+  	<time datetime="2018-01-01T03:17:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>不昧己心-古人云：“仰不愧于天，俯不怍于人。”做人做事，一定要不昧己心，做事光明磊落，不要背地里损害他人利益。<br></p>
+<p>不尽人情-是教我们凡事都要留有余地，事不能做尽、势不能用尽、福不能享尽、话不能说尽。所以《周易》中说，“上九，亢龙有悔”。<br></p>
+<p>不竭物力-这句话出自《淮南子•主术训》。意思是不要排尽湖中或池中的水来捕鱼，不要焚烧山林来猎取猎物。一方面上天有好生之德，人类向自然索取所需，但一定要遵循生态规律，这样才能和谐相处。如果一位索取，竭尽物力，等待我们的必然是大自然眼里的惩罚。国家可持续发展战略也因此。<br></p>
+</blockquote>
+<p><img src="/img/pic/2018/0.jpg"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年底了，到了评定和发年终奖的时候，总会想起2015年，当时决定来北京发展，在发年终奖前和公司提出离职，只为了能够让公司提前安排接手人员，避免影响“摇点”业务开发。可想而知，年终奖受到了影响，其实这个自己一开始就做好了准备。但当时觉得自己是个loser是在开年会时候，我一个奖都没得。当时想法自己离开这样的公司是值得的，所以也没有怨言。但过完年回到公司，统计每个人奖项的时候，部门负责人刘守建看到统计结果，发现没有我，于是找行政和副总理论，最终给我评定了奖项。虽然知道这个奖项有多么虚，但起码觉得对工作的付出得到了肯定。后来在北京创业失败，说走就走的旅行的时候，回到大连，又和“摇点”团队相聚，部门负责人改签了出差的火车票来聚会，其他小伙伴也是一呼即来。也是那次聚会才知道，我离职前，刘守建和公司副总吵架是因为我的年终奖太少而吵。不昧己心，终会有回报的。失去了部分年终奖，但得到众人的认可，同时“摇点”这个团队的每个人，都是最好的朋友、兄弟。尤其从项目经理李相禄那学到不少管理和处事经验，这也比钱重要的多。那一年为来北京打下了很好的基础。</p>
+<p><img src="/img/pic/2018/2.jpg"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016年，这一年创过业也失败过，这一年体会最深的就是“不尽人情”，也让自己吃了亏。这一年，是成长最快的一年，也因为成长，所以变的更加傲娇。等真正跌下来的时候，才发现自己陷入了迷茫和忧郁中，间接的影响了自己的生活，天天为自己的未来而迷茫，生怕自己被淘汰，无力去照顾自己想要照顾的人。这一段迷茫和忧郁期，从16年年底一直持续到17年年底。</p>
+<p><img src="/img/pic/2018/1.jpg"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017年，正如刚刚所说处在迷茫和忧郁中，这一年缺少一位真正能指引我发展道路的人，来告诉我该怎么走，才能有能力越来越好，能够让我有能力照顾我想照顾的人。这一年处处尝试，尝试大数据发展规划、尝试架构师发展规划、尝试咨询师发展规划，一直没有明确下来。到了年底，才想开，其实这一切都不冲突，就看路怎么走。当然，虽然在迷茫中，但工作技能还是得到了提升。总结起来2017年不是“不竭物力”，而是感恩。这一年的工作，由于自己原因，同时也因一些同事对自己的不理解，所以压力还是有的。也想过换工作，也有乙方和兄弟公司开条件让去他们那边。但最终都没有离开，虽然这里有一些自己看不惯的，但这里有一个能懂你的领导，并给你创造条件让你实现自己的价值。正如之前在“摇点”，虽然工资不高，但有李相禄在，每个成员也都过的很开心。有一些事，是钱不能相比的。当然，滴水之恩，当涌泉相报，在愿景还没实现就逃离，是不懂得感恩同时也是不负责任的。对于工作中，发生冲突的同事，虽然因为各种原因，你们选择接受我的想法和接受我的脾气，但我想说，我就是“知错改错不认错”，我的错，我知道，只是不承认。</p>
+<p><img src="/img/pic/2018/3.jpg"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2018年，是时候该对自己说说了，2018年，要把17年失去的追回来；2018年，要收收自己的脾气；2018年照着自己的规划，去完成自己的目标；2018年，做更好的自己。“不昧己心，不尽人情，不竭物力”。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">随笔集</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/随笔集//" class="article-tag-list-link color4">随笔集</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Maven私服上传多个jdk版本包即多profile配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -388,11 +562,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">问题解决</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">问题解决</a>
         		</li>
       		
 		</ul>
@@ -618,238 +792,9 @@
 
 
   
-    <article id="post-Java架构师-Maven安装和发布项目到私服" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/14/Java架构师-Maven安装和发布项目到私服/">Java架构师-Maven安装和发布项目到私服</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/14/Java架构师-Maven安装和发布项目到私服/" class="archive-article-date">
-  	<time datetime="2017-08-14T08:01:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>　私服是架设在局域网的一种特殊的远程仓库，目的是代理远程仓库及部署第三方构件。有了私服之后，当 Maven 需要下载构件时，直接请求私服，私服上存在则下载到本地仓库；否则，私服请求外部的远程仓库，将构件下载到私服，再提供给本地仓库下载。我们可以使用专门的 Maven 仓库管理软件来搭建私服，比如：Apache Archiva，Artifactory，Sonatype Nexus。这里我们使用 Sonatype Nexus。</p>
-</blockquote>
-<h2 id="安装Maven"><a href="#安装Maven" class="headerlink" title="安装Maven"></a>安装Maven</h2><blockquote>
-<p>此处不是重点，大家可以自行百度</p>
-</blockquote>
-<h2 id="安装Nexus"><a href="#安装Nexus" class="headerlink" title="安装Nexus"></a>安装Nexus</h2><blockquote>
-<p>Nexus 专业版是需要付费的，这里我们下载开源版 Nexus OSS。<a href="http://www.sonatype.org/nexus/go" target="_blank" rel="noopener">http://www.sonatype.org/nexus/go</a></p>
-</blockquote>
-<p>环境准备：Linux服务器，JDK1.8</p>
-<h3 id="下载最新版本，解压放到-usr-local-nexus3"><a href="#下载最新版本，解压放到-usr-local-nexus3" class="headerlink" title="下载最新版本，解压放到/usr/local/nexus3"></a>下载最新版本，解压放到/usr/local/nexus3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nexus-3.5.0-02-unix.tar.gz</span><br><span class="line">mv nexus-3.5.0-02 /usr/local/nexus3</span><br></pre></td></tr></table></figure>
-<h3 id="启动Nexus"><a href="#启动Nexus" class="headerlink" title="启动Nexus"></a>启动Nexus</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 进入nexus3/bin目录</span><br><span class="line">./nexus run &amp;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>另外中途遇到一个坑，由于习惯不使用root用户，单独创建个用户，即使添加到root组依然不能执行sudo命令。需要在/etc/sudoers中添加创建的用户，保存使用wq!</p>
-</blockquote>
-<h3 id="验证启动"><a href="#验证启动" class="headerlink" title="验证启动"></a>验证启动</h3><p>默认网址:<a href="http://192.168.80.182:8081/(需换成自己ip)" target="_blank" rel="noopener">http://192.168.80.182:8081/(需换成自己ip)</a></p>
-<p>默认用户名和密码：admin/admin123</p>
-<h2 id="发布项目到私服"><a href="#发布项目到私服" class="headerlink" title="发布项目到私服"></a>发布项目到私服</h2><h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><blockquote>
-<p>在创建仓库我们先了解下几个概念：</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>仓库类型<ul>
-<li>hosted 宿主仓库：主要用于部署无法从公共仓库获取的构件（如 oracle 的 JDBC 驱动）以及自己或第三方的项目构件；</li>
-<li>proxy 代理仓库：代理中央Maven仓库，当PC访问中央库的时候，先通过Proxy下载到Nexus仓库，然后再从Nexus仓库下载到PC本地。这样的优势只要其中一个人从中央库下来了，以后大家都是从Nexus私服上进行下来，私服一般部署在内网，这样大大节约的宽带。</li>
-<li>group 仓库组：Nexus 通过仓库组的概念统一管理多个仓库，这样我们在项目中直接请求仓库组即可请求到仓库组管理的多个仓库。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<p>具体创建步骤：</p>
-<ul>
-<li>创建仓库：</li>
-</ul>
-<p><img src="/img/java/nexus/picture/1.png"></p>
-<ul>
-<li>创建宿主仓库：</li>
-</ul>
-<p><img src="/img/java/nexus/picture/2.png"></p>
-<ul>
-<li>name输入msj-realease ，版本控制选择realease</li>
-</ul>
-<p><img src="/img/java/nexus/picture/3.png"></p>
-<ul>
-<li>重复第一二三步，创建msj-snapshots,版本控制选择snapshots，最终如下图</li>
-</ul>
-<p><img src="/img/java/nexus/picture/4.png"></p>
-<h3 id="pom配置"><a href="#pom配置" class="headerlink" title="pom配置"></a>pom配置</h3><p>添加如下配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置发布到私服 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">distributionManagement</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">id</span>&gt;</span>msj-realease<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">name</span>&gt;</span>Release Repository of msj<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.80.182:8081/repository/msj-realease/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">id</span>&gt;</span>msj-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">name</span>&gt;</span>Snapshot Repository of msj<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://192.168.80.182:8081/repository/msj-snapshots/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">snapshotRepository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">distributionManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>url是点对应仓库的copy按钮，会出现相应的url</p>
-</blockquote>
-<p><img src="/img/java/nexus/picture/5.png"></p>
-<h3 id="配置本地maven（非服务器maven）"><a href="#配置本地maven（非服务器maven）" class="headerlink" title="配置本地maven（非服务器maven）"></a>配置本地maven（非服务器maven）</h3><ul>
-<li>settings.xml 中增加如下信息</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">id</span>&gt;</span>msj-realease<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">id</span>&gt;</span>msj-snapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">password</span>&gt;</span>admin123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="部署仓库"><a href="#部署仓库" class="headerlink" title="部署仓库"></a>部署仓库</h3><p>项目根目录，执行mvn deploy命令</p>
-<p><img src="/img/java/nexus/picture/6.png"></p>
-<h3 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h3><p><img src="/img/java/nexus/picture/7.png"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java架构师</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Swagger2集成" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/13/Swagger2集成/">Swagger2集成</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/13/Swagger2集成/" class="archive-article-date">
-  	<time datetime="2017-07-13T03:04:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务。总体目标是使客户端和文件系统作为服务器以同样的速度来更新。文件的方法，参数和模型紧密集成到服务器端的代码，允许API来始终保持同步。Swagger 让部署管理和使用功能强大的API从未如此简单。</p>
-</blockquote>
-<ul>
-<li>Swagger2生成的api页面</li>
-</ul>
-<p><img src="/img/java/swagger/picture/swaggerui.png"></p>
-<h2 id="Swagger集成（Spring-boot）"><a href="#Swagger集成（Spring-boot）" class="headerlink" title="Swagger集成（Spring boot）"></a>Swagger集成（Spring boot）</h2><ul>
-<li>添加Swagger2依赖</li>
-</ul>
-<blockquote>
-<p>在pom.xml中加入Swagger2的依赖</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- swagger2  --&gt;</span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</span><br><span class="line">           &lt;version&gt;2.2.2&lt;/version&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</span><br><span class="line">           &lt;version&gt;2.2.2&lt;/version&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br><span class="line">       &lt;!-- swagger2 --&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建Swagger2配置类</li>
-</ul>
-<blockquote>
-<p>在Application.java同级创建Swagger2的配置类Swagger2</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author Vincent.M</span><br><span class="line"> * @mail mengshaojie@188.com</span><br><span class="line"> * @date 17/7/12</span><br><span class="line"> * @copyright ©2017 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc @Configuration注解，让Spring来加载该类配置。再通过@EnableSwagger2注解来启用Swagger2。</span><br><span class="line"> * 再通过createRestApi函数创建Docket的Bean之后，apiInfo()用来创建该Api的基本信息（这些基本信息会展现在文档页面中）。select()函数返回一个ApiSelectorBuilder实例用来控制哪些接口暴露给Swagger来展现，本例采用指定扫描的包路径来定义，Swagger会扫描该包下所有Controller定义的API，并产生文档内容（除了被@ApiIgnore指定的请求）。</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">@EnableSwagger2</span><br><span class="line">public class Swagger2 &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Docket createRestApi() &#123;</span><br><span class="line">        return new Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(&quot;com.msj.fuxi&quot;))</span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">    private ApiInfo apiInfo() &#123;</span><br><span class="line">        return new ApiInfoBuilder()</span><br><span class="line">                .title(&quot;Spring Boot中使用Swagger2构建RESTful APIs&quot;)</span><br><span class="line">                .description(&quot;更多Spring Boot相关文章请关注：http://blog.didispace.com/&quot;)</span><br><span class="line">                .termsOfServiceUrl(&quot;http://centmeng.github.io&quot;)</span><br><span class="line">                .contact(&quot;孟少杰&quot;)</span><br><span class="line">                .version(&quot;1.0&quot;)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Controller中添加注解</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@ApiOperation(value=&quot;菜单列表页面&quot;, notes=&quot;返回子菜单列表&quot;)</span><br><span class="line">@RequestMapping(value = &quot;menu&quot;, method = RequestMethod.GET)</span><br><span class="line">@PrivilegeRequired(value = &#123;&quot;admin&quot;,&quot;menu_detail&quot;&#125;)</span><br><span class="line">public ModelAndView listMenu() &#123;</span><br><span class="line">    ModelAndView result = new ModelAndView();</span><br><span class="line">    List&lt;Menu&gt; subMenus = menuService.findBySubMenu();</span><br><span class="line">    result.addObject(&quot;subMenus&quot;,subMenus);</span><br><span class="line">    result.setViewName(&quot;datadic/menu/list&quot;);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@ApiOperation(value=&quot;修改菜单列表&quot;, notes=&quot;返回菜单信息，和父菜单信息&quot;)</span><br><span class="line">@ApiImplicitParam(name = &quot;id&quot;, value = &quot;菜单id&quot;, required = true, dataType = &quot;String&quot;)</span><br><span class="line">@RequestMapping(value = &quot;menu/edit/&#123;id&#125;&quot;, method = RequestMethod.GET)</span><br><span class="line">@PrivilegeRequired(value = &#123;&quot;admin&quot;,&quot;menu_modify&quot;&#125;)</span><br><span class="line">public ModelAndView editZichanTypeDic(@PathVariable String id) &#123;</span><br><span class="line">    ModelAndView result = new ModelAndView();</span><br><span class="line">    List&lt;Menu&gt; subMenus = menuService.findBySubMenu();</span><br><span class="line">    result.addObject(&quot;subMenus&quot;,subMenus);</span><br><span class="line">    Menu menu = menuService.getById(id);</span><br><span class="line">    if (menu == null) &#123;</span><br><span class="line">        return new ModelAndView(&quot;datadic/menu/list&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;Menu&gt; menus = menuService.findByParent(&quot;&quot;);</span><br><span class="line">    result.setViewName(&quot;datadic/menu/edit&quot;);</span><br><span class="line">    result.addObject(&quot;menu&quot;, menu);</span><br><span class="line">    result.addObject(&quot;create&quot;, false);</span><br><span class="line">    result.addObject(&quot;parentMenu&quot;, menus);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@RequestMapping(value = &quot;menu/create&quot;, method = RequestMethod.GET)</span><br><span class="line">@PrivilegeRequired(value = &#123;&quot;admin&quot;,&quot;menu_create&quot;&#125;)</span><br><span class="line">public ModelAndView createZichanTypeDic() &#123;</span><br><span class="line">    ModelAndView result = new ModelAndView();</span><br><span class="line">    List&lt;Menu&gt; subMenus = menuService.findBySubMenu();</span><br><span class="line">    result.addObject(&quot;subMenus&quot;,subMenus);</span><br><span class="line">    result.setViewName(&quot;datadic/menu/edit&quot;);</span><br><span class="line">    Menu menu = new Menu();</span><br><span class="line">    List&lt;Menu&gt; menus = menuService.findByParent(&quot;&quot;);</span><br><span class="line">    result.addObject(&quot;menu&quot;, menu);</span><br><span class="line">    result.addObject(&quot;create&quot;, true);</span><br><span class="line">    result.addObject(&quot;parentMenu&quot;, menus);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @param pageSize</span><br><span class="line"> * @param startIndex</span><br><span class="line"> * @param sEcho</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@ApiOperation(value=&quot;菜单列表&quot;, notes=&quot;分页处理&quot;)</span><br><span class="line">@ApiImplicitParams(&#123;</span><br><span class="line">        @ApiImplicitParam(name = &quot;iDisplayLength&quot;, value = &quot;每页条数&quot;, required = true, dataType = &quot;int&quot;),</span><br><span class="line">        @ApiImplicitParam(name = &quot;iDisplayStart&quot;, value = &quot;起始数&quot;, required = true, dataType = &quot;int&quot;),</span><br><span class="line">        @ApiImplicitParam(name = &quot;sEcho&quot;, value = &quot;&quot;, required = true, dataType = &quot;int&quot;)</span><br><span class="line">&#125;)</span><br><span class="line">@RequestMapping(value = &quot;menu/getData&quot;, method = RequestMethod.GET)</span><br><span class="line">@ResponseBody</span><br><span class="line">@PrivilegeRequired(value = &#123;&quot;admin&quot;,&quot;menu_detail&quot;&#125;)</span><br><span class="line">public TableData&lt;Menu&gt; getMenuData(@RequestParam(&quot;iDisplayLength&quot;) int pageSize,</span><br><span class="line">                                         @RequestParam(&quot;iDisplayStart&quot;) int startIndex,</span><br><span class="line">                                         @RequestParam(&quot;sEcho&quot;) int sEcho) &#123;</span><br><span class="line">    Sort sort = new Sort(Sort.Direction.ASC, &quot;orderId&quot;);</span><br><span class="line">    Pageable pageable = new PageRequest(startIndex / pageSize, pageSize, sort);</span><br><span class="line">    PagedResult&lt;Menu&gt; pageableResult = menuService.list(pageable);</span><br><span class="line">    return new TableData&lt;&gt;(pageableResult, sEcho + 1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>完成上述代码添加上，启动Spring Boot程序，访问：<a href="http://localhost:8080/swagger-ui.html。就能看到前文所展示的RESTful" target="_blank" rel="noopener">http://localhost:8080/swagger-ui.html。就能看到前文所展示的RESTful</a> API的页面。我们也可以在此页面对接口进行测试。</p>
-<p><img src="/img/java/swagger/picture/swagger测试接口.png"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java架构师</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -944,18 +889,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -965,6 +898,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -980,7 +925,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -988,19 +933,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1008,11 +941,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1020,11 +957,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1033,6 +978,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">

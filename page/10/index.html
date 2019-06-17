@@ -201,6 +201,255 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-移动端主流框架" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/10/移动端主流框架/">移动端主流框架</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/10/移动端主流框架/" class="archive-article-date">
+  	<time datetime="2016-08-10T06:53:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/html.jpg"></p>
+<h3 id="开发主流框架"><a href="#开发主流框架" class="headerlink" title="开发主流框架"></a>开发主流框架</h3><ul>
+<li>touchweb（手机网站）</li>
+<li>web-app（phoneGap appcan 打包成安卓apk 和 苹果ios格式）</li>
+<li>hybrid-app（主流）</li>
+<li>native-app</li>
+</ul>
+<h3 id="主流的css框架"><a href="#主流的css框架" class="headerlink" title="主流的css框架"></a>主流的css框架</h3><ul>
+<li><a href="http://www.bootcss.com" target="_blank" rel="noopener">bootstrap</a> </li>
+<li><a href="https://github.com/CentMeng/animate.css" target="_blank" rel="noopener">css动画</a></li>
+<li><a href="http://nec.netease.com/framework" target="_blank" rel="noopener">其他框架</a></li>
+<li><a href="http://fontawesome.io" target="_blank" rel="noopener">icon字体 fontawesome</a></li>
+<li><a href="http://www.iconfont.cn" target="_blank" rel="noopener">icon字体 iconfont</a></li>
+<li>css 和 SASS 和 Less框架</li>
+</ul>
+<h3 id="主流的js框架"><a href="#主流的js框架" class="headerlink" title="主流的js框架"></a>主流的js框架</h3><ul>
+<li><a href="http://zeptojs.com" target="_blank" rel="noopener">zeptiojs</a></li>
+</ul>
+<p>  Jquery中方法基本都有，特点是非常的小，加载快缺点是不支持IE浏览器</p>
+<ul>
+<li><a href="http://jgestures.codeplex.com" target="_blank" rel="noopener">jGestures</a> (手势识别)</li>
+</ul>
+<p>事件简介</p>
+<hr>
+<p>orientationchange 代表设备顺时针或者逆时针旋转.此事件可以被设备触发,可能使用的是重力传感器.</p>
+<p>pinch 缩放手势(两个手指在屏幕上的相对运动)</p>
+<p>rotate 旋转手势(两个手指顺时针或者逆时针旋转)</p>
+<p>swipemove 在正在滑动时触发(在设备屏幕上移动手指,比如:拖动)</p>
+<p>swipeone 单点滑动手势,滑动完成后触发(一个手指在屏幕上移动)</p>
+<p>swipetwo 两点滑动(两个手指在屏幕上方向一致的滑动)</p>
+<p>swipethree 三点滑动(三个手指在屏幕上方向一致的滑动)</p>
+<p>swipefour 四点滑动(四个手指在屏幕上方向一致的滑动)</p>
+<p>swipeup 向上滑动,在严格的向上滑动手势完成后触发</p>
+<p>swiperightup 向右上角滑动,在向右且向上的滑动手势完成后触发</p>
+<p>swiperight 向右滑动,在严格的向右滑动手势完成后触发</p>
+<p>swiperightdown 向右下角滑动,在向右且向下的滑动手势完成后触发</p>
+<p>swipedown 向下滑动,在严格的向下滑动手势完成后触发</p>
+<p>swipeleftdown 向左下角滑动,在向左且向下的滑动手势完成后触发</p>
+<p>swipeleft 向左滑动,在严格的向左滑动手势完成后触发</p>
+<p>swipeleftup 向左上角滑动,在向左且向上的滑动手势完成后触发</p>
+<p>tapone 在单个手指轻点的手势后触发</p>
+<p>taptwo 在两个手指一起轻点的手势后触发</p>
+<p>tapthree 在三个手指一起轻点的手势后触发</p>
+<p>pinchopen 撑开手势,当两个手指撑大并离开设备时触发.</p>
+<p>pinchclose 捏紧手势,当两个手指捏紧并离开设备时触发.</p>
+<p>rotatecw 两个手指顺时针旋转并且离开屏幕时触发(two fingers rotating clockwise)</p>
+<p>rotateccw 两个手指逆时针旋转并且离开屏幕时触发 (two fingers rotating counterclockwise)</p>
+<p>shake 当检测到设备正在摇晃时触发</p>
+<p>shakefrontback 当检测到摇晃动作，且可以被解读为前后移动之时触发.</p>
+<p>shakeleftright 当检测到摇晃动作，且可以被解读为左右移动之时触发.</p>
+<p>shakeupdown 当检测到摇晃动作，且可以被解读为上下移动之时触发.</p>
+<p>关于swipe，我上一篇文章已经介绍过了，<a href="http://www.haorooms.com/post/jquery_scroll_upanddown" target="_blank" rel="noopener">http://www.haorooms.com/post/jquery_scroll_upanddown</a></p>
+<p>当页面有滚动条的时候，swipe的up,down，left,right可能会不触发！事件会被滚动事件覆盖掉！</p>
+<hr>
+<p>事件用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script&gt;</span><br><span class="line">jQuery(document).ready(function () &#123;</span><br><span class="line">             jQuery(window).bind(&apos;shakeupdown&apos;,function(event_,data_)&#123;</span><br><span class="line">                alert(&apos;shake: &apos;+ data_.description)</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="www.swiper.com.cn">swiper</a> (滚动效果，就类似于现在H5宣传滑动跳转页面一样)</p>
+</li>
+<li><p>iSroll.js</p>
+</li>
+</ul>
+<h3 id="移动开发流行框架"><a href="#移动开发流行框架" class="headerlink" title="移动开发流行框架"></a>移动开发流行框架</h3><ul>
+<li><a href="http://api.jquerymobile.com/" target="_blank" rel="noopener">jqueryMobile</a> (缺点下拉框反应比较慢)</li>
+</ul>
+<ul>
+<li><p><a href="https://github.com/01org/appframework" target="_blank" rel="noopener">app framework</a></p>
+</li>
+<li><p><a href="http://sencha.com/" target="_blank" rel="noopener">senchtouch</a>（桌面程序）</p>
+</li>
+<li><p><a href="http://mobileangularui.com/docs/" target="_blank" rel="noopener">mobileangularui</a></p>
+</li>
+<li><p><a href="http://phonegap.com/" target="_blank" rel="noopener">phonegap</a></p>
+</li>
+<li><p><a href="http://www.appcan.cn/" target="_blank" rel="noopener">appcan</a></p>
+</li>
+<li><p><a href="http://amazeui.org/" target="_blank" rel="noopener">妹子UI</a></p>
+</li>
+<li><p><a href="http://gmu.baidu.com/" target="_blank" rel="noopener">百度GMU</a></p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">框架</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端技术//" class="article-tag-list-link color5">前端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-spring-boot-分页查询（关联表）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/08/spring-boot-分页查询（关联表）/">spring-boot 分页查询（关联表）</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/08/spring-boot-分页查询（关联表）/" class="archive-article-date">
+  	<time datetime="2016-08-08T14:27:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/java.jpg"></p>
+<p>引言：由于公司转型，使我原本android开发工程师，转变为后台开发工程师，对于后台，除了大学利用servlet写过些项目，其他就一无所知。公司使用<a href="http://projects.spring.io/spring-boot/" target="_blank" rel="noopener">spring-boot</a>框架.那么spring-boot框架究竟是什么呢？Spring-boot是微框架，是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。好了废话不说了，下面讲讲分页实例吧。</p>
+<h3 id="首先我们创建两个实例（表）"><a href="#首先我们创建两个实例（表）" class="headerlink" title="首先我们创建两个实例（表）"></a>首先我们创建两个实例（表）</h3><p>TestPage 和TestPageRef，其中TestPageRef关联TestPage的Id,其中这两个表都继承TimeScopeEntity（增加了id和创建时间字段）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 分页测试表</span><br><span class="line"> * @author  CentMeng &lt;mengshaojie@188.com&gt;</span><br><span class="line"> * @date    Aug 8, 2016 3:30:45 PM</span><br><span class="line"> * @copyright ©2016 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc  </span><br><span class="line"> */</span><br><span class="line">@Data</span><br><span class="line">@NoArgsConstructor</span><br><span class="line">@AllArgsConstructor</span><br><span class="line">@Entity</span><br><span class="line">@Table(name = &quot;T_TESTPAGE&quot;)</span><br><span class="line">public class TestPage extends TimeScopeEntity&#123;</span><br><span class="line">    </span><br><span class="line">    private String name;</span><br><span class="line">    </span><br><span class="line">    private String content;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 分页测试表关联表</span><br><span class="line"> * @author  CentMeng &lt;mengshaojie@188.com&gt;</span><br><span class="line"> * @date    Aug 8, 2016 3:30:45 PM</span><br><span class="line"> * @copyright ©2016 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc  </span><br><span class="line"> */</span><br><span class="line">@Data</span><br><span class="line">@NoArgsConstructor</span><br><span class="line">@AllArgsConstructor</span><br><span class="line">@Entity</span><br><span class="line">@Table(name = &quot;T_TESTPAGEREF&quot;)</span><br><span class="line">public class TestPageRef extends TimeScopeEntity&#123;</span><br><span class="line">    </span><br><span class="line">    private String testId;</span><br><span class="line">    </span><br><span class="line">    private boolean enabled;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="写Dao层接口，主要是继承PagingAndSortingRepository"><a href="#写Dao层接口，主要是继承PagingAndSortingRepository" class="headerlink" title="写Dao层接口，主要是继承PagingAndSortingRepository"></a>写Dao层接口，主要是继承PagingAndSortingRepository</h3><p>这里我们写一个获取list的方法接口,返回的是Page对象</p>
+<p>也可以返回某些字段，将t，替换成t.id,t.content等等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import javax.transaction.Transactional;</span><br><span class="line">import net.luoteng.muser.entity.TestPage;</span><br><span class="line">import org.springframework.data.domain.Page;</span><br><span class="line">import org.springframework.data.domain.Pageable;</span><br><span class="line">import org.springframework.data.jpa.repository.Query;</span><br><span class="line">import org.springframework.data.repository.PagingAndSortingRepository;</span><br><span class="line">import org.springframework.data.repository.query.Param;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 分页测试</span><br><span class="line"> * @author  CentMeng &lt;mengshaojie@188.com&gt;</span><br><span class="line"> * @date    Aug 8, 2016 3:39:55 PM</span><br><span class="line"> * @copyright ©2016 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc  </span><br><span class="line"> */</span><br><span class="line">@Transactional</span><br><span class="line">public interface TestRepository extends PagingAndSortingRepository&lt;TestPage,String&gt;&#123;</span><br><span class="line">    @Query(&quot;select t from TestPage t,TestPageRef r where t.id = r.testId and r.enabled = :enabled&quot;)</span><br><span class="line">    public Page&lt;TestPage&gt; findList( @Param(&quot;enabled&quot;) boolean enabled,Pageable pageable);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="写Service层"><a href="#写Service层" class="headerlink" title="写Service层"></a>写Service层</h3><p>Service层要分接口层和实现层，springboot的注入为接口注入</p>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package net.luoteng.muser.service;</span><br><span class="line"></span><br><span class="line">import net.luoteng.muser.common.PageResult;</span><br><span class="line">import net.luoteng.muser.entity.TestPage;</span><br><span class="line">import org.springframework.data.domain.Pageable;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *</span><br><span class="line"> * 分页测试</span><br><span class="line"> * @author  CentMeng &lt;mengshaojie@188.com&gt;</span><br><span class="line"> * @date    Aug 8, 2016 3:37:51 PM</span><br><span class="line"> * @copyright ©2016 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc  </span><br><span class="line"> */</span><br><span class="line">public interface TestService &#123;</span><br><span class="line">    </span><br><span class="line">      public PageResult&lt;TestPage&gt; list(boolean enabled,Pageable pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line">import javax.transaction.Transactional;</span><br><span class="line">import net.luoteng.muser.common.PageResult;</span><br><span class="line">import net.luoteng.muser.dao.TestRepository;</span><br><span class="line">import net.luoteng.muser.entity.TestPage;</span><br><span class="line">import net.luoteng.muser.service.TestService;</span><br><span class="line">import org.apache.commons.collections.CollectionUtils;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.data.domain.Page;</span><br><span class="line">import org.springframework.data.domain.Pageable;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *</span><br><span class="line"> * @author  CentMeng &lt;mengshaojie@188.com&gt;</span><br><span class="line"> * @date    Aug 8, 2016 4:21:25 PM</span><br><span class="line"> * @copyright ©2016 孟少杰 All Rights Reserved</span><br><span class="line"> * @desc  </span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">@Transactional</span><br><span class="line">public class TestImpl implements TestService&#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    TestRepository testRepository;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public PageResult&lt;TestPage&gt; list(boolean enabled, Pageable pageable) &#123;</span><br><span class="line">      Page&lt;TestPage&gt; testPages = testRepository.findList(enabled,pageable);</span><br><span class="line">        List&lt;TestPage&gt; tests = testPages.getContent();</span><br><span class="line"></span><br><span class="line">        if (!CollectionUtils.isEmpty(tests)) &#123;</span><br><span class="line">            PageResult pageResult = new PageResult(tests, testPages.getTotalElements());</span><br><span class="line">            return pageResult;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Page返回参数说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;content&quot;:[</span><br><span class="line">    &#123;&quot;id&quot;:123,&quot;title&quot;:&quot;blog122&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:122,&quot;title&quot;:&quot;blog121&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:121,&quot;title&quot;:&quot;blog120&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:120,&quot;title&quot;:&quot;blog119&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:119,&quot;title&quot;:&quot;blog118&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:118,&quot;title&quot;:&quot;blog117&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:117,&quot;title&quot;:&quot;blog116&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:116,&quot;title&quot;:&quot;blog115&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:115,&quot;title&quot;:&quot;blog114&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:114,&quot;title&quot;:&quot;blog113&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:113,&quot;title&quot;:&quot;blog112&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:112,&quot;title&quot;:&quot;blog111&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:111,&quot;title&quot;:&quot;blog110&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:110,&quot;title&quot;:&quot;blog109&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;,</span><br><span class="line">    &#123;&quot;id&quot;:109,&quot;title&quot;:&quot;blog108&quot;,&quot;content&quot;:&quot;this is blog content&quot;&#125;],</span><br><span class="line">  &quot;last&quot;:false,</span><br><span class="line">  &quot;totalPages&quot;:9,</span><br><span class="line">  &quot;totalElements&quot;:123,</span><br><span class="line">  &quot;size&quot;:15,</span><br><span class="line">  &quot;number&quot;:0,</span><br><span class="line">  &quot;first&quot;:true,</span><br><span class="line">  &quot;sort&quot;:[&#123;</span><br><span class="line">    &quot;timeCreated&quot;:&quot;DESC&quot;,</span><br><span class="line">  &#125;],</span><br><span class="line">  &quot;numberOfElements&quot;:15</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以id倒序排列的10条数据</p>
+<p>当前页不是最后一页，后面还有数据</p>
+<p>总共有9页</p>
+<p>每页大小为15</p>
+<p>当前页为第0页</p>
+<p>当前页是第一页</p>
+<p>当前页是以id倒序排列的</p>
+<p>当前页一共有15条数据</p>
+<h3 id="Controller层"><a href="#Controller层" class="headerlink" title="Controller层"></a>Controller层</h3><p>关键代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">   TestService testService;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">    *</span><br><span class="line">    * @param page</span><br><span class="line">    * @param pageSize</span><br><span class="line">    * @return</span><br><span class="line">    */</span><br><span class="line">   @RequestMapping(value = &quot;/test/page&quot;, method = RequestMethod.GET)</span><br><span class="line">   public RestResponse testPage(</span><br><span class="line">           @RequestParam(value = &quot;page&quot;, defaultValue = &quot;0&quot;) Integer page,</span><br><span class="line">           @RequestParam(value = &quot;pageSize&quot;, defaultValue = &quot;10&quot;) Integer pageSize) &#123;</span><br><span class="line">       RestResponse result = new RestResponse();</span><br><span class="line">	//排序对象</span><br><span class="line">       Sort sort = new Sort(Sort.Direction.DESC, &quot;timeCreated&quot;);</span><br><span class="line">       Pageable pageable = new PageRequest(page, pageSize, sort);</span><br><span class="line"></span><br><span class="line">       PageResult&lt;TestPage&gt; pageResult = testService.list(true, pageable);</span><br><span class="line"></span><br><span class="line">       return result.success(pageResult);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>OK这样，分页关联表查询效果就实现了</p>
+<h3 id="注解解释"><a href="#注解解释" class="headerlink" title="注解解释"></a>注解解释</h3><p>只是个人查看记忆用，非本次讲解内容</p>
+<p>@Data 自动创建getter和setter<br>@NoArgsConstructor<br>@AllArgsConstructor 这两个是声明构造函数<br>@Entity 申明是实体，需要创建表的都会用到<br>@Table(name = “T_TESTPAGE”) 创建表，可以设置表名，以及唯一键<br>@Component 在service实现层使用<br>@Transactional 事务 在service实现层和dao层都需要使用<br>@Autowired 自动引入，自己构造的则不用使用此注解<br>@RequestMapping(value = “/test/page”, method = RequestMethod.GET) 配置请求路径和请求方式</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-android实现中间卡位下方viewpager效果展示" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -493,321 +742,9 @@
 
 
   
-    <article id="post-TextView图文混排" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/19/TextView图文混排/">TextView显示Gif图片实现图文混排</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/19/TextView图文混排/" class="archive-article-date">
-  	<time datetime="2016-07-19T11:36:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/code.jpg"></p>
-<p>首先我们使用的html，解析成Spanned，然后设置Span来实现图文混排的，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Drawable <span class="title">getUrlDrawable</span><span class="params">(String source,  TextView mTextView)</span> </span>&#123;</span><br><span class="line">    GlideImageGetter imageGetter = <span class="keyword">new</span> GlideImageGetter(mTextView.getContext(),mTextView);</span><br><span class="line">    <span class="keyword">return</span> imageGetter.getDrawable(source);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setImageText</span><span class="params">(TextView tv)</span></span>&#123;</span><br><span class="line">   </span><br><span class="line">   String  html =<span class="string">"&lt;p dir=\"ltr\"&gt;&lt;img src=\"http://p1.duyao001.com/image/article/a838e283f2b5d7cc45487c5fd79f84cb.gif\"&gt;&lt;img src=\"http://statics.zhid58.com/Fqr9YXHd20fDOqil4nLAbBhNBw0A\"&gt;&lt;br&gt;&lt;br&gt;&lt;img src=\"http://statics.zhid58.com/FufBg05KGCLypIvrYgjaXnTWySUS\"&gt;&lt;br&gt;&lt;br&gt;OK咯木木木立刻哦lol额JOJO图谋女女look女女诺克各地测了测理论啃了了乐克乐克人咯咯JOJO图谋木木木木木木女女哦咯口头摸头LED可口女女LED咳咳JOJO咯JOJO咳咳咯科技JOJO扣女哦lol欧诺扣女&lt;a href=\"http://www.taobao.com\"&gt;http://www.taobao.com&lt;/a&gt; jvjvjvjv jgjvvjjvjce&lt;br&gt;&lt;br&gt;&lt;img src=\"http://statics.zhid58.com/FkBcKMiLfzGfUpSb0bge4x-gIqWw\"&gt;&lt;br&gt;&lt;/p&gt;&lt;br&gt;"</span>;</span><br><span class="line">    Spanned htmlStr = Html.fromHtml(html);</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</span><br><span class="line">        tv.setLayerType(View.LAYER_TYPE_SOFTWARE, <span class="keyword">null</span>);</span><br><span class="line">        tv.setTextIsSelectable(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    tv.setText(htmlStr);</span><br><span class="line">    tv.setMovementMethod(LinkMovementMethod.getInstance());</span><br><span class="line">    CharSequence text = tv.getText();</span><br><span class="line">    <span class="keyword">if</span>(text <span class="keyword">instanceof</span> Spannable)&#123;</span><br><span class="line">        <span class="keyword">int</span> end = text.length();</span><br><span class="line">        Spannable sp = (Spannable)tv.getText();</span><br><span class="line">        URLSpan[] urls=sp.getSpans(<span class="number">0</span>, end, URLSpan.class);</span><br><span class="line">        ImageSpan[] imgs = sp.getSpans(<span class="number">0</span>,end,ImageSpan.class);</span><br><span class="line">        StyleSpan[] styleSpens = sp.getSpans(<span class="number">0</span>,end,StyleSpan.class);</span><br><span class="line">        ForegroundColorSpan[] colorSpans = sp.getSpans(<span class="number">0</span>,end,ForegroundColorSpan.class);</span><br><span class="line">        SpannableStringBuilder style=<span class="keyword">new</span> SpannableStringBuilder(text);</span><br><span class="line">        style.clearSpans();</span><br><span class="line">        <span class="keyword">for</span>(URLSpan url : urls)&#123;</span><br><span class="line">            style.setSpan(url,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">            </span><br><span class="line">                ForegroundColorSpan colorSpan = <span class="keyword">new</span> ForegroundColorSpan(Color.parseColor(<span class="string">"#FF12ADFA"</span>));</span><br><span class="line">                style.setSpan(colorSpan,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(ImageSpan url : imgs)&#123;</span><br><span class="line">            ImageSpan span = <span class="keyword">new</span> ImageSpan(getUrlDrawable(url.getSource(),tv),url.getSource());</span><br><span class="line">            style.setSpan(span,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(StyleSpan styleSpan : styleSpens)&#123;</span><br><span class="line">            style.setSpan(styleSpan,sp.getSpanStart(styleSpan),sp.getSpanEnd(styleSpan),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(ForegroundColorSpan colorSpan : colorSpans)&#123;</span><br><span class="line">            style.setSpan(colorSpan,sp.getSpanStart(colorSpan),sp.getSpanEnd(colorSpan),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        tv.setText(style);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码图片展示是通过ImageSpan来实现的，但默认的图片展示的gif图片是静态取第一帧图片，我们可以在获取图片时候使用<a href="http">Glide</a>，来实现播放gif,glide是图片加载库，这个库被广泛的运用在google的开源项目中，包括2014年google I/O大会上发布的官方app。Glide和Picasso有90%的相似度，准确的说，就是Picasso的克隆版本。但是在细节上还是有不少区别的。而且性能上更加优化。</p>
-<p>把Glide引入到我们项目中，然后在创建UrlDrawable 和 GlideImageGetter</p>
-<p>代码可以参考：<a href="https://github.com/CentMeng/RichTextView" target="_blank" rel="noopener">RichTextView</a></p>
-<p>方法调用就是</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImageTextUtil.setImageText(tv,html);</span><br></pre></td></tr></table></figure>
-<p>需注意的是<br>    //个别机型如魅族手机，如果使用以下语句会报错导致无法显示Textview内容 View too large to fit into drawing cache 的Warning<br>//        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) {<br>//            tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null); 关闭硬件加速<br>//            tv.setTextIsSelectable(true); 设置是否可以粘贴<br>//        }</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">图文混排</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/19/hexo安装/">hexo安装</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/19/hexo安装/" class="archive-article-date">
-  	<time datetime="2016-07-19T11:29:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>###下载hexo</p>
-<ul>
-<li>安装node<ul>
-<li>查看安装的node版本 npm -v</li>
-</ul>
-</li>
-<li>安装git</li>
-<li>安装Hexo<ul>
-<li>sudo npm install -g hexo-cli</li>
-</ul>
-</li>
-</ul>
-<p>###生成本地hexo目录</p>
-<ul>
-<li>创建hexo目录<ul>
-<li>cd hexo</li>
-</ul>
-</li>
-<li>初始化hexo<ul>
-<li>hexo init</li>
-</ul>
-</li>
-</ul>
-<p>###启动hexo</p>
-<ul>
-<li>生成静态页面<ul>
-<li>hexo generate（hexo g也可以）</li>
-</ul>
-</li>
-<li>启动本地服务<ul>
-<li>hexo server</li>
-<li>浏览器输入<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<p>###github的repository与hexo关联</p>
-<ul>
-<li>创建个人github的repository<ul>
-<li>repository名称必须为${userName}.github.io</li>
-</ul>
-</li>
-<li><p>建立与hexo的连接</p>
-<ul>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li><p>修改config.yml中最下方如下：</p>
-<pre><code>deploy:
-     type: git
-     repo:https://github.com/${userName}/${userName}.github.io.git
-     branch:master
-</code></pre></li>
-<li>npm install hexo-deployer-git –save</li>
-<li>hexo deploy</li>
-<li>浏览器http://${userName}.github.io/</li>
-</ul>
-</li>
-</ul>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><ul>
-<li>每次布署前，按下列顺序执行<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy</li>
-</ul>
-</li>
-</ul>
-<hr>
-<p>###更换头像、作者、主题</p>
-<ul>
-<li>修改头像<ul>
-<li>cd hexo/themes/yilia</li>
-<li>vim _config.yml</li>
-<li>找到 #你的头像url avatar: 后接一个URL就行了，头像就修改成功了</li>
-</ul>
-</li>
-<li>修改作者名字<ul>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li>找到 author: 潘柏信，修改成你自己的名字就行了</li>
-<li>部署 hexo g</li>
-<li>提交 hexo d</li>
-</ul>
-</li>
-<li><p>修改主题</p>
-<ul>
-<li>cd hexo/themes</li>
-<li>git clone ${gitThemeAddress}.git</li>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li><p>找到如下文字</p>
-<pre><code># Extensions
-## Plugins: http://hexo.io/plugins/
-## Themes: http://hexo.io/themes/
-theme:yilia
-</code></pre></li>
-<li>改成theme: yilia，theme:后面接你自己的主题名字就行了,然后分别执行</li>
-<li>部署 hexo g</li>
-<li>提交 hexo d</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li>hexo new”postName” #新建文章</li>
-<li>hexo new page”pageName” #新建页面</li>
-<li>hexo generate #生成静态页面至public目录</li>
-<li>hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）</li>
-<li>hexo deploy #将.deploy目录部署到GitHub</li>
-<li>hexo help # 查看帮助</li>
-<li>hexo version #查看Hexo的版本</li>
-</ul>
-<hr>
-<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><ul>
-<li>ERROR Deployer not found: git 或者 ERROR Deployer not found: github<ul>
-<li>解决方法： npm install hexo-deployer-git –save</li>
-</ul>
-</li>
-<li>ERROR Process failed: layout/.DS_Store<ul>
-<li>进入主题里面layout和_partial目录下，使用删除命令：</li>
-<li>rm-rf.DS_Store</li>
-</ul>
-</li>
-<li>ERROR Plugin load failed: hexo-server<ul>
-<li>原因：Besides,utilities are separated into a standalone module.hexo.util is not reachable anymore.</li>
-<li>解决方法，执行命令：sudo npm install hexo-server</li>
-</ul>
-</li>
-<li><p>执行命令hexo server，提示：Usage: hexo ….</p>
-<ul>
-<li>原因：我认为是没有生成本地服务</li>
-<li><p>解决方法，执行命令：npm install hexo-server–save</p>
-<pre><code>提示：hexo-server@0.1.2 node_modules/hexo-server
-....
-表示成功了
-</code></pre></li>
-<li><p>这个时候再执行：hexo-server</p>
-<pre><code>得到:
-INFOHexois running at http://0.0.0.0:4000/.PressCtrl+C to stop.
-这个时候再点击http://0.0.0.0:4000，正常情况下应该是最原始的画面，但是我看到的是：
-白板和Cannot GET / 几个字
-
-原因：
-由于2.6以后就更新了，我们需要手动配置些东西，我们需要输入下面三行命令：
-npm install hexo-renderer-ejs--save
-npm install hexo-renderer-stylus--save
-npm install hexo-renderer-marked--save
-
-这个时候再重新生成静态文件，命令：
-hexo generate（或hexo g）
-
-启动本地服务器：
-hexo server（或hexo s）
-再点击网址http://0.0.0.0:4000O
-</code></pre></li>
-</ul>
-</li>
-<li>No layout: index.html<ul>
-<li>原因：更换主题后，主题文件不正确。</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/其他//" class="article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
     </nav>
   
 
@@ -902,18 +839,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -923,6 +848,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -938,7 +875,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -946,19 +883,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -966,11 +891,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -978,11 +907,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -991,6 +928,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">

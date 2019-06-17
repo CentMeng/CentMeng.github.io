@@ -201,6 +201,584 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java架构师-网络编程和netty" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/24/Java架构师-网络编程和netty/">Java架构师-网络编程和netty</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/24/Java架构师-网络编程和netty/" class="archive-article-date">
+  	<time datetime="2017-03-24T05:55:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网络编程基础篇"><a href="#网络编程基础篇" class="headerlink" title="网络编程基础篇"></a>网络编程基础篇</h2><h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><ul>
+<li>Socket又称“套接字”，应用程序通常通过“套接字”向网络发送请求或者应答网络请求。<ul>
+<li>Socket和ServerSocket类库位于java.net包中。ServerSocket用于服务器端，Socket是建立网络连接时使用的。在连接成功时，应用程序两端都会产生一个Socket实例，操作这个实例，完成所需的会话。对于一个网络连接来说，套接字是平等的，不因为在服务器端或在客户端而产生不同的级别。不管是Socket还是ServerSocket它们的工作都是通过SocketImpl类及其子类完成的。</li>
+</ul>
+</li>
+<li>套接字之间的连接过程可以分为四个步骤：服务器监听，客户端请求服务器，服务器确认，客户端确认，进行通信。  <ul>
+<li>服务器监听：是服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态。</li>
+<li>客户端请求：是指由客户端的套接字提出连接请求，要连接的目标是服务器端的套接字。为此，客户端的套接字必须首先描述它要连接的服务器的套接字，指出服务器端套接字的地址和端口号，然后向服务器端套接字提出连接请求。</li>
+<li>服务器端连接确认：是指当服务器端套接字监听到或者说接收到客户端套接字的连接请求，它就相应客户端套接字的请求，建立一个新的线程，把服务器端套接字的描述发给客户端。</li>
+<li>客户端连接确认：一旦客户端确认了此描述，连接就建立好了。双方开始通信。而服务器端套接字继续处于监听状态，继续接受其他客户端套接字的连接请求。</li>
+</ul>
+</li>
+<li>windows 一般支持1000个线程，Linux辞职2000个线程。</li>
+<li>jdk1.5之前，利用伪异步方式<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/bio2" target="_blank" rel="noopener">（线程池+队列）</a>，解决socket创建client端过多，服务器撑爆问题。jdk1.6通过nio方式。<h4 id="伪异步IO"><a href="#伪异步IO" class="headerlink" title="伪异步IO"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/bio2" target="_blank" rel="noopener">伪异步IO</a></h4></li>
+<li>采用线程池和任务队列可以实现一种伪异步的IO通信框架。我们学过连接池的使用和队列的使用，其实就是将客户端的socket封装成一个task任务（实现runnable接口的类）然后投递到线程池中去，配置相应的队列进行实现。<br><img src="/img/java/网络编程/picture/伪异步IO.png"></li>
+</ul>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li>IO（BIO）和NIO区别<br>IO:阻塞型IO,面向流，无选择器<br>NIO:非阻塞型IO,面向缓冲，选择器<ul>
+<li>阻塞概念：应用程序在获取网络数据时候，如果网络传输数据很慢，那么程序就一直等着，直到传输完为止。</li>
+<li>非阻塞概念：应用程序直接可以获取已经准备就绪好的数据，无需等待。</li>
+<li>BIO为同步阻塞形式，NIO为同步非阻塞形式。NIO并没有实现异步，在JDK1.7之后，升级NIO包，支持异步非阻塞通信模型即NIO2.0(AIO)。</li>
+<li>同步时，应用程序会直接参与IO读写操作，并且我们的应用程序会直接阻塞到某一个方法上，直到数据准备就绪；或者采用轮询的策略实时检查数据的就绪状态例如NIO，如果就绪则获取数据。</li>
+<li>异步时，则所在的IO读写操作交给操作系统处理，与我们的应用程序没有直接关系，我们应用程序不需要关心IO读写，当操作系统完成了IO读写操作时，会给我们应用程序发送通知，我们应用程序直接拿走数据即可。</li>
+</ul>
+</li>
+</ul>
+<h4 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/nio" target="_blank" rel="noopener">NIO</a></h4><p>NIO本质就是避免原始的TCP建立连接使用3次握手的操作，减少连接的开销。</p>
+<ul>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/nio/test/TestBuffer.java" target="_blank" rel="noopener">Buffer</a>（缓冲区）<br>Buffer是一个对象，它包含一些要写入或者要读取的数据。在NIO类库中加入Buffer对象，体现了新库与原IO的一个重要的区别。在面向流的IO中，可以将数据直接写入或读取到Stream对象中。在NIO库中，<font color="#f00">所有数据都是用缓冲区处理的（读写）</font>。缓冲区实质上是一个数组，通常它是一个字节数组（ByteBuffer），也可以使用其他类型的数组。这个数组为缓冲区提供了数据的访问读写等操作属性，如位置、容量、上限等概念，参考api文档。<ul>
+<li>Buffer类型：我们最常用的就是ByteBuffer，<font color="#f00">实际上每一种java基本类型都对应了一种缓冲区（除了Boolean类型）</font> 。ByteBuffer，CharBuffer，ShortBuffer，intBuffer，LongBuffer，FloatBuffer，DoubleBuffer。</li>
+<li>put方法执行完，要调用下flip方法来恢复未知</li>
+</ul>
+</li>
+<li>Channel(通道)<ul>
+<li>通道（Channel），它就像自来水管道一样，网络数据通过Channel读取和写入，通道与流不同之处在于通道是双向的，而流只是一个方向上移动（一个流必须是InputStream或者OutputStream的子类），而通道可以用于读、写或者二者同时进行，最关键的是可以与多路复用器结合起来，有多种的状态位，方便多路复用器去识别。事实上通道分为两大类，一类是网络读写的（SelectableChannel），一类是用于文件操作的（FileChannel），我们使用的SocketChannel和ServerChannel都是SelectableChannel的子类。 </li>
+</ul>
+</li>
+<li>Selector（选择器，多路复用器）<ul>
+<li>NIO编程的基础，非常重要。多路复用器提供选择已经就绪的任务的能力。简单说，就是Selector会不断地轮询注册在其上的通道（Channel），如果某个通道发生了读写操作，这个通道就处于就绪状态，会被Selector轮询出来，然后通过SelectionKey可以取得就绪的Channel集合，从而进行后续的IO操作。</li>
+<li>一个多路复用器可以负责成千上万Channel通道，没有上限，这也是JDK使用了epoll代替了传统的select实现，获得连接句柄没有限制。这也就意味着我们只要一个线程负责Selector的轮询，就可以接入成千上万个客户端，这是JDK NIO库的巨大进步。 </li>
+<li>Selector线程就类似一个管理者（Master），管理了成千上万个管道，然后轮询哪个管道的数据已经准备好，通知cpu执行IO的读取或写入操作。</li>
+<li>Selector模式：当IO事件（管道）注册到选择器以后，selector会分配给每个管道一个值，相当于标签。selector选择器是以轮询的方式进行查找注册的所有IO事件（管道），当我们的IO事件（管道）准备就绪后，select就会识别，会通过key值来找到相应的管道，进行相关的数据处理操作（从管道里读或写数据，写到我们的数据缓冲区中）。</li>
+<li>每个管道都会对选择器进行注册不同的事件状态，以便选择器超找。SelectionKey.OP_CONNECT,  SelectionKey.OP_ACCEPT,SelectionKey.OP_READ,SelectionKey.OP_WRITE。<br><img src="/img/java/网络编程/picture/NIO模式.png"></li>
+</ul>
+</li>
+<li>NIO通信步骤<br><img src="/img/java/网络编程/picture/NIO通信步骤.png"></li>
+</ul>
+<h4 id="AIO"><a href="#AIO" class="headerlink" title="AIO"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/aio" target="_blank" rel="noopener">AIO</a></h4><p>AIO编程，在NIO基础之上引入了异步通道的概念，并提供了异步文件和异步套接字通道的实现，从而在真正意义上实现了异步非阻塞，之前我们学习的NIO只是非阻塞而并非异步。而AIO它不需要通过多路复用器对注册的通道进行轮询操作即可实现异步读写，从而简化了NIO编程模型。也可以称之为NIO2.0，这种模式才真正的属于我们异步非阻塞的模型。</p>
+<ul>
+<li>AsynchronousServerSocketChannel</li>
+<li>AsynchronousScoketChannel</li>
+</ul>
+<h4 id="总结-Socket进化史"><a href="#总结-Socket进化史" class="headerlink" title="总结 Socket进化史"></a>总结 Socket进化史</h4><ul>
+<li>BIO（同步阻塞）:就是传统Socket编程，有一个阻塞模型。只要client端和server端要建立一个tcp连接都需要三次握手，三次握手本身性能上就很浪费性能，然后每次我开始必须服务器端先启动，服务器端有个accept方法，使服务器整个程序阻塞着，然后有一个client端进来，accept方法就返回一个Socket对象，然后通过一个新的Thread做数据处理。</li>
+<li>NIO（同步非阻塞）:有一个Client端想接入Server端，两端不是直接连接，通过一个selector。服务器端的通道注册到这个Selector上，然后客户端的一些通道都得注册到这个Selector。然后轮询这个Selector，把里面Channel根据不同状态处理相对应的事务。一个Selector（也就是可以通过一个线程）接入成千上万个客户端，接入过程需要自己实现。</li>
+<li>AIO（异步非阻塞）:自己有一堆线程组，轮询过程不用代码写，里面已经封装好了，有一个client端过来，通过线程组某一个线程和client端接入。接入之后，会有代码和client端读写实际处理操作。在BIO里面，读写操作是new一个Thread去单独交互，这样很浪费性能。在AIO是new一个对象<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/aio/ServerCompletionHandler.java" target="_blank" rel="noopener">ServerCompletionHandler</a>，<strong><em>但是只支持接入一个对象，接入一个对象后程序就停了，所以如果想接入第二个对象，需要在handler里面进行递归操作。并且在Handler里面处理读写</em></strong></li>
+</ul>
+<h2 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a><a href="http://netty.io" target="_blank" rel="noopener">Netty</a></h2><p>为什么选择Netty？简单，实现Socket通信不必去需写复杂的代码逻辑，不用去考虑性能，不需要考虑编解码问题，半包读写问题等。得到成百上千的商业/商用项目验证，如Hadoop的RPC框架Avro，和JMS框架，RocketMQ，还有主流的分布式通信框架Dubbox等等。</p>
+<p>学习网址：<a href="http://ifeve.com/netty5-user-guide/" target="_blank" rel="noopener">http://ifeve.com/netty5-user-guide/</a> 示例：<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/test" target="_blank" rel="noopener">test</a></p>
+<h3 id="Netty初步"><a href="#Netty初步" class="headerlink" title="Netty初步"></a>Netty初步</h3><ul>
+<li>Netty框架<br><img src="/img/java/网络编程/picture/Netty框架.png"></li>
+<li>Netty特性<br><img src="/img/java/网络编程/picture/Netty特性.png"></li>
+<li>Netty实现通信的步骤<ol>
+<li>创建两个NIO线程组，一个专门用于网络事件处理(接受客户端连接)，另一个则进行网络通信读写（实际业务处理）。</li>
+<li>创建一个ServerBootstrap对象，配置Netty的一系列参数，例如接受传出数据的缓存大小等等。</li>
+<li>创建一个实际处理数据的类ChannelInitializer,并进行初始化的准备工作，比如设置接受传出数据的字符集、格式、已经实际处理数据的接口。</li>
+<li>绑定接口，执行同步阻塞方法等待服务器启动即可。</li>
+</ol>
+</li>
+<li>Netty使用场景<ul>
+<li>放到Tomcat里</li>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/mave生成jar包_pom.xml" target="_blank" rel="noopener">利用maven打成jar包</a>，直接放到系统中运行 </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 配置文件  --&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.directory&#125;/classes<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.properties<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>$&#123;project.build.directory&#125;/classes/META-INF<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">include</span>&gt;</span>spring-context.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">resources</span>&gt;</span>	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.m2e<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lifecycle-mapping<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">lifecycleMappingMetadata</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">pluginExecutions</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;<span class="name">pluginExecution</span>&gt;</span></span><br><span class="line">								<span class="tag">&lt;<span class="name">pluginExecutionFilter</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;<span class="name">versionRange</span>&gt;</span>[2.0,)<span class="tag">&lt;/<span class="name">versionRange</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">										<span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">								<span class="tag">&lt;/<span class="name">pluginExecutionFilter</span>&gt;</span></span><br><span class="line">								<span class="tag">&lt;<span class="name">action</span>&gt;</span></span><br><span class="line">									<span class="tag">&lt;<span class="name">ignore</span> /&gt;</span></span><br><span class="line">								<span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;/<span class="name">pluginExecution</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;/<span class="name">pluginExecutions</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">lifecycleMappingMetadata</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">classesDirectory</span>&gt;</span>target/classes/<span class="tag">&lt;/<span class="name">classesDirectory</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>tpri.mina.execute.Main<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">						<span class="comment">&lt;!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 --&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">useUniqueVersions</span>&gt;</span>false<span class="tag">&lt;/<span class="name">useUniqueVersions</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">addClasspath</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addClasspath</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">classpathPrefix</span>&gt;</span>lib/<span class="tag">&lt;/<span class="name">classpathPrefix</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">Class-Path</span>&gt;</span>.<span class="tag">&lt;/<span class="name">Class-Path</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">type</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">includeTypes</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">includeTypes</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">useUniqueVersions</span>&gt;</span>false<span class="tag">&lt;/<span class="name">useUniqueVersions</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">							$&#123;project.build.directory&#125;/lib</span><br><span class="line">						<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/helloworld" target="_blank" rel="noopener">HelloWorld</a></h3><ul>
+<li>对于ChannelOption.SO_BACKLOG的讲解<ul>
+<li>服务器端TCP内核模块维护2个队列，我们称之为A，B</li>
+<li>客户端向服务器端connect的时候，会发送带有SYN标志的包（第一次握手）</li>
+<li>服务器收到客户端发来的SYN的时，向客户端发送SYN ACK确认（第二次握手）</li>
+<li>此时TCP内核模块把客户端连接加入到A队列中，然后服务器收到客户端发过来的ACK时（第三次握手），</li>
+<li>TCP内核模块把客户端连接从A队列移到B队列，连接完成，应用程序的accept回返回。</li>
+<li>也就是accept从B队列中取出完成三次握手的连接。</li>
+<li>A队列和B队列的长度之和是BACKLOG。当A,B队列的长度之和大于BACKLOG的时候，新连接将会被TCP内核拒绝。</li>
+<li>所以，如果BACKLOG过小，可能会出现accept速度跟不上，A，B队列满了，导致新的客户端无法连接</li>
+<li>要注意的是：BACKLOG对程序支持的连接数并没有影响，BACKLOG只是影响了还没有被accept取出的连接。</li>
+</ul>
+</li>
+<li><p>ChannelHandlerAdapter的channelRead方法中的Object，如果没有write方法，最后要释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReferenceCountUtil.release(msg);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个ServerBootstrap可以绑定多个端口，增加了接收数据能力</p>
+</li>
+</ul>
+<h3 id="Netty核心技术之（TCP拆包和粘包问题）"><a href="#Netty核心技术之（TCP拆包和粘包问题）" class="headerlink" title="Netty核心技术之（TCP拆包和粘包问题）"></a>Netty核心技术之（TCP拆包和粘包问题）</h3><p>熟悉TCP编程的可能都知道，无论是服务器端还是客户端，当我们读取或者发送数据的时候，都需要考虑TCP底层的粘包/拆包机制。</p>
+<ul>
+<li><p>TCP是一个“流”协议，所谓流就是没有界限的遗传数据。大家可以想象下如果河里的水就好比数据，他们是连成一片的，没有分界线，TCP底层并不了解上层的业务数据具体的含义，它会根据TCP缓冲区的实际情况进行包的划分，也就是说，在业务上，我们一个完整的包可能会被TCP分成多个包进行发送，也可能把多个小包封装成一个大的数据包发送出去，这就是所谓的TCP粘包、拆包问题。（例如，实际业务发送“ABC DEF GHI”这些数据分成“ABC”.”DEF”,”GHI”三个包发送,但实际TCP是“流”协议，实际发送可能是“AB”,”DEFG”,”HI”）</p>
+</li>
+<li><p>TCP粘包、拆包问题产生的原因：</p>
+<ul>
+<li>应用程序write写入的字节大小大于套接口发送缓冲区的大小</li>
+<li>进行MSS大小的TCP分段</li>
+<li>以太网帧的payload大于MTU进行IP分片 </li>
+</ul>
+</li>
+<li>TCP粘包、拆包问题解决方案（前两种解决方案netty已经实现）</li>
+</ul>
+<p>(1)  消息定长，例如每个报文的大小固定为200个字节，如果不够，空位补空格。（netty解决方案：<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/ende2" target="_blank" rel="noopener">FixedLengthFrameDecoder</a>【定长】）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		protected void initChannel(SocketChannel sc) throws Exception &#123;</span><br><span class="line">			//设置定长字符串接收</span><br><span class="line">			sc.pipeline().addLast(new FixedLengthFrameDecoder(5));</span><br><span class="line">			//设置字符串形式的解码,write时候还是buffer但是handler接收时候可以直接强转成string</span><br><span class="line">			sc.pipeline().addLast(new StringDecoder());</span><br><span class="line">			sc.pipeline().addLast(new ServerHandler());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>(2)  在包尾部增加特殊字符进行分割，例如加回车等（netty解决方案：分隔符类<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/ende1" target="_blank" rel="noopener">DelimiterBasedFrameDecoder</a>【自定义分隔符】）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	protected void initChannel(SocketChannel sc) throws Exception &#123;</span><br><span class="line">		//设置特殊分隔符</span><br><span class="line">		ByteBuf buf = Unpooled.copiedBuffer(&quot;$_&quot;.getBytes());</span><br><span class="line">		sc.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, buf));</span><br><span class="line">		//设置字符串形式的解码,write时候还是buffer但是handler接收时候可以直接强转成string</span><br><span class="line">		sc.pipeline().addLast(new StringDecoder());</span><br><span class="line">		sc.pipeline().addLast(new ServerHandler());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>(3)  将消息分为消息头和消息体，在消息头中包含表示消息总长度的字段，然后进行业务逻辑的处理（自定义协议【百度搜索netty自定义协议】）</p>
+<h3 id="Netty核心技术之（编解码技术【传递对象】）"><a href="#Netty核心技术之（编解码技术【传递对象】）" class="headerlink" title="Netty核心技术之（编解码技术【传递对象】）"></a>Netty核心技术之（编解码技术【传递对象】）</h3><p>编解码技术，说白了就是java序列化技术，序列化的目的就两个，第一进行网络传输，第二对象持久化。</p>
+<p>虽然我们可以使用java进行对象序列化，netty去传输，但是java序列化的硬伤太多，比如java序列化没法跨语言、序列化后码流太大、序列化性能太低等等。</p>
+<ul>
+<li><p>主流的编解码框架</p>
+<ul>
+<li>JBoss的Marshalling包</li>
+<li>google的Protobuf</li>
+<li>基于Protobuf的Kyro（dubbo中会讲解）</li>
+<li>MessagePack框架</li>
+</ul>
+</li>
+<li><p>最简单的跨平台传递对象方法是使用json</p>
+</li>
+<li><strong><em>序列化的时候，客户端，服务端都要有要序列化的对象，并且包名，类名都一样</em></strong></li>
+<li>兼容操作系统的分隔符：File.separatorChar</li>
+</ul>
+<h4 id="JBoss-Marshalling"><a href="#JBoss-Marshalling" class="headerlink" title="JBoss Marshalling"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/serial" target="_blank" rel="noopener">JBoss Marshalling</a></h4><p>JBoss Marshalling是一个java对象序列化包，对JDK默认的序列化框架进行了优化，但又保持跟java.io.Serializable接口的兼容，同时增加了一些可调的参数和附加特性。<br>类库：jboss-marshalling-1.3.0、jboss-mashalling-serial-1.3.0</p>
+<p>下载地址：<a href="https://www.jboss.org/jbossmarshalling/downloads" target="_blank" rel="noopener">https://www.jboss.org/jbossmarshalling/downloads</a></p>
+<p>示例：<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/serial" target="_blank" rel="noopener">Netty+Marshalling</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">			protected void initChannel(SocketChannel sc) throws Exception &#123;</span><br><span class="line">				sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());</span><br><span class="line">				sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingEncoder());</span><br><span class="line">				sc.pipeline().addLast(new ServerHandler());</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/serial/MarshallingCodeCFactory.java" target="_blank" rel="noopener">MarshallingFactory</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Marshalling工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MarshallingCodeCFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建Jboss Marshalling解码器MarshallingDecoder</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> MarshallingDecoder</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MarshallingDecoder <span class="title">buildMarshallingDecoder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//首先通过Marshalling工具类的精通方法获取Marshalling实例对象 参数serial标识创建的是java序列化工厂对象。</span></span><br><span class="line">		<span class="keyword">final</span> MarshallerFactory marshallerFactory = Marshalling.getProvidedMarshallerFactory(<span class="string">"serial"</span>);</span><br><span class="line">		<span class="comment">//创建了MarshallingConfiguration对象，配置了版本号为5 </span></span><br><span class="line">		<span class="keyword">final</span> MarshallingConfiguration configuration = <span class="keyword">new</span> MarshallingConfiguration();</span><br><span class="line">		configuration.setVersion(<span class="number">5</span>);</span><br><span class="line">		<span class="comment">//根据marshallerFactory和configuration创建provider</span></span><br><span class="line">		UnmarshallerProvider provider = <span class="keyword">new</span> DefaultUnmarshallerProvider(marshallerFactory, configuration);</span><br><span class="line">		<span class="comment">//构建Netty的MarshallingDecoder对象，俩个参数分别为provider和单个消息序列化后的最大长度，解码大于这个长度就不处理</span></span><br><span class="line">		MarshallingDecoder decoder = <span class="keyword">new</span> MarshallingDecoder(provider, <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">return</span> decoder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建Jboss Marshalling编码器MarshallingEncoder</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> MarshallingEncoder</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MarshallingEncoder <span class="title">buildMarshallingEncoder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">final</span> MarshallerFactory marshallerFactory = Marshalling.getProvidedMarshallerFactory(<span class="string">"serial"</span>);</span><br><span class="line">		<span class="keyword">final</span> MarshallingConfiguration configuration = <span class="keyword">new</span> MarshallingConfiguration();</span><br><span class="line">		configuration.setVersion(<span class="number">5</span>);</span><br><span class="line">		MarshallerProvider provider = <span class="keyword">new</span> DefaultMarshallerProvider(marshallerFactory, configuration);</span><br><span class="line">		<span class="comment">//构建Netty的MarshallingEncoder对象，MarshallingEncoder用于实现序列化接口的POJO对象序列化为二进制数组</span></span><br><span class="line">		MarshallingEncoder encoder = <span class="keyword">new</span> MarshallingEncoder(provider);</span><br><span class="line">		<span class="keyword">return</span> encoder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Netty的UDP实现"><a href="#Netty的UDP实现" class="headerlink" title="Netty的UDP实现"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/udp" target="_blank" rel="noopener">Netty的UDP实现</a></h3><h3 id="Netty的WebSocket实现"><a href="#Netty的WebSocket实现" class="headerlink" title="Netty的WebSocket实现"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/websocket" target="_blank" rel="noopener">Netty的WebSocket实现</a></h3><p>webSocket将网络套接字引入到了客户端和服务端，众所周知，我们实现聊天功能，可能需要古老的Socket技术，亦或者是古老的DWR框架，方向Ajax技术，再有可能就是Comet服务器推技术，H5的webSocket很轻松的可以进行聊天功能实现，Netty和H5的WebSocket结合非常的简单，Netty为我们封装了其协议类，我们可以很方便的进行使用。</p>
+<ul>
+<li>ws特点：<ul>
+<li>单一的TCP连接，双方可通信</li>
+<li>对代理，防火墙和路由器透明</li>
+<li>无头部信息、Cookie和身份验证</li>
+<li>无安全开销</li>
+<li>通过ping/pong帧保持链路激活</li>
+<li>服务器可主动传递消息给客户端，不再需要客户端轮询</li>
+</ul>
+</li>
+</ul>
+<h3 id="最佳实践（数据通信，心跳检测）"><a href="#最佳实践（数据通信，心跳检测）" class="headerlink" title="最佳实践（数据通信，心跳检测）"></a>最佳实践（数据通信，心跳检测）</h3><h4 id="数据通信"><a href="#数据通信" class="headerlink" title="数据通信"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/runtime" target="_blank" rel="noopener">数据通信</a></h4><ul>
+<li>我们需要考虑的问题是两台机器（甚至多台）使用Netty是怎样进行通信，个人大体上分为三类：<ul>
+<li>第一种，使用长连接通道不断开的形式进行通信，也就是服务器和客户端的通道一直处于开启状态，如果服务器性能足够好，并且我们的客户端数量也比较少的情况下，还是推荐这种方式的。</li>
+<li>第二种，一次性批量提交数据，采用短连接方式。也就是我们会把数据保存在本地临时缓冲区或者临时表里，当达到临界值时进行一次性批量提交，又或者根据定时任务轮询提交，这种情况弊端是做不到实时性传输，在对实时性要求不高的应用程序中可以推荐使用。</li>
+<li>第三种，我们可以使用一种特殊的长连接，在指定某一时间之内（比如设置60秒），服务器与某台客户端没有任何通信（60秒内没有任何通信），则断开连接。下次连接则是客户端向服务器发送请求的时候，再次建立连接。但是，这种模式我们需要考虑2种因素：</li>
+</ul>
+</li>
+</ul>
+<p>(1）如何在超时（即服务器和客户端没有任何通信）后关闭通道？关闭通道后我们又如何再次建立连接？ <strong><em><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/runtime/Client.java" target="_blank" rel="noopener">解决方案:如下代码</a></em></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">this</span>.cf = b.connect(<span class="string">"127.0.0.1"</span>, <span class="number">8765</span>).sync();</span><br><span class="line">		System.out.println(<span class="string">"远程服务器已经连接, 可以进行数据交换.."</span>);				</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ChannelFuture <span class="title">getChannelFuture</span><span class="params">()</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">this</span>.cf == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">this</span>.connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="keyword">this</span>.cf.channel().isActive())&#123;</span><br><span class="line">		<span class="keyword">this</span>.connect();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.cf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  （2）客户端宕机，我们无需考虑，下次客户端重启之后我们就可以与服务器建立连接，但是服务器宕机时，我们的客户端如何与服务器建立连接？ <strong><em>解决方案:写个脚本，定时轮询，给服务器发连接，看服务器是否启动，启动了就重新创立连接。如果客户端是java的，可以通过spring的定时任务，定时看服务器好没好，好则保持通讯</em></strong></p>
+<pre><code>//两端都需要加，当服务器端与客户端在指定时间以上没有任何进行通信，则会关闭响应的通道，主要为减小服务端资源占用
+sc.pipeline().addLast(new ReadTimeoutHandler(5)); 
+</code></pre><p>  <strong><em>两端如果client端和server端设置超时时间不一样，则短的一方先单一断开，等时间长的一方时间到，双方才会断开连接。</em></strong></p>
+<h4 id="心跳检测"><a href="#心跳检测" class="headerlink" title="心跳检测"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/heartBeat" target="_blank" rel="noopener">心跳检测</a></h4><p>我们使用Socket通信一般经常会处理多个服务器之间的心跳检测，一般来讲我们去维护服务器集群，肯定有一台（或几台）服务器主机（Master），然后还应该有N台从节点（Slave），那么我们主机肯定要时时刻刻知道自己下面的从服务器的各方面情况，然后进行实时监控的功能，这个在分布式架构里叫做心跳检测或者说心跳监控。最佳处理方案，建议使用一些通信框架进行实现,Netty就可以去做这样一件事。一般每隔5秒-10秒心跳一次。</p>
+<ul>
+<li>如果跨域的话，还要考虑安全问题，可以采用SSL或者其他方案解决。<ul>
+<li>从节点调用通道激活方法，把auth发送给主节点</li>
+<li>主节点认证后，主从节点才可以通信     </li>
+</ul>
+</li>
+<li>使用sigar.jar包方法获取系统信息。<br><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/utils/TestSigar.java" target="_blank" rel="noopener">Sigar API</a> 提供一个方便的接口来收集系统信息，如：<ul>
+<li>系统内存，页面交换，cpu，平均负载，运行时间，登录信息</li>
+<li>每个进程占用的内存，cpu，帐号信息，状态，参数，环境，打开的文件</li>
+<li>文件系统探测和度量</li>
+<li>网络接口探测，配置信息和度量</li>
+<li>网络路由和连接表</li>
+</ul>
+</li>
+<li><strong><em>使用sigar.jar需要把<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/doc/hyperic-sigar-1.6.4.zip" target="_blank" rel="noopener">hyperic-sigar-1.6.4.zip</a>文件中找到sigar-bin/lib目录下对应系统的文件到JAVA_HOME/bin目录下或者JAVA_HOME/jre/bin目录,否则获取不到信息</em></strong></li>
+</ul>
+<h3 id="Netty实现文件服务器（基于HTTP协议）"><a href="#Netty实现文件服务器（基于HTTP协议）" class="headerlink" title="Netty实现文件服务器（基于HTTP协议）"></a>Netty实现文件服务器（基于HTTP协议）</h3><p><img src="/img/java/网络编程/picture/Http协议.png"><br><img src="/img/java/网络编程/picture/Http协议2.png"><br><img src="/img/java/网络编程/picture/Http协议3.png"></p>
+<h4 id="Netty文件上传"><a href="#Netty文件上传" class="headerlink" title="Netty文件上传"></a><a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/network/netty/upload" target="_blank" rel="noopener">Netty文件上传</a></h4>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java架构师</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java架构师-并发编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/19/Java架构师-并发编程/">Java架构师-并发编程</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/19/Java架构师-并发编程/" class="archive-article-date">
+  	<time datetime="2017-03-19T12:17:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h2><h3 id="1-线程基础"><a href="#1-线程基础" class="headerlink" title="1.线程基础"></a>1.线程基础</h3><h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><ul>
+<li>线程安全概念：当多个线程访问某一个类（对象或方法）时，这个类始终都能表现出正确的行为，那么这个类（对象或方法）就是线程安全的。</li>
+<li>synchronized:可以在任意对象及方法上加锁，而加锁的这段代码称为“互斥去”或“临界区”</li>
+<li>当多个线程访问myThread的run方法时，以排队的方式进行处理(这里排队是按照CPU分配的先后顺序而定的)，<strong><em>一个线程想要执行synchronized修饰的方法里的代码，首先是尝试获得锁，如果拿到锁，执行synchronized代码体内容；拿不到锁，这个线程就会不断的尝试获得这把锁，直到拿到为止，而且是多个线程同时去竞争这把锁。（也就是会有锁竞争的问题）</em></strong>。</li>
+<li>多个线程同时竞争一把锁会增加cpu的消耗，有可能出现计算缓慢，严重宕机，所以一定要规划好线程的数目</li>
+<li>关键字synchronized取得的锁都是对象锁，而不是把一段代码（方法）当做锁，哪个线程先执行synchronized关键字的方法，哪个线程就持有该方法所属对象的锁（Lock），<strong><em>两个对象，线程获得的就是两个不同的锁，他们互不影响（如果两个对象使用一把锁，可以在锁前面添加static,如果是对象也可以使用static volatile这样可以不用synchronized）见<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/MultiSyncCommonOneTest.java" target="_blank" rel="noopener">MultiSyncCommonOneTest.java</a>）</em></strong>。</li>
+</ul>
+<h4 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h4><ul>
+<li>在我们对一个对象的方法加锁的时候，需要考虑业务的整体性，即为setValue/getValue方法同时加载synchronized同步关键字，保证业务(service)的原子性，不然会出现业务错误。</li>
+<li>数据库特性：A(原子性)C(一致性)I（隔离性）D（持久性）<br><img src="/img/java/并发编程/picture/oracle保持数据一致性讲解.png"></li>
+</ul>
+<h4 id="synchronized代码块及细节"><a href="#synchronized代码块及细节" class="headerlink" title="synchronized代码块及细节"></a>synchronized代码块及细节</h4><ul>
+<li><p>Oracle写存储过程的时候，要加BEGIN和END才能处理EXCEPTION<br><img src="/img/java/并发编程/picture/BEGINEND存储过程.png"></p>
+</li>
+<li><p>多线程有异常终止操作两种方式</p>
+<ul>
+<li>使用InterruptedException</li>
+<li>在异常体里面throw new RuntimeException()</li>
+</ul>
+</li>
+<li>使用synchronized声明的方法在某些情况下是有弊端的，比如A线程调用同步的方法执行一个很长时间的任务，那么B线程就必须等待比较长的时间才能执行，这样的情况下可以使用synchronized代码块去优化代码执行时间，也就是通常所说的减小锁的粒度。</li>
+<li>锁注意事项：<ul>
+<li>synchronized可以使用任意的Object进行加锁</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123; <span class="comment">//对象锁</span></span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"do mehtod1"</span>);</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (ObjectLock.class) &#123; <span class="comment">//类锁</span></span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"do mehtod2"</span>);</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object lock = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123; <span class="comment">//任何对象锁</span></span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"do mehtod3"</span>);</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> ObjectLock objectLock = <span class="keyword">new</span> ObjectLock();</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                objectLock.method1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                objectLock.method2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t3 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                objectLock.method3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t3.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不要使用String的常量加锁，会出现死循环的问题</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (<span class="string">"常量锁"</span>)  <span class="comment">//死循环，因为常量引用的是同一个地址</span></span><br><span class="line">&lt;!--<span class="keyword">synchronized</span> (<span class="keyword">new</span> String（<span class="string">"常量锁"</span>）)  <span class="comment">//这种方式不会死循环--&gt;</span></span><br><span class="line">&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"do mehtod3"</span>);</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">  - 锁对象改变的问题，当使用一个对象进行加锁的时候，要注意对象本身发生改变的时候，那么持有的锁就不同。如果“对象本身”不发生改变，那么依然是同步的，即使是对象的属性（例如User对象的name和age属性）发生了改变（属性改变不影响锁的同步）。如果对象本身改变了，则不是同步，其他线程就进入了。</span><br><span class="line"></span><br><span class="line">```Java</span><br><span class="line">String lock = <span class="string">"lock"</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lock) &#123; </span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"do mehtod);</span></span><br><span class="line"><span class="string">                //锁对象发生了改变，则其他等待的线程可以进入</span></span><br><span class="line"><span class="string">                lock = "</span>change lock<span class="string">";</span></span><br><span class="line"><span class="string">                Thread.sleep(2000);</span></span><br><span class="line"><span class="string">            &#125;catch (InterruptedException e)&#123;</span></span><br><span class="line"><span class="string">                e.printStackTrace();</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Volatile关键字概念，线程优化执行流程，内部原理讲解"><a href="#2-Volatile关键字概念，线程优化执行流程，内部原理讲解" class="headerlink" title="2. Volatile关键字概念，线程优化执行流程，内部原理讲解"></a>2. Volatile关键字概念，线程优化执行流程，内部原理讲解</h3><ul>
+<li>volatile概念：volatile关键字的主要作用是使变量在多个线程间可见。<br><img src="/img/java/并发编程/picture/volatile关键字概念.png"></li>
+</ul>
+<h4 id="volatile关键字的非原子性"><a href="#volatile关键字的非原子性" class="headerlink" title="volatile关键字的非原子性"></a>volatile关键字的非原子性</h4><ul>
+<li>JDK1.5以后，对每个线程(Thread)做了一个优化,加了一块独立的内存运行空间，这一块独立内存空间存放主内存的一些引用，也就是当前线程引用的一些变量。线程使用的时候，直接从自身的独立内存空间取数据。所以下图中，while循环不会被终止（创建在子线程，改的值改的是主线程的isRunning的值，所以不会终止）。<br><img src="/img/java/并发编程/picture/JDK1.5之后不在同一线程设置开关不会终止.png"><br>上图，如果想停止，解决办法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> isRunning = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/img/java/并发编程/picture/volatile关键字线程执行流程图.png"></p>
+<ul>
+<li>volatile虽然拥有多个线程的可见性，但是却不具备同步性（也就是原子性)（count++方法，每次叠加1000次，分10个线程执行，最后一个线程执行完毕最终值不是10000）。可以算是一个轻量级的synchronized,性能要比synchronized强很多，不会造成阻塞（在很多开源框架里，比如netty的底层代码就大量使用volatile，可见netty性能一定是不错的）。这里需要注意：一般volatile用于只针对于多个线程可见的变量操作，并不能代替synchronized的同步功能。如果保证原子性可以用AtomicInteger.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger count = <span class="keyword">new</span> AtomicInter(<span class="number">0</span>); <span class="comment">//count初始化值0</span></span><br><span class="line"><span class="comment">//使用incrementAndGet（)方法叠加</span></span><br><span class="line">count.incrementAndGet();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>volatile只具有可见性，没有原子性。要实现原子性建议使用atomic类的系列对象，支持原子性操作（注意atomic类只保证本身方法的原子性，并不保证多次操作的原子性）。<br><img src="/img/java/并发编程/picture/atomic类一个方法调用多次不保证原子性.png"></li>
+</ul>
+<h4 id="并发编程下的多线程间通信概念wait，notify，线程经典面试题"><a href="#并发编程下的多线程间通信概念wait，notify，线程经典面试题" class="headerlink" title="并发编程下的多线程间通信概念wait，notify，线程经典面试题"></a>并发编程下的多线程间通信概念wait，notify，线程经典面试题</h4><ul>
+<li>使用wait/notify方法实现线程间通信。（这两个方法都是object的类的方法，换句话说java的所有的对象都提供了这两个方法）<ul>
+<li>wait和notify必须配合synchronized关键字使用</li>
+<li>wait方法释放锁，notify方法不释放锁（wait方法调用后，其他线程可以拿到锁执行方法；notify方法则必须等到此线程synchronized代码块执行完，其他线程才能拿到锁进行执行）</li>
+</ul>
+</li>
+</ul>
+<p>使用示例：参考<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/sync/waitnotify" target="_blank" rel="noopener">waitnotify</a></p>
+<h4 id="模拟底层阻塞队列（queue）实现讲解"><a href="#模拟底层阻塞队列（queue）实现讲解" class="headerlink" title="模拟底层阻塞队列（queue）实现讲解"></a>模拟底层阻塞队列（queue）实现讲解</h4><p>上面内容实践操作，示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/MyQueue.java" target="_blank" rel="noopener">MyQueue</a></p>
+<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><ul>
+<li>ThreadLocal:线程局部变量，是一种多线程间并发访问变量的解决方案。与其synchronized等加锁的方式不同，ThreadLocal完全不提供锁，而使用以空间换时间的手段，为每个线程提供变量的独立副本，以保障线程安全。</li>
+<li>从性能上说，ThreadLocal不具有绝对的优势，在并发不是很高的时候，加锁的性能会更好，但作为一套与锁无关的线程安全解决方案，在高并发量或者竞争激烈的场景，使用ThreadLocal可以在一定程度上减少锁竞争。</li>
+</ul>
+<h4 id="单例和多线程结合使用"><a href="#单例和多线程结合使用" class="headerlink" title="单例和多线程结合使用"></a>单例和多线程结合使用</h4><p>单例模式：最常见的就是饥饿模式和懒汉模式。一个直接实例化对象，一个在调用方法时进行实例化对象。在多线程模式中，考虑到性能和线程安全问题，我们一般选择下面两种比较经典的单例模式，在性能提高的同时,又保证了线程安全。</p>
+<ul>
+<li>dubble check instance</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubbleSingleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> DubbleSingleton ds;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DubbleSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(ds == <span class="keyword">null</span>)&#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="comment">//模拟初始化对象的准备时间...</span></span><br><span class="line">				Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">synchronized</span> (DubbleSingleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span>(ds == <span class="keyword">null</span>)&#123;</span><br><span class="line">					ds = <span class="keyword">new</span> DubbleSingleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ds;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>static inner class (简单，安全)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerSingleton</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Singletion</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> Singletion single = <span class="keyword">new</span> Singletion();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singletion <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> Singletion.single;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-同步类容器"><a href="#3-同步类容器" class="headerlink" title="3 同步类容器"></a>3 同步类容器</h3><h4 id="同步类容器"><a href="#同步类容器" class="headerlink" title="同步类容器"></a>同步类容器</h4><ul>
+<li>同步类容器都是线程安全的，但在某些场景下可能需要加锁来保护复合操作。复合类操作如：迭代、跳转、以及条件运算。这些复合操作在多线程并发地修改容器时，可能会表现出意外的行为，最经典的便是ConcurrentModificationException。原因是当容器迭代的过程中，被并发地修改了内容，这是由于早起迭代器设计的时候并没有考虑并发修改的问题。</li>
+<li>同步类容器：如古老的Vector,HashTable。这些容器的同步功能其实都是有JDK的Collections.synchronized ** 等方法去创建实现的。其底层的机制无非就是用传统的synchronized关键字对每个公用的方法都进行同步，使得每次只能有一个线程访问容器的状态。这很明显不满足我们今天互联网时代高并发的需求，在保证线程安全的同时，也必须有足够好的性能</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HashMap线程不安全，但被修饰后返回的就是线程安全的map</span></span><br><span class="line">Map&lt;Object,Object&gt; map = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;&gt;());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>并发类容器：在jdk5.0之后提供了多种并发类容器来替代同步类容器从而改善性能。同步类容器的状态都是串行化的。他们虽然实现了线程安全，但是严重降低了并发性，在多线程环境时，严重降低了应用程序的吞吐量。</li>
+<li>并发类容器是专门针对并发设计的，使用ConcurrentHashMap来代替给予散列的传统的HashTable，而且在ConcurrentHashMap中，添加了一些常见复合操作的支持。以及使用了CopyOnWriteArrayList代替Vector，并发地CopyOnWriteArraySet，以及并发的Queue，ConcurrentLinkedQueue和LinkedBlockingQueue，前者是高性能的队列，后者是以阻塞形式的队列。</li>
+</ul>
+<h4 id="Concurrent集合类讲解与底层原理实现"><a href="#Concurrent集合类讲解与底层原理实现" class="headerlink" title="Concurrent集合类讲解与底层原理实现"></a>Concurrent集合类讲解与底层原理实现</h4><ul>
+<li>ConcurrentMap两个重要实现<ul>
+<li>ConcurrentHashMap</li>
+<li>ConcurrentSkipListMap（支持并发排序功能，密闭ConcurrentHashMap）</li>
+</ul>
+</li>
+<li>ConcurrentHashMap内部使用段（Segment）来表示这些不同的部分，每个段其实就是一个小的HashTable，他们有自己的锁。只要多个修改操作发生在不同的段上，他们就可以并发进行。把一个整体分成了16个段（Segment）。也就是最高支持16个线程的并发修改操作。这也是在多线程场景时减少锁的粒度从而降低锁竞争的一种方案。并且代码中大多共享变量使用volatile关键字声明，目的是第一时间获取修改的内容，性能非常好。<br><img src="/img/java/并发编程/picture/ConcurrentHashMap使用.png"></li>
+<li>Copy-On-Write简称COW，是一种用于程序设计中的优化策略。JDK里的COW容器有两种：CopyOnWriteArrayList和CopyOnWriteArraySet，COW容器非常有用，可以在非常多的并发场景中使用到。<strong><em>适用于读多写少的操作。写多的情况建议使用ArrayList，Set加锁方式实现同步</em></strong></li>
+<li>CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy，复制出一个新的容器，然后新的容器里刚添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是我们可以对CopyOnWrite容器进行<strong><em>并发地读</em></strong>，而不需要加锁，因为当前容器不会添加任何元素。而且COW容器的写操作已经加锁，不会出现写操作数据不一致问题情况。CopyOnWrite也是一种读写分离的思想，读和写不同的容器。</li>
+</ul>
+<h4 id="各类并发Queue"><a href="#各类并发Queue" class="headerlink" title="各类并发Queue"></a>各类并发Queue</h4><ul>
+<li>MQ适用场景：生产端快，消费端慢的情况或生产端产生大量数据，消费端来不及消费的情况。消费者快的情况可以用netty或者mina这种基于点对点tcp通讯的框架。</li>
+<li>阻塞队列与普通队列的区别在于，当队列是空的时，从队列中获取元素的操作将会被阻塞，或者当队列是满时，往队列里添加元素的操作会被阻塞。试图从空的阻塞队列中获取元素的线程将会被阻塞，直到其他的线程往空的队列插入新的元素。同样，试图往已满的阻塞队列中添加新元素的线程同样也会被阻塞，直到其他的线程使队列重新变得空闲起来，如从队列中移除一个或者多个元素，或者完全清空队列.</li>
+<li>ConcurrentLinkedQueue：适用于高并发场景下的队列，通过无锁的方式，实现了高并发状态下的高性能。是高性能队列但不是阻塞队列。先进先出原则，queue里面元素不能为null。<ul>
+<li>add()和offer() 都是加入元素。（ConcurrentLinkQueue中，这两种方法没有任何区别）。</li>
+<li>poll()和peek（） 都是取头元素节点，区别在于前者会删除元素，后者不会</li>
+</ul>
+</li>
+<li><p>BlockingQueue接口<br><img src="/img/java/并发编程/picture/BlockingQueue接口.png"><br><img src="/img/java/并发编程/picture/BlockingQueue接口重要方法.png"> </p>
+<ul>
+<li>ArrayBlockingQueue:阻塞队列，有界队列，不能读写分离。（队列满了再添加会抛出Queue full异常）。适用于Queue大，有峰值的情况。</li>
+<li>LinkedBlockingQueue：阻塞队列，无界队列，能读写分离。适合Queue不大情况。</li>
+<li><p>SynchronousQueue：不允许添加任何元素（不可以add()和offer()，只有阻塞了add（）才不会报异常，如下图。这是因为不是往队列添加，而是直接丢给阻塞的线程处理）。适用于数据量少，即来即走的情况。<br><img src="/img/java/并发编程/picture/SynchronousQueue队列能使用add情况.png"></p>
+</li>
+<li><p>DelayQueue：带有延迟时间的Queue，元素只有当其执行的延迟时间到了，才能从队列中获取到该元素。没有大小限制，使用场景，比如对缓存超时的数据进行移除，任务超时处理，空闲连接的关闭等等。(参考<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/queue/UseDelayQueue.java" target="_blank" rel="noopener">UseDelayQueue</a>)</p>
+</li>
+<li>PriorityBlockingQueue：不遵循先进先出原则，遵循比较原则，优先级由传入的对象Compator对象决定，也就是传入队列的对象必须实现Comparable接口。（参考<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/queue/UsePriorityBlockingQueue.java" target="_blank" rel="noopener">UsePriorityBlockingQueue</a>）<font color="#F00">循环输出并没有排序，只有每次take时候就排序，取出优先级最高的</font>。</li>
+</ul>
+</li>
+<li><p>Deque 双端队列，允许在队列的头部或尾部进行出队和入队操作。</p>
+<ul>
+<li>LinkedBlockingDeque是一个线程安全的双端队列实现，可以说他是最为复杂的一种队列，在内部实现维护了前端和后端节点，但是其没有实现读写分离，因此同一时间只能有一个线程对其进行操作。在高并发中性能远低于其他BlockingQueue。更要低于ConcurrentLinkedQueue，在jdk早期有一个非线程安全的Deque就是ArrayDeque，java6里添加了LinkedBlockingDeque来弥补多线程场景下线程安全的问题。 </li>
+</ul>
+</li>
+</ul>
+<h3 id="4-多线程的设计模式"><a href="#4-多线程的设计模式" class="headerlink" title="4. 多线程的设计模式"></a>4. 多线程的设计模式</h3><h4 id="Future模式讲解，即异步加载-见future"><a href="#Future模式讲解，即异步加载-见future" class="headerlink" title="Future模式讲解，即异步加载(见future )"></a>Future模式讲解，即异步加载(见<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/sync/future" target="_blank" rel="noopener">future</a> )</h4><ul>
+<li>Future模式类似于商品订单。比如在网购时，当看中某一件商品时，就可以提交订单，当订单处理完成后，在家里等待商品送货上门即可。或者说更形象的我们发送Ajax请求的时候，页面是异步的进行后台处理，用户无须一直等待请求的结果，可以继续浏览或操作其他内容。<br><img src="/img/java/并发编程/picture/Future模式.png"></li>
+</ul>
+<h4 id="Master-Worker模式-见masterworker"><a href="#Master-Worker模式-见masterworker" class="headerlink" title="Master-Worker模式(见masterworker)"></a>Master-Worker模式(见<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/sync/masterworker" target="_blank" rel="noopener">masterworker</a>)</h4><ul>
+<li><strong><em>并行计算，使用多线程对同一个对象进行队列操作，处理完出队</em></strong></li>
+<li>Master-Worker模式是常用的并行计算模式。它的核心思想是系统由两类进程协作工作：Master进程和Worker进程。Master负责接收和分配任务，Worker负责处理子任务。当各个Worker子进程处理完成后，会将结果返回给Master，由Master做归纳和总结。其好处是能将一个大任务分解成若干个小任务，并行执行，从而提高系统的吞吐量。<br><img src="/img/java/并发编程/picture/Master-Worker模式.png"></li>
+<li>Master-Worker开发引导图<br><img src="/img/java/并发编程/picture/Master-Worker模式开发引导图.png"></li>
+</ul>
+<h4 id="生产者-消费者模式-见productorconsumer"><a href="#生产者-消费者模式-见productorconsumer" class="headerlink" title="生产者-消费者模式(见productorconsumer)"></a>生产者-消费者模式(见<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/sync/productorconsumer" target="_blank" rel="noopener">productorconsumer</a>)</h4><ul>
+<li>生产者和消费者也是一个非常经典的多线程模式，我们在实际开发中应用非常广泛的思想概念。在生产-消费模式中，通常有两类线程，即若干个生产者的线程和若干个消费者的线程。生产者线程负责提交用户请求，消费者线程则负责具体处理生产者提交的任务，在生产者和消费者之间通过共享内存缓存区进行通信。<br><img src="/img/java/并发编程/picture/生产者-消费者模式.png"></li>
+</ul>
+<h3 id="5-线程池"><a href="#5-线程池" class="headerlink" title="5. 线程池"></a>5. 线程池</h3><h4 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h4><ul>
+<li>Executors创建线程池的方法：<ul>
+<li>newFixedThreadPool()方法，该方法返回一个固定数量的线程池（创建几个就几个），该方法的线程数始终不变。当有一个任务提交时，若线程池中空闲，则立即执行，若没有，则会被暂缓在一个任务队列中等待有空闲的线程去执行。</li>
+<li>newSingleThreadExecutor()方法，创建一个线程的线程池，若空闲则执行，若没有空闲线程则暂缓在任务队列中。</li>
+<li>newCachedThreadPool()方法，返回一个可根据实际情况调整线程个数的线程池，不限制最大线程数量，若有空闲的线程执行则执行任务，若无任务则不创建线程。并且每一个空闲线程会在60秒后自动回收。</li>
+<li>newScheduledThreadPool()方法，该方法放回一个ScheduledExecutorService对象，但该线程可以指定线程的数量。</li>
+</ul>
+</li>
+<li>自定义线程池(见<a href="https://github.com/CentMeng/JavaFrameTest/tree/master/src/com/msj/sync/executors/test2" target="_blank" rel="noopener">executors</a>)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                              TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                              BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                              ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                              RejectedExecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="/img/java/并发编程/picture/自定义线程池使用详解.png"></p>
+<ul>
+<li>自定义拒绝策略：<ul>
+<li>方案1：高峰期过程中，通过HttpUrlConnection创建一个请求，通过这个请求发回传数据方，告诉他一会再发（高峰期不建议这样使用，因为资源已经很紧张了，再发送请求的话也是占用资源的，不过使用HttpClient可以配置请求的线程池数）。</li>
+<li>方案2：输出日志或将队列缓存其他地方（不建议缓存其他地方，因为这样还不如给队列扩容），然后有个调度的</li>
+<li>job把日志记录的再重新跑一遍。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-Concurrent-util常用类"><a href="#6-Concurrent-util常用类" class="headerlink" title="6. Concurrent.util常用类"></a>6. Concurrent.util常用类</h3><ul>
+<li>CyclicBarrier使用：</li>
+</ul>
+<p>假设有一个场景：每个线程代表一个跑步运动员，当运动员都准备好后，才一起出发，只要有一个人没有准备好，大家都等待。示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/executors/test3/UseCyclicBarrier.java" target="_blank" rel="noopener">UseCyclicBarrier</a></p>
+<ul>
+<li>CountDownLatch使用：</li>
+</ul>
+<p>他经常用于监听某些初始化操作，等初始化执行完毕后，通知主线程继续工作。使用场景使用于：例如方法中包含1，2方法，1方法要多线程执行，执行完毕后才能执行2方法。在1方法后执行await(),await后面写2方法。示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/executors/test3/UseCountDownLatch.java" target="_blank" rel="noopener">UseCountDownLatch</a></p>
+<ul>
+<li>Callbale和Future使用：</li>
+</ul>
+<p>这个例子其实就是我们之前实现的Future模式。jdk给予一个实现的封装，使用非常简单。示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/executors/test3/UseFuture.java" target="_blank" rel="noopener">UseFuture</a></p>
+<p>Future模式非常适合处理耗时很长的业务逻辑时进行使用，可以有效的减少系统的响应时间，提高系统的吞吐量。</p>
+<ul>
+<li>Executor的submit()和execute()区别<ul>
+<li>submit可以传入实现Callable接口的实例对象</li>
+<li>submit方法有返回值</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-高并发"><a href="#7-高并发" class="headerlink" title="7. 高并发"></a>7. 高并发</h3><ul>
+<li>信号量<br>信号量可以用来解决限流（控制系统流量）。拿到信号量的线程可以进入，否则就等待。示例见：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/executors/test3/UseSemaphore.java" target="_blank" rel="noopener">UseSemaphore</a>。一般使用Redis进行限流，比如用将用户信息放到Redis缓存里，然后记录用户访问的url，加入1分钟只允许访问60次，如果超过60次提示访问频繁。<br><img src="/img/java/并发编程/picture/信号量.png"></li>
+<li>解决高并发<ul>
+<li>网络端</li>
+<li>服务器层面（ngix负载均衡（ngix最大只支持2000万并发，超过2000万可以通过ngix结合使用lvs或者haprox来进行负载均衡）-&gt;多个tomcat分流）<br><img src="/img/java/并发编程/picture/ngix超过2000万并发解决方案.png"></li>
+<li>业务（业务模块化，在业务上进行并发分流，细粒度）<br><img src="/img/java/并发编程/picture/业务模块化并发分流策略.png"></li>
+<li>Java层面限流</li>
+<li>采用非关系型数据库对关系型数据库降压</li>
+</ul>
+</li>
+<li>峰值计算，进行多轮压力测试后，采用80/20原则，即80%的访问请求在20%的时间内达到。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">峰值qps = （总PV * 80%）/(60*60*24*20%)</span><br></pre></td></tr></table></figure>
+<p>例如：100次请求需要10秒完成，则80次请求需要8秒，但希望在20%的时间内完成即1.6秒完成。<br>然后再将总的峰值qps除以单台机器所能承受的最高的gps值，就是所需要机器的数量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">机器数 = 总的峰值qps /峰值qps</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>秒杀方案<ul>
+<li>一个单独独立的子系统(和商城主系统独立)，这样即使服务挂了，也不影响主服务。</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-锁"><a href="#8-锁" class="headerlink" title="8. 锁"></a>8. 锁</h3><h4 id="重入锁"><a href="#重入锁" class="headerlink" title="重入锁"></a>重入锁</h4><p>在需要同步的代码上部分加入锁定，但最后一定不要忘记释放锁定，不然会造成锁永远无法释放，其他线程永远进不来的情况。示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/lock/lock1/UseReentrantLock.java" target="_blank" rel="noopener">UseReentrantLock</a></p>
+<h4 id="锁与等待-通知-类似synchronized中的wait和notify，notifyall"><a href="#锁与等待-通知-类似synchronized中的wait和notify，notifyall" class="headerlink" title="锁与等待/通知(类似synchronized中的wait和notify，notifyall)"></a>锁与等待/通知(类似synchronized中的wait和notify，notifyall)</h4><p>我们再使用Lock的时候，可以使用一个新的等待/通知的类，它就是Condition。这个Condition一定是针对具体某一把锁。也就是在只有锁的基础之上才会产生Condition.Condition比synchronized的wait，notify要灵活。因为Condition可以根据一个Lock创建多个Condition,见<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/lock/lock1/UseManyCondition.java" target="_blank" rel="noopener">UseManyCondition</a>。<br>使用场景：两个方法并行计算，方法1中有的方法需要等待方法2计算完毕后，才能继续执行。<br>示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/lock/lock1/UseCondition.java" target="_blank" rel="noopener">UseCondition</a></p>
+<h4 id="公平锁与非公平锁"><a href="#公平锁与非公平锁" class="headerlink" title="公平锁与非公平锁"></a>公平锁与非公平锁</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认非公平锁</span></span><br><span class="line">Lock lock = <span class="keyword">new</span> ReentranLock(<span class="keyword">boolean</span> fair);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>公平锁是哪个线程代码先调用则锁放开后调用哪个线程</p>
+</li>
+<li><p>公平锁浪费性能<br><img src="/img/java/并发编程/picture/Lock,Condition其他方法.png"></p>
+</li>
+</ul>
+<h4 id="ReentrantReadWriteLock读写锁"><a href="#ReentrantReadWriteLock读写锁" class="headerlink" title="ReentrantReadWriteLock读写锁"></a>ReentrantReadWriteLock读写锁</h4><ul>
+<li>实现读写分离的锁。在高并发的情况下，尤其是读多写少的情况下，性能要远高于重入锁。示例：<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/lock/lock2/UseReentrantReadWriteLock.java" target="_blank" rel="noopener">ReentrantReadWriteLock</a></li>
+<li>之前学synchronized，ReentrantLock时，我们知道，同一时间内，只能有一个线程进行访问被锁定的代码，那么读写锁则不同，其本质是分成两个锁，即读锁，写锁。在读锁下，多个线程可以并发的进行访问，但是在写锁的时候，只能一个个的顺序访问。</li>
+</ul>
+<h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><ul>
+<li>一个服务部署到两台服务器上，相同的服务实现同步。可以使用zookeeper的分布式锁。</li>
+</ul>
+<h4 id="锁的优化"><a href="#锁的优化" class="headerlink" title="锁的优化"></a>锁的优化</h4><ul>
+<li>避免死锁</li>
+<li>减少锁的持有时间</li>
+<li>减小锁的粒度</li>
+<li>锁的分离</li>
+<li>尽量使用无锁的操作，如原子类（Atomic系列类），voliate</li>
+</ul>
+<h3 id="无锁并行计算框架（Disruptor）"><a href="#无锁并行计算框架（Disruptor）" class="headerlink" title="无锁并行计算框架（Disruptor）"></a>无锁并行计算框架（Disruptor）</h3><ul>
+<li>全球最快最好用的无锁并行计算框架。Martin Fowler在自己网站上写了一篇LMAX架构的文章，在文章中他介绍了LMAX是一种新型零售金融交易平台，它能够以很低的延迟产生大量交易。这个系统是建立在JVM平台上，其核心是一个业务逻辑处理器，<font color="#f00">它能够在一个线程里每秒处理6百万订单。</font>业务逻辑处理器完全是运行在内存中，使用事件源驱动方式。业务逻辑处理器的核心是Disruptor。</li>
+<li>Disruptor是一个高性能的异步处理框架，或者可以认为是最快的消息框架（轻量的JMS），也可以认为是一个观察者模式的实现，或者事件监听模式的实现。 </li>
+<li><strong><em>官方学习网站：<a href="http://ifeve.com/disruptor-getting-started/" target="_blank" rel="noopener">http://ifeve.com/disruptor-getting-started/</a></em></strong></li>
+<li>在Disruptor中，我们想实现<a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/disruptor/base" target="_blank" rel="noopener">hello world</a> 需要如下几步骤：<ul>
+<li>第一：建立一个Event类</li>
+<li>第二：建立一个工厂Event类，用于创建Event类实例对象</li>
+<li>第三：需要有一个监听事件类，用于处理数据（Event类）</li>
+<li>第四：我们需要进行测试代码编写。实例化Disruptor实例，配置一系列参数。然后我们对Disruptor实例绑定监听事件类，接受并处理数据。</li>
+<li>第五：在Disruptor中，真正存储数据的核心叫做RingBuffer(环型缓存)，我们通过Disruptor实例拿到它，然后把数据生产出来，把数据加入到RingBuffer的实例对象中即可。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Disruptor术语说明"><a href="#Disruptor术语说明" class="headerlink" title="Disruptor术语说明"></a>Disruptor术语说明</h4><ul>
+<li>RingBuffer: 被看作Disruptor最主要的组件，然而从3.0开始RingBuffer仅仅负责存储和更新在Disruptor中流通的数据。对一些特殊的使用场景能够被用户(使用其他数据结构)完全替代。</li>
+<li>Sequence: Disruptor使用Sequence来表示一个特殊组件处理的序号。和Disruptor一样，每个消费者(EventProcessor)都维持着一个Sequence。大部分的并发代码依赖这些Sequence值的运转，因此Sequence支持多种当前为AtomicLong类的特性。</li>
+<li>Sequencer: 这是Disruptor真正的核心。实现了这个接口的两种生产者（单生产者和多生产者）均实现了所有的并发算法，为了在生产者和消费者之间进行准确快速的数据传递。</li>
+<li>SequenceBarrier: 由Sequencer生成，并且包含了已经发布的Sequence的引用，这些的Sequence源于Sequencer和一些独立的消费者的Sequence。它包含了决定是否有供消费者来消费的Event的逻辑。</li>
+<li>WaitStrategy：决定一个消费者将如何等待生产者将Event置入Disruptor。</li>
+<li>Event：从生产者到消费者过程中所处理的数据单元。Disruptor中没有代码表示Event，因为它完全是由用户定义的。</li>
+<li>EventProcessor：主要事件循环，处理Disruptor中的Event，并且拥有消费者的Sequence。它有一个实现类是BatchEventProcessor，包含了event loop有效的实现，并且将回调到一个EventHandler接口的实现对象。</li>
+<li>EventHandler：由用户实现并且代表了Disruptor中的一个消费者的接口。</li>
+<li>Producer：由用户实现，它调用RingBuffer来插入事件(Event)，在Disruptor中没有相应的实现代码，由用户实现。</li>
+<li>WorkProcessor：确保每个sequence只被一个processor消费，在同一个WorkPool中的处理多个WorkProcessor不会消费同样的sequence。</li>
+<li>WorkerPool：一个WorkProcessor池，其中WorkProcessor将消费Sequence，所以任务可以在实现WorkHandler接口的worker吃间移交</li>
+<li>LifecycleAware：当BatchEventProcessor启动和停止时，于实现这个接口用于接收通知。</li>
+</ul>
+<h4 id="Disruptor印象"><a href="#Disruptor印象" class="headerlink" title="Disruptor印象"></a>Disruptor印象</h4><ul>
+<li>把一个个生产的对象（生产一堆）传到Disruptor中的RingBuffer容器中（环形结构），消费者在RingBuffer中注册监听事件，然后RingBuffer一旦有数据就会主动把生产对象传给消费者处理。<br><img src="/img/java/并发编程/picture/Disruptor印象.png">   </li>
+<li>理解RingBuffer<ul>
+<li>RingBuffer是一个环，可以把他用做在上下文（线程）间传递数据的buffer。大小必须是2的n次方，否则影响性能（个数是2的n次方更有利于基于二进制的计算机进行计算）。</li>
+<li>基本来说，ringbuffer拥有一个序号（Sequence），这个序号指向数组中下一个可用元素。随着你不停地填充这个buffer（可能也会有相应的读取），这个序号会一直增长，直到绕过这个环。<br><img src="/img/java/并发编程/picture/ringbuffer讲解.png"></li>
+<li>要找到数组中当前序号指向的元素，可以通过mod操作：sequence mod array length = array index（取模操作）以上面的ringbuffer为例（java的mod语法）：12 % 10 = 2。</li>
+<li>如果你看了维基百科里面的关于环形buffer的词条，你就会发现，我们的实现方式，与其最大的区别在于：没有尾指针。我们只维护了一个指向下一个可用位置的序号。这种实现是经过深思熟虑的—我们选择用环形buffer的最初原因就是想要提供可靠的消息传递。</li>
+<li>我们实现的ring buffer和大家常用的队列之间的区别是，我们不删除buffer中的数据，也就是说这些数据一直存放在buffer中，直到新的数据覆盖他们。这就是和维基百科版本相比，我们不需要尾指针的原因。ringbuffer本身并不控制是否需要重叠。</li>
+<li>因为它是数组，所以要比链表快，而且有一个容易预测的访问模式。</li>
+<li>这是对CPU缓存友好的，也就是说在硬件级别，数组中的元素是会被预加载的，因此在ringbuffer当中，cpu无需时不时去主存加载数组中的下一个元素。</li>
+<li>其次，你可以为数组预先分配内存，使得数组对象一直存在（除非程序终止）。这就意味着不需要花大量的时间用于垃圾回收。此外，不像链表那样，需要为每一个添加到其上面的对象创造节点对象—对应的，当删除节点时，需要执行相应的内存清理操作。</li>
+</ul>
+</li>
+</ul>
+<h4 id="场景应用"><a href="#场景应用" class="headerlink" title="场景应用"></a>场景应用</h4><ul>
+<li><p>在helloWorld的实例中，我们创建Disruptor实例，然后调用getRingBuffer方法去获取RingBuffer，其实在很多时候，我们可以直接使用RingBuffer，以及其他的API操作。我们一起熟悉下示例：</p>
+<ul>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/disruptor/generate1" target="_blank" rel="noopener">使用EventProcessor消息处理器</a></li>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/disruptor/generate1" target="_blank" rel="noopener">使用WorkerPool消息处理器</a></li>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/disruptor/generate2" target="_blank" rel="noopener">在复杂场景下使用RingBuffer（希望P1生产的数据给C1、C2并行执行，最后C1、C2执行结束后C3执行）</a></li>
+<li><a href="https://github.com/CentMeng/JavaFrameTest/blob/master/src/com/msj/sync/disruptor/multi" target="_blank" rel="noopener">多生产者、消费者使用</a></li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java架构师</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-再识RxJava庐山真面目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -473,268 +1051,9 @@
 
 
   
-    <article id="post-2016" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/30/2016/">2016</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/30/2016/" class="archive-article-date">
-  	<time datetime="2016-12-30T15:48:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="2016，时间去哪了"><a href="#2016，时间去哪了" class="headerlink" title="2016，时间去哪了"></a>2016，时间去哪了</h1><p>  时光就像小偷，不知不觉又偷走了我们一年的年华。回首这一年，觉得什么也没做，但又觉得发生了许多。</p>
-<p>  这一年最大的事莫过于互联网的资本寒冬，受此寒流影响冰封住了“指点”的前进步伐。其实每次和人说起此事很轻松，但谁又能知道一个项目从第一行代码就由你自己去编写，并且后续由你去参与设计和规划。你看到他一步步的成长起来，突然有一天你却为他coding最后一行代码。这种心情其他人不知道，只有我自己知道。如今还能想起在那无聊的一天，一群”无聊“的人在个无聊的创业咖啡馆聊着”无聊“的梦想。</p>
-<p>  当然无聊的人并非只有这些，还有这么一群逗逼的结识。  </p>
-<p><img src="/img/pic/welcome2017/IMG_4333.JPG"></p>
-  <center> 没拍到环环 </center>
-
-<p> <img src="/img/pic/welcome2017/IMG_3731.JPG"></p>
-   <center> 没错就是展望2016 </center>
-
-<p> <img src="/img/pic/welcome2017/IMG_4238.JPG"></p>
-   <center> 是不是我最帅 </center>
-
-<p> <img src="/img/pic/welcome2017/IMG_4450.JPG"></p>
-   <center> 小骚货们 </center>     
-
-<p>   总结以上就一句话“这个冬天有点冷”。下面说说开心的事：</p>
-<h2 id="NO-1哥考上了研究生，对没错就是北航"><a href="#NO-1哥考上了研究生，对没错就是北航" class="headerlink" title="NO.1哥考上了研究生，对没错就是北航"></a>NO.1哥考上了研究生，对没错就是北航</h2><p><img src="/img/pic/welcome2017/IMG_4068.JPG"></p>
-   <center> 为了它，不容易啊 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_3953.JPG"></p>
-   <center> 合个影吧 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_6179.JPG"></p>
-   <center> 15GD6大家庭 </center>
-
-<h2 id="NO-2说走就走的旅行"><a href="#NO-2说走就走的旅行" class="headerlink" title="NO.2说走就走的旅行"></a>NO.2说走就走的旅行</h2><p>最初想法：环绕中国一周</p>
-<p>临出发前想法：拿着5000元钱，走到哪是哪</p>
-<p>最终实现：妈的，走累了，我要回家</p>
-<p>最终路线： 北京（火车）–》大连（客船）–》蓬莱（客船）–》长岛（灰机）–》上海（客车）–》周庄（客车）–》苏州（动车）–》上海（灰机）–》包头（火车）–》北京</p>
-<p>目的：北京（哥要说走就走，于是乎考完试就走了）–》大连（第二故乡，怎能不回来看看）–》蓬莱（听说烟台有到上海的廉价机票）–》长岛（他们推荐来的）–》上海（我要见见大都市）–》周庄（我要见见古镇，来到这里，不想走了，想呆两天回去）–》苏州（被同屋住的小伙伴拉过来的）–》上海（从这回家灰机便宜）–》包头（我要回家）–》北京（找工作）</p>
-<p>事迹：北京（离职了，考完试了，没事了，我要粗发）–》大连（学校还是那个学校，就是没有了以前的人，见了很多老朋友）–》蓬莱（第一次住青旅，走了神仙路）–》长岛（在乡村一个人过的中元节）–》上海（终于见到东方之珠了）–》周庄（住了百年老店，还差98年。刚一进门，被珠珠（狗的名字）的热情给感染了，走不动了，不想走了，想家了。同时认识了几位新朋友，学会了些拍照技巧，话说我们三个从下午拍到半夜）–》苏州（同屋旅友说就来周庄不去苏州会后悔的，没几步地。最后结论是他们说的对）–》上海（来也匆匆，去也匆匆）–》包头（我要回家）–》北京（去找坑）</p>
-<p> <img src="/img/pic/welcome2017/IMG_5019.JPG"></p>
-   <center> 这装备，是不是够够的 </center>
-
-<p> <img src="/img/pic/welcome2017/IMG_5052.JPG"></p>
-   <center> 粗发 </center>
-
-<p>  <img src="/img/pic/welcome2017/IMG_5076.JPG"></p>
-   <center> 回母校看看</center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5136.JPG"></p>
-   <center> 人在囧途 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5252.JPG"></p>
-   <center> 第二站 烟台（蓬莱，长岛） </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5335.JPG"></p>
-   <center> 长岛</center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5378.JPG"></p>
-   <center> 蓬莱青旅 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5410.JPG"></p>
-   <center> 第三站 魔都 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5504.JPG"></p>
-   <center> 第四站：周庄 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5472.JPG"></p>
-   <center> 珠珠 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_5630.JPG"></p>
-   <center> 第五站 苏州 </center>
-
-<p> ok，说走就走，说回就回的旅行就此结束了。</p>
-<h2 id="NO-3买房了"><a href="#NO-3买房了" class="headerlink" title="NO.3买房了"></a>NO.3买房了</h2><p>从此也是有欠款的人了</p>
-<p>  <img src="/img/pic/welcome2017/IMG_4648.JPG"></p>
-   <center> 这房子，是不是很不错，哈哈 </center>
-
-<p>   <img src="/img/pic/welcome2017/IMG_3756.JPG"></p>
-   <center> 其实户型是这样的 </center>
-
-<h2 id="最后的最后，撒上一把狗粮"><a href="#最后的最后，撒上一把狗粮" class="headerlink" title="最后的最后，撒上一把狗粮"></a>最后的最后，撒上一把狗粮</h2><p> <img src="/img/pic/welcome2017/IMG_5872.JPG"></p>
-   <center> 回我对象老家玩了一把 </center>
-
-<p>16年总结完毕，我的本命年也马上结束了。跨年狂欢，未完待续。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">随笔集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/随笔集//" class="article-tag-list-link color4">随笔集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Android抓包" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/30/Android抓包/">Android抓包</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/30/Android抓包/" class="archive-article-date">
-  	<time datetime="2016-12-30T15:45:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#手机上抓包</p>
-<p>安卓系统上常用的抓包工具是 tcpdump，具体的操作步骤如下：</p>
-<ul>
-<li><p>1) PC 上安装 adb，直接下载或者通过 eclipse 中的安卓开发环境自带的工具集获得。</p>
-</li>
-<li><p>2) 下载 tcpdump: <a href="http://www.strazzere.com/Android/tcpdump" target="_blank" rel="noopener">http://www.strazzere.com/Android/tcpdump</a></p>
-</li>
-</ul>
-<ul>
-<li>网盘地址：链接: <a href="https://pan.baidu.com/s/1jHGmImq" target="_blank" rel="noopener">https://pan.baidu.com/s/1jHGmImq</a> 密码: b15h</li>
-</ul>
-<ul>
-<li>3) 检查设备连接情况。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure>
-<ul>
-<li>4) 把 tcpdump 拷贝至 /data/local 目录，注意，/data/local 目录需要 root 权限才能拷入，所以先使用 adb push 拷贝至手机 /sdcard 目录，再使用 adb shell 进入命令行，使用 su 进入 root 状态， cp 至 /data/local 目录。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb push ./tcpdump /sdcard/tcpdump</span><br><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cp /sdcard/tcpdump /data/local/tcpdump</span><br></pre></td></tr></table></figure>
-<ul>
-<li>5) 为 tcpdump 添加可执行权限</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /data/local</span><br><span class="line">chmod 6755 tcpdump</span><br></pre></td></tr></table></figure>
-<ul>
-<li>6) 启动抓包，使用命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/data/local/tcpdump -p -vv -s 0 -w /sdcard/capture.pcap</span><br></pre></td></tr></table></figure>
-<p><strong><em>“Got”后面的数字表示当前抓到的包的数量。如果在变化，表示有网络流量。</em></strong></p>
-<ul>
-<li>7) 我们刚刚把抓包的结果保存在了 /sdcard 目录下，导出抓包的结果到电脑。</li>
-</ul>
-<p>大家看了这么多步骤是不是觉得很复杂，不过不要紧，我们自研的 GT 工具已经把 tcpdump 抓包功能集成进去了，后面介绍 GT 的章节里面会详细介绍抓包方法，在手机上有用户操作界面可以实现一键式抓包，另外 GT 也提供了命令行方式的接口启动抓包，启动命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell am broadcast – a com.tencent.wstt.gt.plugin.tcpdump.startTest – es filepath “/sdcard/GT/Tcpdump/Capture/test.pcap”</span><br></pre></td></tr></table></figure>
-<p>停止抓包命令为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell am broadcast -a com.tencent.wstt.gt.plugin.tcpdump.endTest</span><br></pre></td></tr></table></figure>
-<p>后面可以看到，命令行方式可以方便的做进自动化测试脚本中。</p>
-<p>第三步：根据抓包文件统计流量</p>
-<p>这里需要对抓包文件分析，获得抓取的报文总流量，目前 PC 上的抓包软件 wireshark 就提供这样的统计功能。用 wireshark 打开刚刚的抓包文件，点击 Statistics-&gt;Summary.</p>
-<p>流量的数值为 Bytes 一行的 Displayed 一栏。</p>
-<p><img src="/img/android/zhuabao/1.png"></p>
-<center>图 wireshark 流量统计详细页</center>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
@@ -829,18 +1148,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -850,6 +1157,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -865,7 +1184,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -873,19 +1192,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -893,11 +1200,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -905,11 +1216,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -918,6 +1237,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">

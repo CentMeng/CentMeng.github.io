@@ -201,6 +201,300 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-描述统计学" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/17/描述统计学/">描述统计学</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/17/描述统计学/" class="archive-article-date">
+  	<time datetime="2019-06-17T13:45:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这里只针对一些知识做简要的记录，着重了解下箱线图和标准差部分</p>
+</blockquote>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><p><b>一句话概括统计学研究方法：学习构建、总体与样本、相关与因果、假设与试验</b></p>
+<ul>
+<li><p>构建：抽象的概念如何描述，即如何根据参数来描述问题</p>
+</li>
+<li><p>可以度量构建（抽象）的可操作定义（参数），构建被测量后，我们便可以分析它们了</p>
+</li>
+<li><p>当更多的因素为常量时，测试结果就更可信</p>
+</li>
+<li><p>统计量：描述样本的数字</p>
+</li>
+<li>变量：描述各个数据点的特征，例如性别等</li>
+<li>常量：不会改变的数</li>
+</ul>
+<h2 id="调查方法"><a href="#调查方法" class="headerlink" title="调查方法"></a>调查方法</h2><p>安慰剂方法：为了让调查有对比，需要让正常的人也参与进来，比如服药，不能给真实的药，只能用安慰剂，但也不能让他们知道是安慰剂</p>
+<p>在这样的基础上我们又可以划分为单盲和双盲：</p>
+<ul>
+<li><p>单盲：只让被调查方不知道自己服用的是否有效的药</p>
+</li>
+<li><p>双盲：被调查者和统计者都不让知道，一面影响统计者判断</p>
+</li>
+</ul>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><ul>
+<li><p>频次：出现的次数</p>
+</li>
+<li><p>相对频率：每一种类与总体的比</p>
+</li>
+<li><p>组距：指每组的最高数值与最低数值之间的距离</p>
+</li>
+<li><p>直方图软件：Interactivate</p>
+</li>
+<li><p>正态分布：会有峰值叫做众数，图对称，众数=中位数=平均值</p>
+</li>
+<li><p>偏斜分布：当多数数据集中在曲线的一端，而少数数据在曲线的另一端，数据分布的形态就产生了偏斜。当偏斜的一边的趋向正数的方向，叫正偏态。当偏斜的一边的趋向负数的方向叫负偏态。</p>
+</li>
+</ul>
+<h2 id="集中趋势"><a href="#集中趋势" class="headerlink" title="集中趋势"></a>集中趋势</h2><blockquote>
+<p>集中趋势，我们要学会用一个数字描述的三种量度，即均值、中位数和众数</p>
+</blockquote>
+<ul>
+<li><p>中位数：分布在中间的值,中位数是位于“中间”的数据，意味着有一半数据值小于它，而另一半大于它。由于存在偏斜分布，所以用中位数来代表平均水平（为了避免有异常值影响平均值）。中位数如果不是正好有一个值在中间，则取中间两个值的平均值。比如1，3，5，7，8，10队列的中位数是（5+7）/2</p>
+</li>
+<li><p>众数：出现次数最多的众数，众数分类可能有多个众数会有多个众数，比如鞋，男鞋中有一个众数，女鞋中有一个众数。所以众数可用于描述任何数据类型，数值型和类别型都可以</p>
+</li>
+<li><p>均值：平均数</p>
+</li>
+<li><p>均值、中位数和众数特性<br><img src="/img/statistics/描述统计学/平均值中位数众数特征.png"></p>
+<ul>
+<li><p>有一个简单的公式</p>
+</li>
+<li><p>如果数据集中有数据的值变化，它也一定会变化</p>
+</li>
+<li><p>不受组距变化的影响</p>
+</li>
+<li><p>不易受到异常值的影响</p>
+</li>
+<li><p>容易在直方图上找到</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="箱线图"><a href="#箱线图" class="headerlink" title="箱线图"></a>箱线图</h2><blockquote>
+<p>一般来说，在去除数据点前，我们建议首先将数据点通过图像表述出来（直方图、散点图、箱线图等），这样可以帮助你获得对数据整理分析的了解。然后，基于项目的背景，判断你更关心数据的哪一部分（大多数正常数据，还是小部分异常数据），因为在一些项目背景下，你可能更关心那些异常值，比如在 数据分析（进阶）课程的安然数据分析中，那些工资异常高的人更有可能腐败。最后，是基于现有的数据量作出决定，究竟是直接丢弃部分数据还是对部分作出调整，亦或是有保留地接受所有数据。特别记住一点，没有一种分析方法100%正确，但我们总可以尝试根据不同的需求找到一种最合理的方法。<font color="red"> 所以我们可以通过箱线图直观的表示四分位数和异常值 </font></p>
+</blockquote>
+<p>在了解箱线图，我们需要先知道几个概念</p>
+<ul>
+<li>四分位：第1个四分位就是第一个数与中位数中间的数，即分成四份，第一份的最后一个。以此类推</li>
+<li>IQR：第3个四分位减去第1个四分位 即Q3-Q1</li>
+<li>定义异常值：如果一个值小于第1个四分位数减去1.5倍的IQR 或者大于第3个四分位数加上1.5倍的IQR</li>
+</ul>
+<p>了解了上面的概念，下面我们来看下箱线图：</p>
+<p><img src="/img/statistics/描述统计学/箱线图.png"></p>
+<p>直方图与箱线图对应关系，<font color="red">请注意图C的包含zuckerberg的异常值 </font></p>
+<p><img src="/img/statistics/描述统计学/直方图和箱线图对应关系.png"></p>
+<p>如上图，可以看到直方图组距和箱线图的组距关系，以及异常值的标记位置</p>
+<h2 id="数学符号"><a href="#数学符号" class="headerlink" title="数学符号"></a>数学符号</h2><blockquote>
+<p>用符号讲故事，语言如此，数学也如此</p>
+</blockquote>
+<ul>
+<li><p>μ（总体参数）：用来描述整个总体的值,即抽样总体的数</p>
+</li>
+<li><p>x-bar(样本参数)：用来描述样本（总体中的某一部分）的值；我们使用统计量来估计总体参数。估计值是我们对总体参数的最佳猜测。所以，我们可以使用 X-bar 来估计μ。参数（μ）是用来描述整个总体的值。</p>
+</li>
+</ul>
+<blockquote>
+<p>μ和x-bar的两者之间的差别叫做抽样误差</p>
+</blockquote>
+<ul>
+<li><p>均值数字表达如下图<br><img src="/img/statistics/描述统计学/平均值数字表达.png"></p>
+</li>
+<li><p>均值数字符号进一步描述<br><img src="/img/statistics/描述统计学/进一步平均值符号表达.png"></p>
+</li>
+<li><p>我们用上面的样本参数和总体参数针对均值来说明，左边的是样本的平均值，右边的是总体的平均值的符号写法</p>
+</li>
+</ul>
+<p><img src="/img/statistics/描述统计学/样本平均值和总体平均值数字表达.png"></p>
+<ul>
+<li>中位数公式，数据集个数为偶数<br><img src="https://latex.codecogs.com/png.latex?\frac{X_{\frac{n}{2}}&plus;X_{\frac{n}{2}&plus;1}}{2}" title="\frac{X_{\frac{n}{2}}+X_{\frac{n}{2}+1}}{2}"></li>
+</ul>
+<p>数据为奇数<br><img src="https://latex.codecogs.com/png.latex?X_{\frac{n&plus;1}{2}}" title="X_{\frac{n+1}{2}}"></p>
+<ul>
+<li><p>偏差：每个值与数据集均值之间差</p>
+</li>
+<li><p>平均偏差：衡量差异性最好的选项。算法是找出每个值与数据集均值之间差的平均值（平均偏差），有些值不需要负数则使用平均绝对偏差。</p>
+</li>
+</ul>
+<p><img src="/img/statistics/描述统计学/平均偏差.png"></p>
+<ul>
+<li><p>方差：各个数据分别与其平均数之差的平方的和的平均数，用字母D表示。在概率论和数理统计中，方差（Variance）用来度量随机变量和其数学期望（即均值）之间的偏离程度。在许多实际问题中，研究随机变量和均值之间的偏离程度有着重要意义。</p>
+</li>
+<li><p>标准差（Standard Deviation）：标准差是方差的算术平方根，用小写的西格玛表示。中文环境中又常称均方差，但不同于均方误差（mean squared error，均方误差是各数据偏离真实值的距离平方的平均数，也即误差平方和的平均数，计算公式形式上接近方差，它的开方叫均方根误差，均方根误差才和标准差形式上接近），标准差是离均差平方和平均后的方根，用σ表示。标准差是方差开平方。</p>
+<blockquote>
+<p>大写的西格玛是求和</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/img/statistics/描述统计学/标准差.png"></p>
+<p>标准差图形化解释：</p>
+<blockquote>
+<p>每个值与平均值的偏差，这就是偏差，然后我们对每个偏差取平方，等同于这些方形的面积，然后我们得出这些方形面积的平均值，将平均值开平方，从而得到方形的边长，即标准差。 如下图所示</p>
+</blockquote>
+<p><img src="/img/statistics/描述统计学/标准差图形化.png"></p>
+<p>标准差特性<br></p>
+<p>在正态分布中，68.2%的数据在平均值一个标准差的范围之内，即（平均值+标准差）和（平均值-标准差），95%的数据在两个标准差之内，即（平均值+2<em>标准差）和（平均值-2</em>标准差）。如下图所示</p>
+<p><img src="/img/statistics/描述统计学/标准差正态特性.png"></p>
+<p>标准差归一化<br></p>
+<p>我们用一个示例来说明，标准差归一化的问题，<br>A是facebook好友数，其中用户距离μ是3.5个标准差，<br>B是twitter关注数，用户距离μ是2.5个标准差，<br>能说明A比B更不受关注吗？答案是不能的。</p>
+<p>根据上面的问题，可得出下图：<br><img src="/img/statistics/描述统计学/归一化示例.png"></p>
+<p>上图合二为一得到未进行归一化的下图</p>
+<p><img src="/img/statistics/描述统计学/标准化分布图.png"></p>
+<p>下面使用0作为参考点，进行归一化，得到标准化分布图，如下图所示</p>
+<p><img src="/img/statistics/描述统计学/标准分布后的图.png"></p>
+<p>对两个图做标准分布后，发现B比A离得更远，这是因为在facebook归一化就是将所有值按</p>
+<p><img src="/img/statistics/描述统计学/归一化公式.png"></p>
+<p>进行计算新值，得出新的均值和方差，即平均值为0，标准偏差为1。具体步骤就是减去平均值，将其平移到0处，然后除以标准差，使标准差等于1。<br>通过z值，我们可以将任何正态分布进行转换，并做比较，正如上面facebook和twitter的例子</p>
+<p><img src="/img/statistics/描述统计学/归一化结果.png"></p>
+<p>上面的示例，最终结果小于值210的比例与这里的小于值0.56的比例完全相同，同时也等于最右边图小于55.6的比例。</p>
+<blockquote>
+<p>所以判定不同组数据，来分析同一个目的，需要对两组数据做归一化之后再做比较结果。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">统计学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/统计学//" class="article-tag-list-link color4">统计学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-贝塞尔校正" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/17/贝塞尔校正/">贝塞尔校正</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/17/贝塞尔校正/" class="archive-article-date">
+  	<time datetime="2019-06-17T13:40:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>“贝塞尔校正(Bessel’s Correction)”这个名词，是德国天文学家，数学家 Friedrich Bessel在进行天体测量学研究时提出的一个方法。其主要目的是一个与统计学的方差和标准差相关的一个修正方法而已。</p>
+</blockquote>
+<p>大家都知道方差和标准差的公式，除数都是数据的个数即n，但是对于样本方差和样本标准差我们如何去估算总体方差和标准差呢？如下图所示</p>
+<p><img src="/img/statistics/统计学/贝塞尔校正.png"></p>
+<p>上图表示的含义是样本标准差去估计总体标准差（就是利用样本标准差去估算总体标准差），小写s表示更正后的标准差。用样本的标准差去估计的总体的标准差的时候需要通过贝塞尔校正 。分母减一，使值变大一点。那么为什么需要<font color="red"> 减去1呢？ </font></p>
+<p>原因在于：比如在高斯分布（正态分布）中，我们抽取一部分的样本，用样本的方差来估计总体的方差。由于样本绝大部分会落在中间位置附近，那么样本方差一定小于总体的方差（因为高斯分布的边沿抽取的数据很少）。为了能弥补这方面的缺陷，那么我们把公式的n改为n-1,以此来提高方差的数值。这种方法叫做贝塞尔校正系数。</p>
+<blockquote>
+<p>PS：当我们用小样本数据的标准差去估计总体的标准差的时候采用 n-1,但是这个小样本数据的实际标准差还是用 n 的那个公式的，不要混淆了数据的实际标准差。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">统计学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/统计学//" class="article-tag-list-link color4">统计学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-nginx重试机制的深坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -507,183 +801,9 @@
 
 
   
-    <article id="post-starter制作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/05/starter制作/">SpringBoot starter制作</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/05/starter制作/" class="archive-article-date">
-  	<time datetime="2018-08-05T03:10:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>大家都知道，在spring-boot有众多starter。在传统Maven项目中通常将一些层、组件拆分为模块来管理，以便相互依赖复用，在spring-boot项目中我们则可以创建自定义spring-boot starter来达成该目的。<br>å</p>
-</blockquote>
-<p>这里我们做一个KafKa的starter来进行讲解，首先，我们先引入依赖，pom.xml如下</p>
-<ul>
-<li>pom.xml引入</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;com.zongjie&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-kafka-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.16.20&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;kafka_2.10&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;0.8.2.0&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;log4j&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;log4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">                &lt;exclusion&gt;</span><br><span class="line">                    &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;</span><br><span class="line">                    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.2.15&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;!-- Import dependency management from Spring Boot --&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;1.5.8.RELEASE&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/htmlsingle/#boot-features-custom-starter-naming" target="_blank" rel="noopener">Spring官方</a> Starter通常命名为spring-boot-starter-{name}如 spring-boot-starter-web， Spring官方建议非官方Starter命名应遵循{name}-spring-boot-starter的格式。</p>
-</blockquote>
-<ul>
-<li>写配置和service</li>
-</ul>
-<p>这里我们写kafka需要从application.properties读取的配置，在引用的项目中，配置即可</p>
-<p>以生产者为例的配置文件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Vincent.M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@mail</span> mengshaojie@188.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/5/21</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@copyright</span> ©2018 孟少杰 All Rights Reserved</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@desc</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(ProducerProperties.PREFIX)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProducerProperties</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PREFIX = <span class="string">"com.mq.kafka.producer"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String serializerClass;</span><br><span class="line">    <span class="keyword">private</span> String producerType;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxQueueBuffer;</span><br><span class="line">    <span class="keyword">private</span> String brokerList;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> requiredAck;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Properties <span class="title">getProperties</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="keyword">if</span> (serializerClass != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"serializer.class"</span>, serializerClass);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (producerType != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"producer.type"</span>, producerType);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (maxQueueBuffer &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"queue.buffering.max.ms"</span>, String.valueOf(maxQueueBuffer));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (brokerList != <span class="keyword">null</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"metadata.broker.list"</span>, brokerList);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (requiredAck &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            properties.setProperty(<span class="string">"request.required.acks"</span>, String.valueOf(requiredAck));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> properties;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>service需要被引用的类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public class KafkaProducer implements InitializingBean &#123;</span><br><span class="line"></span><br><span class="line">    private static ConcurrentHashMap&lt;String, ProducerWrapper&gt; producerWrapperMap = new ConcurrentHashMap&lt;String, ProducerWrapper&gt;();</span><br><span class="line"></span><br><span class="line">    ProducerProperties producerProperties;</span><br><span class="line"></span><br><span class="line">    public KafkaProducer(ProducerProperties producerProperties)&#123;</span><br><span class="line">        this.producerProperties = producerProperties;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 同步发送生产者数据</span><br><span class="line">     *</span><br><span class="line">     * @param topic    主题</span><br><span class="line">     * @param routeKey 消息分组的字段,为null会选择随机分组</span><br><span class="line">     * @param msg      消息体</span><br><span class="line">     */</span><br><span class="line">    public void send(KafkaTopics topic, String routeKey, String msg) &#123;</span><br><span class="line">        getProducer(topic.getTopic()).send(topic, routeKey, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 异步发送生产者数据，会先放到内存队列中再发送</span><br><span class="line">     *</span><br><span class="line">     * @param topic</span><br><span class="line">     * @param routeKey</span><br><span class="line">     * @param msg</span><br><span class="line">     */</span><br><span class="line">    public void sendAsync(KafkaTopics topic, String routeKey, String msg) &#123;</span><br><span class="line">        getProducer(topic.getTopic()).sendAsync(topic, routeKey, msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取信息发送器</span><br><span class="line">     *</span><br><span class="line">     * @param topic</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    private  ProducerWrapper getProducer(String topic) &#123;</span><br><span class="line">        if (!producerWrapperMap.containsKey(topic)) &#123;</span><br><span class="line">            synchronized (producerWrapperMap) &#123;</span><br><span class="line">                if (!producerWrapperMap.containsKey(topic)) &#123;</span><br><span class="line">                    if (producerProperties != null) &#123;</span><br><span class="line">                        producerWrapperMap.put(topic, new ProducerWrapper(topic, producerProperties.getProperties()));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return producerWrapperMap.get(topic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void afterPropertiesSet() throws Exception &#123;</span><br><span class="line">        Assert.notNull(producerProperties, &quot;producerProperties &apos;producer&apos; is required&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring-boot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/后端技术//" class="article-tag-list-link color5">后端技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）/">2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/01/2018-我想和世界谈谈（不昧己心，不尽人情，不竭物力）/" class="archive-article-date">
-  	<time datetime="2018-01-01T03:17:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>不昧己心-古人云：“仰不愧于天，俯不怍于人。”做人做事，一定要不昧己心，做事光明磊落，不要背地里损害他人利益。<br></p>
-<p>不尽人情-是教我们凡事都要留有余地，事不能做尽、势不能用尽、福不能享尽、话不能说尽。所以《周易》中说，“上九，亢龙有悔”。<br></p>
-<p>不竭物力-这句话出自《淮南子•主术训》。意思是不要排尽湖中或池中的水来捕鱼，不要焚烧山林来猎取猎物。一方面上天有好生之德，人类向自然索取所需，但一定要遵循生态规律，这样才能和谐相处。如果一位索取，竭尽物力，等待我们的必然是大自然眼里的惩罚。国家可持续发展战略也因此。<br></p>
-</blockquote>
-<p><img src="/img/pic/2018/0.jpg"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年底了，到了评定和发年终奖的时候，总会想起2015年，当时决定来北京发展，在发年终奖前和公司提出离职，只为了能够让公司提前安排接手人员，避免影响“摇点”业务开发。可想而知，年终奖受到了影响，其实这个自己一开始就做好了准备。但当时觉得自己是个loser是在开年会时候，我一个奖都没得。当时想法自己离开这样的公司是值得的，所以也没有怨言。但过完年回到公司，统计每个人奖项的时候，部门负责人刘守建看到统计结果，发现没有我，于是找行政和副总理论，最终给我评定了奖项。虽然知道这个奖项有多么虚，但起码觉得对工作的付出得到了肯定。后来在北京创业失败，说走就走的旅行的时候，回到大连，又和“摇点”团队相聚，部门负责人改签了出差的火车票来聚会，其他小伙伴也是一呼即来。也是那次聚会才知道，我离职前，刘守建和公司副总吵架是因为我的年终奖太少而吵。不昧己心，终会有回报的。失去了部分年终奖，但得到众人的认可，同时“摇点”这个团队的每个人，都是最好的朋友、兄弟。尤其从项目经理李相禄那学到不少管理和处事经验，这也比钱重要的多。那一年为来北京打下了很好的基础。</p>
-<p><img src="/img/pic/2018/2.jpg"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016年，这一年创过业也失败过，这一年体会最深的就是“不尽人情”，也让自己吃了亏。这一年，是成长最快的一年，也因为成长，所以变的更加傲娇。等真正跌下来的时候，才发现自己陷入了迷茫和忧郁中，间接的影响了自己的生活，天天为自己的未来而迷茫，生怕自己被淘汰，无力去照顾自己想要照顾的人。这一段迷茫和忧郁期，从16年年底一直持续到17年年底。</p>
-<p><img src="/img/pic/2018/1.jpg"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017年，正如刚刚所说处在迷茫和忧郁中，这一年缺少一位真正能指引我发展道路的人，来告诉我该怎么走，才能有能力越来越好，能够让我有能力照顾我想照顾的人。这一年处处尝试，尝试大数据发展规划、尝试架构师发展规划、尝试咨询师发展规划，一直没有明确下来。到了年底，才想开，其实这一切都不冲突，就看路怎么走。当然，虽然在迷茫中，但工作技能还是得到了提升。总结起来2017年不是“不竭物力”，而是感恩。这一年的工作，由于自己原因，同时也因一些同事对自己的不理解，所以压力还是有的。也想过换工作，也有乙方和兄弟公司开条件让去他们那边。但最终都没有离开，虽然这里有一些自己看不惯的，但这里有一个能懂你的领导，并给你创造条件让你实现自己的价值。正如之前在“摇点”，虽然工资不高，但有李相禄在，每个成员也都过的很开心。有一些事，是钱不能相比的。当然，滴水之恩，当涌泉相报，在愿景还没实现就逃离，是不懂得感恩同时也是不负责任的。对于工作中，发生冲突的同事，虽然因为各种原因，你们选择接受我的想法和接受我的脾气，但我想说，我就是“知错改错不认错”，我的错，我知道，只是不承认。</p>
-<p><img src="/img/pic/2018/3.jpg"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2018年，是时候该对自己说说了，2018年，要把17年失去的追回来；2018年，要收收自己的脾气；2018年照着自己的规划，去完成自己的目标；2018年，做更好的自己。“不昧己心，不尽人情，不竭物力”。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">随笔集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/随笔集//" class="article-tag-list-link color4">随笔集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -778,18 +898,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">框架</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">适配</a>
               </li>
              
@@ -799,6 +907,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android安全</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">运维相关</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">框架</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -814,7 +934,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
+                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -822,19 +942,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Rect-Native</a>
+                <a href="javascript:void(0)" class="js-tag color5">问题解决</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -842,11 +950,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">python</a>
+                <a href="javascript:void(0)" class="js-tag color5">图文混排</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
+                <a href="javascript:void(0)" class="js-tag color3">WebView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">布局样式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -854,11 +966,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
+                <a href="javascript:void(0)" class="js-tag color2">Android性能调优</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深坑解决</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Android Studio</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -867,6 +987,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RxJava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">统计学</a>
               </li>
              
               <li class="article-tag-list-item">
