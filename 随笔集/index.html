@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://centmeng.github.io">
-  <title>萤火</title>
+  <title>随笔集 | 萤火</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="不昧己心，不尽人情，不竭物力  看人长处，帮人难处，记人好处">
 <meta property="og:type" content="website">
-<meta property="og:title" content="萤火">
-<meta property="og:url" content="https://centmeng.github.io/page/10/index.html">
+<meta property="og:title" content="随笔集">
+<meta property="og:url" content="https://centmeng.github.io/随笔集/index.html">
 <meta property="og:site_name" content="萤火">
 <meta property="og:description" content="不昧己心，不尽人情，不竭物力  看人长处，帮人难处，记人好处">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-17T13:38:16.602Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="萤火">
+<meta name="twitter:title" content="随笔集">
 <meta name="twitter:description" content="不昧己心，不尽人情，不竭物力  看人长处，帮人难处，记人好处">
   
     <link rel="alternative" href="/atom.xml" title="萤火" type="application/atom+xml">
@@ -199,101 +200,127 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-android实现中间卡位下方viewpager效果展示" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/25/android实现中间卡位下方viewpager效果展示/">android实现中间卡位下方viewpager效果展示</a>
+    <h1 class="article-title" itemprop="name">
+      随笔集
     </h1>
   
 
         
-        <a href="/2016/07/25/android实现中间卡位下方viewpager效果展示/" class="archive-article-date">
-  	<time datetime="2016-07-25T11:11:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-25</time>
+        <a href="/随笔集/index.html" class="archive-article-date">
+  	<time datetime="2019-06-17T13:38:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/img/data/androidkawei.gif"></p>
-<p>###设置卡位效果###</p>
-<p>实现如图效果，中间tab滑动上方时候，卡在顶部，下方继续上滑</p>
-<p>其实很简单，只需要借助android的<a href="https://guides.codepath.com/android/Design-Support-Library" target="_blank" rel="noopener">Design Support Library</a></p>
-<p>####1.引用library<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support:design:23.3.0'</span></span><br></pre></td></tr></table></figure></p>
-<p> ####2.写布局</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">"@+id/coordinator"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_marginTop</span>=<span class="string">"@dimen/view_height"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:id</span>=<span class="string">"@+id/barlayout"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_above</span>=<span class="string">"@+id/layout_zhidian"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:background</span>=<span class="string">"@color/background"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Dark"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">              <span class="tag">&lt;<span class="name">FrameLayout</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:id</span>=<span class="string">"@+id/layout_topexpert"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:background</span>=<span class="string">"@color/white"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|exitUntilCollapsed"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:visibility</span>=<span class="string">"visible"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">....</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">....</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">              <span class="tag">&lt;<span class="name">android.support.design.widget.TabLayout</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:id</span>=<span class="string">"@+id/tl_expert"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabGravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabIndicatorColor</span>=<span class="string">"@color/basecolor"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:background</span>=<span class="string">"@color/white"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabMode</span>=<span class="string">"fixed"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabSelectedTextColor</span>=<span class="string">"@color/basecolor"</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">app:tabTextColor</span>=<span class="string">"@color/darkgray"</span></span></span><br><span class="line"><span class="tag">                  /&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">          <span class="tag">&lt;<span class="name">android.support.v4.view.ViewPager</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:id</span>=<span class="string">"@+id/viewpager"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p> 其中关键的是<a href="https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html" target="_blank" rel="noopener">CoordinatorLayout</a></p>
-<p>#####设置滑动布局#####</p>
-<p> 在CoordinatorLayout中包含AppBarLayout,其中AppBarLayout中的子布局，如果设置<br>app:layout_scrollFlags属性里面必须至少启用scroll这个flag，这样这个view才会滚动出屏幕，否则它将一直固定在顶部。可以使用的其他flag有：</p>
-<p><strong><em>enterAlways: 一旦向上滚动这个view就可见。</em></strong></p>
-<p><strong><em>enterAlwaysCollapsed: 顾名思义，这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时enterAlways也定义了，那么view将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。</em></strong></p>
-<p><strong><em>exitUntilCollapsed: 同样顾名思义，这个flag时定义何时退出，当你定义了一个minHeight，这个view将在滚动到达这个最小高度的时候消失。</em></strong></p>
-<p><strong><em>记住，要把带有scroll flag的view放在前面，这样收回的view才能让正常退出，而固定的view继续留在顶部。</em></strong></p>
-<p>本例中layout_topexpert是使用滑动消失的设置了 app:layout_scrollFlags=”scroll|exitUntilCollapsed”，而tl_expert是卡在上方的，所以没有做任何设置</p>
-<p>#####定义AppBarLayout与滚动视图之间的联系#####<br>在viewpager或者任意支持嵌套滚动的view比如NestedScrollView上添加app:layout_behavior。support library包含了一个特殊的字符串资源@string/appbar_scrolling_view_behavior，它和AppBarLayout.ScrollingViewBehavior相匹配，用来通知AppBarLayout 这个特殊的view何时发生了滚动事件，这个behavior需要设置在触发事件（滚动）的view之上</p>
-<p><strong>*</strong>另外需要注意的是<strong>*</strong></p>
-<p>如果相关滚动的是viewpager，在viewpager可以使用recyclerview和scrollview，但ScrollView要使用NestedScrollView</p>
-<p><br></p>
-<hr>
-<p><br><br>滑动卡位的效果实现了，下面是实现Tabfenye和viewpager下方的效果了，其实也很简单，使用库中的android.support.design.widget.TabLayout并做些设置就ok了</p>
-<p>###设置Tablayout###</p>
-<p>####1.设置ViewPager的adpter</p>
-<p>代码很简单，直接看代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExpertDetailPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String userId = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String[] tabTitles = <span class="keyword">new</span> String[]&#123;<span class="string">"点师介绍"</span>,<span class="string">"话题"</span>,<span class="string">"益答"</span>,<span class="string">"动态"</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tabTitles[position];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExpertDetailPagerAdapter</span><span class="params">(FragmentManager fm, String userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(fm);</span><br><span class="line">        <span class="keyword">this</span>.userId = userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (position)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertInfoFragment.newInstance(userId);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertTopicFragment.newInstance(userId);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                RankEntity entity = <span class="keyword">new</span> RankEntity();</span><br><span class="line">                entity.setId(userId);</span><br><span class="line">                <span class="keyword">return</span> ExpertYiDaFragment.newInstance(entity);</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> ExpertDynamicFragment.newInstance(userId);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>getPageTitle是返回Tab的标题</p>
-<p>####2.设置Tablayout</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fragmentAdapter = <span class="keyword">new</span> ExpertDetailPagerAdapter(getSupportFragmentManager(),expertId);</span><br><span class="line"> viewpager.setAdapter(fragmentAdapter);</span><br><span class="line"> viewpager.setOffscreenPageLimit(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"> tl_expert.setupWithViewPager(viewpager);</span><br></pre></td></tr></table></figure>
-<p>本例中Tablayout是居中显示，是通过在布局中设置这两个属性实现的</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">app:tabGravity="center"</span><br><span class="line">app:tabMode="fixed"</span><br></pre></td></tr></table></figure>
-<p>这样就实现了，我一开始使用ScrollView嵌套ViewPager，ViewPager中嵌套ScrollView，RecyclerView出现一大堆问题，最后发现用design库如此的简单解决了问题</p>
-<p>###自定义Behavior###</p>
-<p>CoordinatorLayout的工作原理是搜索定义了<a href="http://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html" target="_blank" rel="noopener">CoordinatorLayout Behavior</a> 的子view，不管是通过在xml中使用app:layout_behavior标签还是通过在代码中对view类使用@DefaultBehavior修饰符来添加注解。当滚动发生的时候，CoordinatorLayout会尝试触发那些声明了依赖的子view。</p>
-<p>要自己定义CoordinatorLayout Behavior，你需要实现layoutDependsOn() 和onDependentViewChanged()两个方法。比如AppBarLayout.Behavior 就定义了这两个关键方法。这个behavior用于当滚动发生的时候让AppBarLayout发生改变。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">layoutDependsOn</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> dependency <span class="keyword">instanceof</span> AppBarLayout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDependentViewChanged</span><span class="params">(CoordinatorLayout parent, View child, View dependency)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// check the behavior triggered</span></span><br><span class="line">    android.support.design.widget.CoordinatorLayout.Behavior behavior = ((android.support.design.widget.CoordinatorLayout.LayoutParams) dependency.getLayoutParams()).getBehavior();</span><br><span class="line">    <span class="keyword">if</span> (behavior <span class="keyword">instanceof</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">        <span class="comment">// do stuff here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢您请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhifubao.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">布局样式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://centmeng.github.io/随笔集/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -304,511 +331,34 @@
 
 
 
-
   
-    <article id="android-studio配置AndroidAnnotations" class="article article-type-android  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/23/studio配置AndroidAnnotations/">studio配置AndroidAnnotations</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/23/studio配置AndroidAnnotations/" class="archive-article-date">
-  	<time datetime="2016-07-23T03:32:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/data/androidstudio.png"></p>
-<ul>
-<li>修改全局gradle文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &apos;com.android.tools.build:gradle:2.1.2&apos;</span><br><span class="line">        // NOTE: Do not place your application dependencies here; they belong</span><br><span class="line">        // in the individual module build.gradle files</span><br><span class="line"></span><br><span class="line">        classpath &apos;com.neenbedankt.gradle.plugins:android-apt:1.4&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task clean(type: Delete) &#123;</span><br><span class="line">    delete rootProject.buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>修改app级gradle文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.application&apos;</span><br><span class="line">apply plugin: &apos;android-apt&apos;</span><br><span class="line">def AAVersion = &apos;3.3.2&apos;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    testCompile &apos;junit:junit:4.12&apos;</span><br><span class="line">    compile &apos;com.android.support:appcompat-v7:23.4.0&apos;</span><br><span class="line">    apt &quot;org.androidannotations:androidannotations:$AAVersion&quot;</span><br><span class="line">    compile &quot;org.androidannotations:androidannotations-api:$AAVersion&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">apt &#123;</span><br><span class="line">    arguments &#123;</span><br><span class="line">        androidManifestFile variant.outputs[0].processResources.manifestFile</span><br><span class="line">        // resourcePackageName &quot;your.package.name&quot;</span><br><span class="line">        resourcePackageName &apos;com.luoteng.voicerecord&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过如下配置我们就可以使用android annotations了</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Android Studio</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-python使用决策树算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/19/python使用决策树算法/">python使用决策树算法</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/19/python使用决策树算法/" class="archive-article-date">
-  	<time datetime="2016-07-19T15:16:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/data.jpg"></p>
-<p>步骤：</p>
-<ol>
-<li><p>导入数据</p>
-<p> <strong><em>利用csv导入数据</em></strong></p>
-</li>
-<li><p>分离数据</p>
-<p> <strong><em>将输入数据，和结果数据分离出来</em></strong></p>
-</li>
-<li><p>转化数据</p>
-<p> ***将输入数据和结果数据转化成0，1格式的数据</p>
-<p> 输入数据转化如下</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dummyX[[ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">	   [ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">		   [ <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">  		   [ <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">	   [ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>]</span><br><span class="line">		   [ <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>]</span><br><span class="line">		   [ <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">0.</span>  <span class="number">1.</span>  <span class="number">1.</span>  <span class="number">0.</span>]]</span><br><span class="line">	其中每一列对应的数据是:</span><br><span class="line">	[<span class="string">'age=middle_aged'</span>, <span class="string">'age=senior'</span>, <span class="string">'age=youth'</span>, <span class="string">'credit_rating=excellent'</span>, <span class="string">'credit_rating=fair'</span>, <span class="string">'income =high'</span>, <span class="string">'income =low'</span>, <span class="string">'income =medium'</span>, <span class="string">'student=no'</span>, <span class="string">'student=yes'</span>]</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<pre><code>输出数据转化如下
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">dummY[[<span class="number">0</span>]</span><br><span class="line">		  [<span class="number">0</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">0</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">0</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">		  [<span class="number">1</span>]</span><br><span class="line">	  [<span class="number">0</span>]]</span><br><span class="line">其中每一行都是最终结果，此例是是否购买的结果</span><br></pre></td></tr></table></figure>
-</code></pre><ol start="4">
-<li><p>建模</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> clf = tree.DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>) <span class="comment">#声明使用决策树ID3算法</span></span><br><span class="line">clf = clf.fit(dummyX,dummyY);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成dot文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"allEletronicInformationGainOri.dot"</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line"> f = tree.export_graphviz(clf,feature_names=vec.get_feature_names(),out_file=f)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用graphviz工具将dot文件导入把决策树画出来（其中分支节点的上下关系根据<b>信息熵</b>的大小来评估的）</p>
-</li>
-<li><p>测试和使用</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#newRowX是0，1输入数据</span></span><br><span class="line">predictedY = clf.predict(newRowX)</span><br><span class="line">print(<span class="string">"新数据结果"</span> + str(predictedY))</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>###信息熵的算法：(变量的不确定性越大，熵越大)  =负的 每一个发生的概率 乘以 以2为低概率的对数###</p>
-<p><img src="/img/data/xinxishanggongshi.png"></p>
-<p><img src="/img/data/xinxishang.png"></p>
-<p><a href="https://github.com/CentMeng/decisiontree" target="_blank" rel="noopener">代码地址</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据技术//" class="article-tag-list-link color1">大数据技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-TextView图文混排" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/19/TextView图文混排/">TextView显示Gif图片实现图文混排</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/19/TextView图文混排/" class="archive-article-date">
-  	<time datetime="2016-07-19T11:36:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/img/code.jpg"></p>
-<p>首先我们使用的html，解析成Spanned，然后设置Span来实现图文混排的，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Drawable <span class="title">getUrlDrawable</span><span class="params">(String source,  TextView mTextView)</span> </span>&#123;</span><br><span class="line">    GlideImageGetter imageGetter = <span class="keyword">new</span> GlideImageGetter(mTextView.getContext(),mTextView);</span><br><span class="line">    <span class="keyword">return</span> imageGetter.getDrawable(source);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setImageText</span><span class="params">(TextView tv)</span></span>&#123;</span><br><span class="line">   </span><br><span class="line">   String  html =<span class="string">"&lt;p dir=\"ltr\"&gt;&lt;img src=\"http://p1.duyao001.com/image/article/a838e283f2b5d7cc45487c5fd79f84cb.gif\"&gt;&lt;img src=\"http://statics.zhid58.com/Fqr9YXHd20fDOqil4nLAbBhNBw0A\"&gt;&lt;br&gt;&lt;br&gt;&lt;img src=\"http://statics.zhid58.com/FufBg05KGCLypIvrYgjaXnTWySUS\"&gt;&lt;br&gt;&lt;br&gt;OK咯木木木立刻哦lol额JOJO图谋女女look女女诺克各地测了测理论啃了了乐克乐克人咯咯JOJO图谋木木木木木木女女哦咯口头摸头LED可口女女LED咳咳JOJO咯JOJO咳咳咯科技JOJO扣女哦lol欧诺扣女&lt;a href=\"http://www.taobao.com\"&gt;http://www.taobao.com&lt;/a&gt; jvjvjvjv jgjvvjjvjce&lt;br&gt;&lt;br&gt;&lt;img src=\"http://statics.zhid58.com/FkBcKMiLfzGfUpSb0bge4x-gIqWw\"&gt;&lt;br&gt;&lt;/p&gt;&lt;br&gt;"</span>;</span><br><span class="line">    Spanned htmlStr = Html.fromHtml(html);</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</span><br><span class="line">        tv.setLayerType(View.LAYER_TYPE_SOFTWARE, <span class="keyword">null</span>);</span><br><span class="line">        tv.setTextIsSelectable(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    tv.setText(htmlStr);</span><br><span class="line">    tv.setMovementMethod(LinkMovementMethod.getInstance());</span><br><span class="line">    CharSequence text = tv.getText();</span><br><span class="line">    <span class="keyword">if</span>(text <span class="keyword">instanceof</span> Spannable)&#123;</span><br><span class="line">        <span class="keyword">int</span> end = text.length();</span><br><span class="line">        Spannable sp = (Spannable)tv.getText();</span><br><span class="line">        URLSpan[] urls=sp.getSpans(<span class="number">0</span>, end, URLSpan.class);</span><br><span class="line">        ImageSpan[] imgs = sp.getSpans(<span class="number">0</span>,end,ImageSpan.class);</span><br><span class="line">        StyleSpan[] styleSpens = sp.getSpans(<span class="number">0</span>,end,StyleSpan.class);</span><br><span class="line">        ForegroundColorSpan[] colorSpans = sp.getSpans(<span class="number">0</span>,end,ForegroundColorSpan.class);</span><br><span class="line">        SpannableStringBuilder style=<span class="keyword">new</span> SpannableStringBuilder(text);</span><br><span class="line">        style.clearSpans();</span><br><span class="line">        <span class="keyword">for</span>(URLSpan url : urls)&#123;</span><br><span class="line">            style.setSpan(url,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">            </span><br><span class="line">                ForegroundColorSpan colorSpan = <span class="keyword">new</span> ForegroundColorSpan(Color.parseColor(<span class="string">"#FF12ADFA"</span>));</span><br><span class="line">                style.setSpan(colorSpan,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(ImageSpan url : imgs)&#123;</span><br><span class="line">            ImageSpan span = <span class="keyword">new</span> ImageSpan(getUrlDrawable(url.getSource(),tv),url.getSource());</span><br><span class="line">            style.setSpan(span,sp.getSpanStart(url),sp.getSpanEnd(url),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(StyleSpan styleSpan : styleSpens)&#123;</span><br><span class="line">            style.setSpan(styleSpan,sp.getSpanStart(styleSpan),sp.getSpanEnd(styleSpan),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(ForegroundColorSpan colorSpan : colorSpans)&#123;</span><br><span class="line">            style.setSpan(colorSpan,sp.getSpanStart(colorSpan),sp.getSpanEnd(colorSpan),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        tv.setText(style);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面代码图片展示是通过ImageSpan来实现的，但默认的图片展示的gif图片是静态取第一帧图片，我们可以在获取图片时候使用<a href="http">Glide</a>，来实现播放gif,glide是图片加载库，这个库被广泛的运用在google的开源项目中，包括2014年google I/O大会上发布的官方app。Glide和Picasso有90%的相似度，准确的说，就是Picasso的克隆版本。但是在细节上还是有不少区别的。而且性能上更加优化。</p>
-<p>把Glide引入到我们项目中，然后在创建UrlDrawable 和 GlideImageGetter</p>
-<p>代码可以参考：<a href="https://github.com/CentMeng/RichTextView" target="_blank" rel="noopener">RichTextView</a></p>
-<p>方法调用就是</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImageTextUtil.setImageText(tv,html);</span><br></pre></td></tr></table></figure>
-<p>需注意的是<br>    //个别机型如魅族手机，如果使用以下语句会报错导致无法显示Textview内容 View too large to fit into drawing cache 的Warning<br>//        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) {<br>//            tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null); 关闭硬件加速<br>//            tv.setTextIsSelectable(true); 设置是否可以粘贴<br>//        }</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">图文混排</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Android技术//" class="article-tag-list-link color5">Android技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/19/hexo安装/">hexo安装</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/19/hexo安装/" class="archive-article-date">
-  	<time datetime="2016-07-19T11:29:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>###下载hexo</p>
-<ul>
-<li>安装node<ul>
-<li>查看安装的node版本 npm -v</li>
-</ul>
-</li>
-<li>安装git</li>
-<li>安装Hexo<ul>
-<li>sudo npm install -g hexo-cli</li>
-</ul>
-</li>
-</ul>
-<p>###生成本地hexo目录</p>
-<ul>
-<li>创建hexo目录<ul>
-<li>cd hexo</li>
-</ul>
-</li>
-<li>初始化hexo<ul>
-<li>hexo init</li>
-</ul>
-</li>
-</ul>
-<p>###启动hexo</p>
-<ul>
-<li>生成静态页面<ul>
-<li>hexo generate（hexo g也可以）</li>
-</ul>
-</li>
-<li>启动本地服务<ul>
-<li>hexo server</li>
-<li>浏览器输入<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<p>###github的repository与hexo关联</p>
-<ul>
-<li>创建个人github的repository<ul>
-<li>repository名称必须为${userName}.github.io</li>
-</ul>
-</li>
-<li><p>建立与hexo的连接</p>
-<ul>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li><p>修改config.yml中最下方如下：</p>
-<pre><code>deploy:
-     type: git
-     repo:https://github.com/${userName}/${userName}.github.io.git
-     branch:master
-</code></pre></li>
-<li>npm install hexo-deployer-git –save</li>
-<li>hexo deploy</li>
-<li>浏览器http://${userName}.github.io/</li>
-</ul>
-</li>
-</ul>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><ul>
-<li>每次布署前，按下列顺序执行<ul>
-<li>hexo clean</li>
-<li>hexo generate</li>
-<li>hexo deploy</li>
-</ul>
-</li>
-</ul>
-<hr>
-<p>###更换头像、作者、主题</p>
-<ul>
-<li>修改头像<ul>
-<li>cd hexo/themes/yilia</li>
-<li>vim _config.yml</li>
-<li>找到 #你的头像url avatar: 后接一个URL就行了，头像就修改成功了</li>
-</ul>
-</li>
-<li>修改作者名字<ul>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li>找到 author: 潘柏信，修改成你自己的名字就行了</li>
-<li>部署 hexo g</li>
-<li>提交 hexo d</li>
-</ul>
-</li>
-<li><p>修改主题</p>
-<ul>
-<li>cd hexo/themes</li>
-<li>git clone ${gitThemeAddress}.git</li>
-<li>cd hexo</li>
-<li>vim _config.yml</li>
-<li><p>找到如下文字</p>
-<pre><code># Extensions
-## Plugins: http://hexo.io/plugins/
-## Themes: http://hexo.io/themes/
-theme:yilia
-</code></pre></li>
-<li>改成theme: yilia，theme:后面接你自己的主题名字就行了,然后分别执行</li>
-<li>部署 hexo g</li>
-<li>提交 hexo d</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li>hexo new”postName” #新建文章</li>
-<li>hexo new page”pageName” #新建页面</li>
-<li>hexo generate #生成静态页面至public目录</li>
-<li>hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）</li>
-<li>hexo deploy #将.deploy目录部署到GitHub</li>
-<li>hexo help # 查看帮助</li>
-<li>hexo version #查看Hexo的版本</li>
-</ul>
-<hr>
-<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><ul>
-<li>ERROR Deployer not found: git 或者 ERROR Deployer not found: github<ul>
-<li>解决方法： npm install hexo-deployer-git –save</li>
-</ul>
-</li>
-<li>ERROR Process failed: layout/.DS_Store<ul>
-<li>进入主题里面layout和_partial目录下，使用删除命令：</li>
-<li>rm-rf.DS_Store</li>
-</ul>
-</li>
-<li>ERROR Plugin load failed: hexo-server<ul>
-<li>原因：Besides,utilities are separated into a standalone module.hexo.util is not reachable anymore.</li>
-<li>解决方法，执行命令：sudo npm install hexo-server</li>
-</ul>
-</li>
-<li><p>执行命令hexo server，提示：Usage: hexo ….</p>
-<ul>
-<li>原因：我认为是没有生成本地服务</li>
-<li><p>解决方法，执行命令：npm install hexo-server–save</p>
-<pre><code>提示：hexo-server@0.1.2 node_modules/hexo-server
-....
-表示成功了
-</code></pre></li>
-<li><p>这个时候再执行：hexo-server</p>
-<pre><code>得到:
-INFOHexois running at http://0.0.0.0:4000/.PressCtrl+C to stop.
-这个时候再点击http://0.0.0.0:4000，正常情况下应该是最原始的画面，但是我看到的是：
-白板和Cannot GET / 几个字
-
-原因：
-由于2.6以后就更新了，我们需要手动配置些东西，我们需要输入下面三行命令：
-npm install hexo-renderer-ejs--save
-npm install hexo-renderer-stylus--save
-npm install hexo-renderer-marked--save
-
-这个时候再重新生成静态文件，命令：
-hexo generate（或hexo g）
-
-启动本地服务器：
-hexo server（或hexo s）
-再点击网址http://0.0.0.0:4000O
-</code></pre></li>
-</ul>
-</li>
-<li>No layout: index.html<ul>
-<li>原因：更换主题后，主题文件不正确。</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/其他//" class="article-tag-list-link color3">其他</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        
-    </div>
-</aside>
-
-
-
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="undefined" data-title="随笔集" data-url="https://centmeng.github.io/随笔集/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"centmeng"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -831,7 +381,7 @@ hexo server（或hexo s）
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
 		isTag: false,
